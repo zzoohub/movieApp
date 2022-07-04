@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import SearchedInfo from "./SearchedInfo";
 
@@ -69,7 +69,9 @@ const SearchForm = styled.form`
     }
   }
 `;
-const Media = styled.section``;
+const Media = styled.section`
+  width: 100%;
+`;
 
 export default function Home() {
   const navigate = useNavigate();

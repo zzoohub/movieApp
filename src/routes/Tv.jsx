@@ -13,6 +13,8 @@ const Grid = styled.div`
   grid-template-rows: auto;
   gap: 10px;
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   height: max-content;
   margin-top: 150px;
 `;
@@ -37,7 +39,7 @@ const MovieImg = styled.div`
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "popula"], () => getPopulaTvs(1));
-  console.log(data?.results);
+
   return (
     <Wrapper>
       {isLoading ? (

@@ -14,6 +14,8 @@ const Grid = styled.div`
   gap: 10px;
   width: 100%;
   height: max-content;
+  max-width: 1440px;
+  margin: 0 auto;
   margin-top: 150px;
 `;
 const Movie = styled.div`
