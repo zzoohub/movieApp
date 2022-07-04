@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Tv from "./routes/Tv";
 import Shoes from "./components/Shoes";
 import Movies from "./routes/Movies";
+import ChatBot from "./components/ChatBot";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/movies" element={<Movies />}></Route>
           <Route path="/*" element={<Home />}></Route>
         </Routes>
+        <ChatBot />
         <Shoes />
       </BrowserRouter>
     </>
