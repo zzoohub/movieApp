@@ -22,6 +22,9 @@ export default function SearchedInfo() {
     )
       .then((res) => res.json())
       .then((json) => setSearchedData(json));
+  }, []);
+
+  useEffect(() => {
     setTvs(
       searchedData?.results.filter((result) => result.media_type === "tv")
     );
