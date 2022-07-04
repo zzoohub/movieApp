@@ -22,13 +22,13 @@ export default function Shoes() {
         <p>
           Zzoo |
           <a href="https://github.com/zzoodev" target="blank">
-            https://github.com/zzoodev
+            | https://github.com/zzoodev
           </a>
         </p>
         <p>
           Jiny |
           <a href="https://github.com/algojiny" target="blank">
-            https://github.com/algojiny
+            | https://github.com/algojiny
           </a>
         </p>
       </Footer>
