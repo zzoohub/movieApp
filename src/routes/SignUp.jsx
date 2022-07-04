@@ -77,6 +77,7 @@ export default function SignUp() {
     localStorage.setItem("user", JSON.stringify(form));
     localStorage.setItem("loginUser", JSON.stringify(form));
     navigate("/");
+    window.location.reload();
   };
 
   return (

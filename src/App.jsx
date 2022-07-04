@@ -6,6 +6,7 @@ import Shoes from "./components/Shoes";
 import Movies from "./routes/Movies";
 import ChatBot from "./components/ChatBot";
 import SignUp from "./routes/SignUp";
+import TvDetail from "./routes/TvDetail";
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
+          <Route path="/tv/:id" element={<TvDetail />}></Route>
           <Route path="/tv" element={<Tv />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/movies" element={<Movies />}></Route>
-          <Route path="/*" element={<Home />}></Route>
+          <Route path="/*" exact element={<Home />}></Route>
         </Routes>
         <ChatBot />
         <Shoes />

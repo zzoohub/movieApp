@@ -70,13 +70,12 @@ const ChatBox = styled.div`
 export default function ChatBot() {
   const [showOn, setShowOn] = useState(false);
   const { user } = useUser();
-  console.log(user);
 
   return (
     <ChatBotWrap>
-      {user === null ? null : (
+      {user ? (
         <ChatBotBtn onClick={() => setShowOn(!showOn)}>ChatBot</ChatBotBtn>
-      )}
+      ) : null}
       {showOn ? (
         <ChatBox>
           <div className="chatHeader">

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getPopulaMovies } from "../api";
+import { getNowPlay } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -38,9 +38,7 @@ const MovieImg = styled.div`
 `;
 
 export default function Movies() {
-  const { data, isLoading } = useQuery(["movie", "popula"], () =>
-    getPopulaMovies(1)
-  );
+  const { data, isLoading } = useQuery(["movie", "popula"], getNowPlay);
 
   return (
     <Wrapper>

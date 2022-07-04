@@ -73,7 +73,7 @@ const Media = styled.section`
   width: 100%;
 `;
 
-export default function Home() {
+export default function Home({ isLogin }) {
   const navigate = useNavigate();
 
   const onValid = (form) => {
