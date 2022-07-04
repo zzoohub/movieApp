@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getPopulaTvs } from "../api";
+import { getPopulaMovies } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -35,19 +35,21 @@ const MovieImg = styled.div`
   }
 `;
 
-export default function Tv() {
-  const { data, isLoading } = useQuery(["tv", "popula"], () => getPopulaTvs(1));
-  console.log(data?.results);
+export default function Movies() {
+  const { data, isLoading } = useQuery(["movie", "popula"], () =>
+    getPopulaMovies(1)
+  );
+
   return (
     <Wrapper>
       {isLoading ? (
         <div>Loading</div>
       ) : (
         <Grid>
-          {data?.results.map((tv) => (
-            <Movie key={tv.id}>
-              <MovieImg bgImg={makeImgPath(tv.backdrop_path || "")}>
-                {tv.backdrop_path ? null : (
+          {data?.results.map((movie) => (
+            <Movie key={movie.id}>
+              <MovieImg bgImg={makeImgPath(movie.backdrop_path || "")}>
+                {movie.backdrop_path ? null : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-3 w-3"
@@ -64,7 +66,7 @@ export default function Tv() {
                   </svg>
                 )}
               </MovieImg>
-              <h1>{tv.name}</h1>
+              <h1>{movie.name}</h1>
             </Movie>
           ))}
         </Grid>

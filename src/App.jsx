@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import NavBar from "./components/NavBar";
 import Tv from "./routes/Tv";
-import Movie from "./routes/Movie";
 import Shoes from "./components/Shoes";
+import Movies from "./routes/Movies";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/tv" element={<Tv />}></Route>
-          <Route path="/movies" element={<Movie />}></Route>
+          <Route path="/movies" element={<Movies />}></Route>
           <Route path="/*" element={<Home />}></Route>
         </Routes>
         <Shoes />

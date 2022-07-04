@@ -7,3 +7,9 @@ export const getPopulaTvs = async (page) => {
     `${BASE_URL}/tv/popular?api_key=${env.API_KEY}&language=ko&page=${page}`
   ).then((res) => res.json());
 };
+
+export const getPopulaMovies = async (page) => {
+  return await fetch(
+    `${BASE_URL}/movie/popular?api_key=${env.API_KEY}&language=ko&page=${page}`
+  ).then((res) => res.json());
+};

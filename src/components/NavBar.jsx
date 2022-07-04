@@ -51,7 +51,7 @@ const UserInfo = styled.div`
 export default function NavBar() {
   const homeMatch = useMatch("/");
   const tvMatch = useMatch("/tv");
-  const movieMatch = useMatch("/movie");
+  const movieMatch = useMatch("/movies");
 
   return (
     <HeaderWrap>
@@ -102,7 +102,7 @@ export default function NavBar() {
           <Link to="/tv" className={tvMatch ? "on" : ""}>
             Tv
           </Link>
-          <Link to="/movie" className={movieMatch ? "on" : ""}>
+          <Link to="/movies" className={movieMatch ? "on" : ""}>
             Movie
           </Link>
         </Nav>
