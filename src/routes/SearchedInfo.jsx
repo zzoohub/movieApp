@@ -79,7 +79,7 @@ export default function SearchedInfo() {
     )
       .then((res) => res.json())
       .then((json) => setSearchedData(json));
-  }, []);
+  }, [keyword]);
 
   useEffect(() => {
     setTvs(
@@ -88,7 +88,7 @@ export default function SearchedInfo() {
     setMovies(
       searchedData?.results.filter((result) => result.media_type === "movie")
     );
-  }, [searchedData]);
+  }, [searchedData, keyword]);
 
   console.log(searchedData);
 
