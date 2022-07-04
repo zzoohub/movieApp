@@ -41,8 +41,8 @@ const Chat_box = styled.div`
 export default function ChatBot() {
   const [showOn, setShowOn] = useState(false);
   const show = () => setShowOn(!showOn);
-
   const close = () => setShowOn(!showOn);
+
   return (
     <ChatBot_wrap>
       <ChatBot_btn onClick={show}>ChatBot</ChatBot_btn>
