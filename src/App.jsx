@@ -5,6 +5,7 @@ import Tv from "./routes/Tv";
 import Shoes from "./components/Shoes";
 import Movies from "./routes/Movies";
 import ChatBot from "./components/ChatBot";
+import SignUp from "./routes/SignUp";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/tv" element={<Tv />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/movies" element={<Movies />}></Route>
           <Route path="/*" element={<Home />}></Route>
         </Routes>

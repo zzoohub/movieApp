@@ -90,8 +90,6 @@ export default function SearchedInfo() {
     );
   }, [searchedData, keyword]);
 
-  console.log(searchedData);
-
   return (
     <>
       {searchedData ? (

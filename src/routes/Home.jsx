@@ -80,6 +80,7 @@ export default function Home() {
     form.preventDefault();
     const userInput = form.target[0].value;
     if (!userInput) return;
+    form.target[0].value = "";
     navigate(`/search?keyword=${userInput}`);
   };
 
