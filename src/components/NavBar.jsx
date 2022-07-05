@@ -8,6 +8,7 @@ const HeaderWrap = styled.div`
   top: 0px;
   width: 100%;
   height: 70px;
+  z-index: 1;
 `;
 const Header = styled.header`
   position: relative;
