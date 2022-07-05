@@ -48,7 +48,7 @@ export default function Movies() {
         <Grid>
           {data?.results.map((movie) => (
             <Movie key={movie.id}>
-              <MovieImg bgImg={makeImgPath(movie.backdrop_path || "")}>
+              <MovieImg bgImg={makeImgPath(movie.backdrop_path, "w500")}>
                 {movie.backdrop_path ? null : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

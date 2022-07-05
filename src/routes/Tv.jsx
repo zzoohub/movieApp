@@ -5,18 +5,45 @@ import { getTvAiringToday } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
-  height: 200vh;
+  height: max-content;
   width: 100%;
 `;
 const Main = styled.main`
   max-width: 1920px;
   margin: 0 auto;
-  margin-top: 100px;
 `;
 const Title = styled.h2`
-  text-align: center;
   color: #ff3d3d;
-  font-size: 24px;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 30px 0px 0px 20px;
+`;
+const Banner = styled.section`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px;
+  width: 100%;
+  height: 70vh;
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url(${(props) => props.bannerImg});
+  background-position: center;
+  background-size: cover;
+  color: #f9f9f9;
+  h3 {
+    font-size: 56px;
+    margin-bottom: 10px;
+  }
+  span {
+    margin: 10px 0px;
+    font-size: 18px;
+    font-weight: 600;
+    max-width: 50%;
+  }
 `;
 const Grid = styled.div`
   display: grid;
@@ -24,21 +51,24 @@ const Grid = styled.div`
   grid-template-rows: auto;
   gap: 20px;
   width: 100%;
-  margin: 0 auto;
+  margin: auto;
   height: max-content;
-  padding: 10px;
-`;
-const Banner = styled.section`
-  width: 100%;
-  height: 500px;
-  background-image: url(${(props) => props.bannerImg});
-  background-position: center;
-  background-size: cover;
+  padding: 15px;
 `;
 const TvItem = styled.div`
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 220px;
+  overflow: hidden;
+  background-color: #222;
+  border-radius: 10px;
+  border-style: outset;
+  border: 3px solid transparent;
+  transition: all ease-in-out 0.1s;
+  :hover {
+    transform: scale(1.02);
+    border: 3px solid #d9d9d9;
+  }
 `;
 const TvItemImg = styled.div`
   display: flex;
@@ -48,11 +78,27 @@ const TvItemImg = styled.div`
   background-size: cover;
   background-position: center center;
   height: 200px;
+  border-bottom: ${(props) =>
+    props.bgImg === "border" ? "1px solid gray" : "none"};
   svg {
     width: 70px;
     height: 70px;
     color: gray;
   }
+`;
+const SubInfo = styled.div`
+  padding: 7px;
+  h3 {
+    font-weight: 600;
+    color: #d9d9d9;
+  }
+`;
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  font-size: 12px;
+  color: #d9d9d9;
 `;
 
 export default function Tv() {
@@ -61,6 +107,7 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
+  console.log(fitered);
 
   return (
     <Wrapper>
@@ -68,15 +115,24 @@ export default function Tv() {
         <div>Loading</div>
       ) : (
         <Main>
-          <Title>오늘 하는 방송</Title>
           <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-            {bannerData?.original_name}
+            <h3>{bannerData?.original_name}</h3>
+            <span>첫방송 {bannerData.first_air_date}</span>
+            <span>평점 {bannerData.vote_average}</span>
+            <span>{bannerData?.overview}</span>
           </Banner>
+          <Title>Today Tv Shows</Title>
           <Grid>
             {fitered.map((tv) => (
               <Link to={`/tv/${tv.id}`} key={tv.id}>
                 <TvItem>
-                  <TvItemImg bgImg={makeImgPath(tv.backdrop_path || "")}>
+                  <TvItemImg
+                    bgImg={
+                      tv.backdrop_path
+                        ? makeImgPath(tv.backdrop_path, "w500")
+                        : "border"
+                    }
+                  >
                     {tv.backdrop_path ? null : (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +150,13 @@ export default function Tv() {
                       </svg>
                     )}
                   </TvItemImg>
-                  <h1>{tv.name}</h1>
+                  <SubInfo>
+                    <h3>{tv.name}</h3>
+                    <Flex>
+                      <span>{tv.first_air_date}</span>
+                      <span>평점 {tv.vote_average}</span>
+                    </Flex>
+                  </SubInfo>
                 </TvItem>
               </Link>
             ))}

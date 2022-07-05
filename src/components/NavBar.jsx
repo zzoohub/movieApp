@@ -68,8 +68,12 @@ const TvSubMenu = styled.ul`
   flex-direction: column;
   width: max-content;
   height: max-content;
-  background-color: gold;
+  background-color: #f9f9f9;
+  border: 1px solid gray;
+  border-radius: 10px;
+  overflow: hidden;
   transition: all ease-in-out 0.2s;
+  padding: 5px 0px;
   li {
     text-align: center;
     a {
@@ -82,7 +86,13 @@ const TvSubMenu = styled.ul`
       margin: 0px;
       padding: 10px;
       color: #333;
-      border: 1px solid #333;
+      border-bottom: 1px solid #d9d9d9;
+      :hover {
+        font-weight: bold;
+      }
+      :last-child {
+        border: none;
+      }
     }
   }
 `;
@@ -94,8 +104,12 @@ const MovieSubMenu = styled.ul`
   flex-direction: column;
   width: max-content;
   height: max-content;
-  background-color: gold;
+  background-color: #f9f9f9;
+  border: 1px solid gray;
+  border-radius: 10px;
   transition: all ease-in-out 0.2s;
+  overflow: hidden;
+  padding: 5px 0px;
   li {
     text-align: center;
     a {
@@ -108,7 +122,13 @@ const MovieSubMenu = styled.ul`
       margin: 0px;
       padding: 10px;
       color: #333;
-      border: 1px solid #333;
+      border-bottom: 1px solid #d9d9d9;
+      :hover {
+        font-weight: bold;
+      }
+      :last-child {
+        border: none;
+      }
     }
   }
 `;
