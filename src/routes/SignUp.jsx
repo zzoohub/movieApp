@@ -1,14 +1,16 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import { useUser } from "../util/useUser";
 
 const Wrapper = styled.div`
   min-height: 100vh;
   width: 100%;
 `;
 const Main = styled.main`
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 0 auto;
   margin-top: 100px;
 `;
@@ -79,6 +81,10 @@ export default function SignUp() {
     navigate("/");
     window.location.reload();
   };
+  const { user } = useUser();
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
 
   return (
     <Wrapper>

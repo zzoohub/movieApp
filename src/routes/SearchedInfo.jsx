@@ -44,7 +44,7 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-rows: repeat(auto-fill, 1fr);
   gap: 10px;
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 30px auto;
 `;
 const Item = styled.div`

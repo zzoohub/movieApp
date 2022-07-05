@@ -8,7 +8,7 @@ const FooterWrap = styled.div`
   line-height: 1.4;
 `;
 const Footer = styled.footer`
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 20px;
 `;

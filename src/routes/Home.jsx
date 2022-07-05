@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const Main = styled.main`
-  max-width: 1440px;
+  max-width: 1920px;
   min-height: 100vh;
   margin: 0 auto;
   left: 0px;

@@ -9,43 +9,39 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 const Main = styled.main`
+  position: relative;
   display: flex;
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 0 auto;
-  margin-top: 120px;
-  padding: 10px;
 `;
-const BaseInfo = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-`;
-const DetailInfo = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+const Banner = styled.section`
+  position: fixed;
+  top: 0%;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)),
+    url(${(props) => props.bannerImg});
+  background-position: center;
+  background-size: cover;
 `;
 const Title = styled.h2``;
 const Period = styled.span``;
 const Vote = styled.span``;
+
 export default function TvDetail() {
   const { id } = useParams();
   const { data, isLoading } = useQuery(["tv", "detail"], () => getTvDetail(id));
-  console.log(data);
+
   return (
     <Wrapper>
       <Main>
-        <BaseInfo>
-          <img src={makeImgPath(data?.backdrop_path)}></img>
-          <Title>{data?.original_name}</Title>
-          <Period>
-            {data?.first_air_date} ~ {data?.last_air_date}
-          </Period>
-          <Vote>
-            평점 {data?.vote_average} / {data?.vote_count}명
-          </Vote>
-        </BaseInfo>
-        <DetailInfo></DetailInfo>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <Banner bannerImg={makeImgPath(data.backdrop_path)}></Banner>
+        )}
       </Main>
     </Wrapper>
   );

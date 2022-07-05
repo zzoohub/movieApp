@@ -15,12 +15,13 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1920px;
   height: 100%;
   padding: 0px 30px;
   margin: 0px auto;
   left: 0px;
   right: 0px;
+  background-color: transparent;
 `;
 const Nav = styled.ul`
   display: flex;
@@ -118,6 +119,7 @@ const UserInfo = styled.div`
   svg {
     width: 30px;
     height: 30px;
+    cursor: pointer;
   }
   a {
     color: #f9f9f9;
@@ -134,7 +136,7 @@ export default function NavBar() {
   const { user } = useUser();
   const [showNav, setShowNav] = useState(true);
   const controllNav = (event) => {
-    if (window.scrollY > 50) {
+    if (window.scrollY > 80) {
       setShowNav(false);
     } else {
       setShowNav(true);
@@ -240,20 +242,18 @@ export default function NavBar() {
           </Nav>
           <UserInfo>
             {user ? (
-              <Link to="/signup">
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Link>
+              <svg
+                className="w-6 h-6"
+                fill="#f9f9f9"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                  clipRule="evenodd"
+                />
+              </svg>
             ) : (
               <Link to="/signup">로그인/회원가입</Link>
             )}

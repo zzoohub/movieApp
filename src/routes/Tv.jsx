@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const Main = styled.main`
-  max-width: 1440px;
+  max-width: 1920px;
   margin: 0 auto;
   margin-top: 100px;
 `;
@@ -24,7 +24,6 @@ const Grid = styled.div`
   grid-template-rows: auto;
   gap: 20px;
   width: 100%;
-  max-width: 1440px;
   margin: 0 auto;
   height: max-content;
   padding: 10px;
