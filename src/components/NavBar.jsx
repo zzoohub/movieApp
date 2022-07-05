@@ -250,13 +250,13 @@ export default function NavBar() {
               </Link>
               <MovieSubMenu ref={movieMenuRef}>
                 <li>
-                  <Link to="/tv/popula">인기 프로</Link>
+                  <Link to="/movies/popula">인기 프로</Link>
                 </li>
                 <li>
-                  <Link to="/tv/top">평점 높은</Link>
+                  <Link to="/movies/top">평점 높은</Link>
                 </li>
                 <li>
-                  <Link to="/tv/onair">절찬 상영중</Link>
+                  <Link to="/movies/onair">절찬 상영중</Link>
                 </li>
               </MovieSubMenu>
             </Li>
