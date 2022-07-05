@@ -71,7 +71,8 @@ const ChatBox = styled.div`
   }
 `;
 const ChatUl = styled.ul`
-  height: 450px;
+  position: relative;
+  height: 530px;
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 2px 5px;
@@ -118,23 +119,28 @@ const ThumNail = styled.div`
   text-align: center;
 `;
 const Form = styled.form`
+  position: absolute;
+  left: 23px;
+  bottom: 25px;
   display: flex;
-  height: 70px;
+  width: 254px;
+  height: 28px;
   margin-top: 10px;
   textarea {
     resize: none;
     width: 85%;
+    outline: none;
     border: none;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
     padding: 5px;
   }
   button {
     width: 15%;
     border: none;
     color: #f9f9f9;
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
     background-color: #007d51;
     text-align: right;
   }
