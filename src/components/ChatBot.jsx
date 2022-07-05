@@ -97,18 +97,18 @@ function ChatBalloon() {
 
   const [inputText, setInputText] = useState("");
   const lists = [
-    {
-      id: 1,
-      profile: {user?.ninkname},
-      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
-    },
-    {
-      id: 2,
-      profile: {user?.ninkname},
-      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
-    },
+    // {
+    //   id: 1,
+    //   profile: user.nickname,
+    //   text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+    // },
+    // {
+    //   id: 2,
+    //   profile: user?.nickname,
+    //   text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+    // },
   ];
-  const [chatList, setChatList] = useState(lists);
+  const [chatList, setChatList] = useState([]);
   const [nextId, setNextId] = useState(3);
   const userInput = (e) => {
     setInputText(e.target.value);
@@ -116,7 +116,7 @@ function ChatBalloon() {
   const onClick = (e) => {
     e.preventDefault();
     if (inputText.length > 0) {
-      const newChat = { id: nextId, profile: {user?.ninkname}, text: inputText };
+      const newChat = { id: nextId, profile: user?.nickname, text: inputText };
       const newLists = [...lists];
       newLists.push(newChat);
       setChatList(newLists);
@@ -124,8 +124,6 @@ function ChatBalloon() {
       setInputText("");
     }
   };
-  console.log(chatList);
-  console.log(user?.ninkname);
 
   return (
     <div>
