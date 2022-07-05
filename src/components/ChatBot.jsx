@@ -64,8 +64,95 @@ const ChatBox = styled.div`
     word-break: keep-all;
     line-height: 1.2;
     margin-top: 10px;
+    h3 {
+      margin: 10px 0 15px;
+    }
   }
 `;
+const ChatUl = styled.ul`
+  height: 400px;
+  border: 1px solid red;
+`;
+const ThumNail = styled.div`
+  background-color: #000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px;
+  text-align: center;
+`;
+const Form = styled.form`
+  textarea {
+    width: 100%;
+    height: 50px;
+  }
+  button {
+    display: block;
+    text-align: right;
+  }
+`;
+
+function ChatBalloon() {
+  const { user } = useUser();
+
+  const [inputText, setInputText] = useState("");
+  const lists = [
+    {
+      id: 1,
+      profile: {user?.ninkname},
+      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+    },
+    {
+      id: 2,
+      profile: {user?.ninkname},
+      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+    },
+  ];
+  const [chatList, setChatList] = useState(lists);
+  const [nextId, setNextId] = useState(3);
+  const userInput = (e) => {
+    setInputText(e.target.value);
+  };
+  const onClick = (e) => {
+    e.preventDefault();
+    if (inputText.length > 0) {
+      const newChat = { id: nextId, profile: {user?.ninkname}, text: inputText };
+      const newLists = [...lists];
+      newLists.push(newChat);
+      setChatList(newLists);
+      setNextId(nextId + 1);
+      setInputText("");
+    }
+  };
+  console.log(chatList);
+  console.log(user?.ninkname);
+
+  return (
+    <div>
+      <ChatUl>
+        {chatList.map((list) => (
+          <li key={list.id}>
+            <ThumNail>{list.profile}</ThumNail>
+            <div>{list.text}</div>
+          </li>
+        ))}
+      </ChatUl>
+      <Form>
+        <textarea
+          type="text"
+          placeholder="무엇이든 물어보세요."
+          onChange={userInput}
+          id={nextId}
+          value={inputText}
+          profile={"user"}
+        >
+          {inputText}
+        </textarea>
+        <button onClick={onClick}>전송</button>
+      </Form>
+    </div>
+  );
+}
 
 export default function ChatBot() {
   const [showOn, setShowOn] = useState(false);
@@ -112,11 +199,8 @@ export default function ChatBot() {
             </div>
           </div>
           <div className="chatBody">
-            <p>다양한 영화와 Tv Show 정보를 얻으실 수 있는 무비앱 입니다.</p>
-            <div className="chatBalloon">
-              <div className="thumNail">썸네일</div>
-              <div></div>
-            </div>
+            <h3>다양한 영화와 Tv Show 정보를 얻으실 수 있는 무비앱 입니다.</h3>
+            <ChatBalloon />
           </div>
         </ChatBox>
       ) : null}
