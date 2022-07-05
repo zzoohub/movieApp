@@ -31,30 +31,31 @@ const ChatBox = styled.div`
   bottom: 0px;
   width: 300px;
   height: 600px;
-  background-color: #6aebb7;
+  background-color: #eaeaea;
   border-radius: 20px;
   color: #f9f9f9;
   padding: 20px 15px;
+  box-shadow: 0px 10px 20px 20px rgba(0, 0, 0, 0.2);
   .chatHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     h2 {
-      color: #007d51;
+      color: #333;
       font-weight: 700;
     }
     button {
       cursor: pointer;
       border: none;
       background: none;
-      color: #f9f9f9;
+      color: #666;
       padding: 0 0 0 5px;
       svg {
         width: 25px;
         height: 25px;
       }
       :hover {
-        color: #007d51;
+        color: #333;
       }
     }
   }
@@ -70,7 +71,7 @@ const ChatBox = styled.div`
   }
 `;
 const ChatUl = styled.ul`
-  height: 390px;
+  height: 450px;
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 2px 5px;
@@ -78,19 +79,40 @@ const ChatUl = styled.ul`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
+    margin: 15px 0px;
+    padding: 0px 8px;
     div:nth-child(2) {
-      width: 78%;
+      position: relative;
+      width: 80%;
       text-align: justify;
       word-break: break-all;
       color: #000;
+      ::before {
+        content: "";
+        position: absolute;
+        left: -33px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-bottom: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-left: 20px solid transparent;
+        border-right: 20px solid #d9d9d9;
+      }
     }
   }
 `;
+const Text = styled.div`
+  padding: 7px;
+  background-color: #d9d9d9;
+  font-size: 14px;
+  border-radius: 5px;
+`;
 const ThumNail = styled.div`
-  background-color: #000;
-  width: 48px;
-  height: 48px;
+  background-color: gray;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   line-height: 48px;
   text-align: center;
@@ -126,7 +148,7 @@ function ChatBalloon() {
   const lists = [
     {
       id: 1,
-      profile: "예시",
+      profile: "",
       text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
     },
   ];
@@ -157,11 +179,11 @@ function ChatBalloon() {
         {chatList.map((list) => (
           <li key={list.id}>
             <ThumNail>
-              {list.profile.length < 4
+              {/* {list.profile.length < 4
                 ? list.profile
-                : list.profile.slice(undefined, 3)}
+                : list.profile.slice(undefined, 3)} */}
             </ThumNail>
-            <div>{list.text}</div>
+            <Text>{list.text}</Text>
           </li>
         ))}
       </ChatUl>
@@ -194,7 +216,7 @@ export default function ChatBot() {
       {showOn ? (
         <ChatBox>
           <div className="chatHeader">
-            <h2>MovieApp</h2>
+            <h2>Chating Bot</h2>
             <div>
               <button>
                 <svg
@@ -227,7 +249,6 @@ export default function ChatBot() {
             </div>
           </div>
           <div className="chatBody">
-            <h3>다양한 영화와 Tv Show 정보를 얻으실 수 있는 무비앱 입니다.</h3>
             <ChatBalloon />
           </div>
         </ChatBox>
