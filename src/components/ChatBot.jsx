@@ -4,8 +4,8 @@ import { useUser } from "../util/useUser";
 
 const ChatBotWrap = styled.div`
   position: fixed;
-  right: 80px;
-  bottom: 80px;
+  right: 40px;
+  bottom: 25px;
   width: 70px;
   /* background-color: #dd4982; */
   height: 70px;
@@ -28,7 +28,7 @@ const ChatBotBtn = styled.button`
 const ChatBox = styled.div`
   position: absolute;
   right: -10px;
-  bottom: -10px;
+  bottom: 0px;
   width: 300px;
   height: 600px;
   background-color: #6aebb7;
@@ -70,58 +70,84 @@ const ChatBox = styled.div`
   }
 `;
 const ChatUl = styled.ul`
-  height: 400px;
-  border: 1px solid red;
+  height: 390px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 2px 5px;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    div:nth-child(2) {
+      width: 78%;
+      text-align: justify;
+      word-break: break-all;
+      color: #000;
+    }
+  }
 `;
 const ThumNail = styled.div`
   background-color: #000;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  line-height: 50px;
+  line-height: 48px;
   text-align: center;
 `;
 const Form = styled.form`
+  display: flex;
+  height: 70px;
+  margin-top: 10px;
   textarea {
-    width: 100%;
-    height: 50px;
+    resize: none;
+    width: 85%;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 5px;
   }
   button {
-    display: block;
+    width: 15%;
+    border: none;
+    color: #f9f9f9;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #007d51;
     text-align: right;
   }
 `;
 
 function ChatBalloon() {
   const { user } = useUser();
+  const nickName = user?.nickname;
 
   const [inputText, setInputText] = useState("");
   const lists = [
-    // {
-    //   id: 1,
-    //   profile: user.nickname,
-    //   text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
-    // },
-    // {
-    //   id: 2,
-    //   profile: user?.nickname,
-    //   text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
-    // },
+    {
+      id: 1,
+      profile: "예시",
+      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+    },
   ];
-  const [chatList, setChatList] = useState([]);
-  const [nextId, setNextId] = useState(3);
+  console.log(lists);
+
+  const [chatList, setChatList] = useState(lists);
+  const [nextId, setNextId] = useState(2);
   const userInput = (e) => {
+    e.preventDefault();
     setInputText(e.target.value);
   };
   const onClick = (e) => {
     e.preventDefault();
     if (inputText.length > 0) {
-      const newChat = { id: nextId, profile: user?.nickname, text: inputText };
-      const newLists = [...lists];
-      newLists.push(newChat);
-      setChatList(newLists);
+      const newChat = { id: nextId, profile: nickName, text: inputText };
+      chatList.push(newChat);
+      setChatList(chatList);
       setNextId(nextId + 1);
       setInputText("");
+
+      console.log(chatList, nextId);
     }
   };
 
@@ -130,7 +156,11 @@ function ChatBalloon() {
       <ChatUl>
         {chatList.map((list) => (
           <li key={list.id}>
-            <ThumNail>{list.profile}</ThumNail>
+            <ThumNail>
+              {list.profile.length < 4
+                ? list.profile
+                : list.profile.slice(undefined, 3)}
+            </ThumNail>
             <div>{list.text}</div>
           </li>
         ))}
