@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getTvAiringToday } from "../api";
+import InfoBox from "../components/InfoBox";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -125,39 +126,16 @@ export default function Tv() {
           <Grid>
             {fitered.map((tv) => (
               <Link to={`/tv/${tv.id}`} key={tv.id}>
-                <TvItem>
-                  <TvItemImg
-                    bgImg={
-                      tv.backdrop_path
-                        ? makeImgPath(tv.backdrop_path, "w500")
-                        : "border"
-                    }
-                  >
-                    {tv.backdrop_path ? null : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3 w-3"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                    )}
-                  </TvItemImg>
-                  <SubInfo>
-                    <h3>{tv.name}</h3>
-                    <Flex>
-                      <span>{tv.first_air_date}</span>
-                      <span>평점 {tv.vote_average}</span>
-                    </Flex>
-                  </SubInfo>
-                </TvItem>
+                <InfoBox
+                  bgUrl={
+                    tv.backdrop_path
+                      ? makeImgPath(tv.backdrop_path, "w500")
+                      : null
+                  }
+                  name={tv.name}
+                  firstDate={tv.first_air_date}
+                  voteAverage={tv.vote_average}
+                ></InfoBox>
               </Link>
             ))}
           </Grid>

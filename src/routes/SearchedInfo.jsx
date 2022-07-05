@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import env from "react-dotenv";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import InfoBox from "../components/InfoBox";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Title = styled.div`
@@ -13,51 +14,46 @@ const Title = styled.div`
   em {
     margin-right: 10px;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 30px;
   }
   span {
     font-size: 24px;
+    margin-top: 2px;
   }
 `;
 const Tabs = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 50px;
-  margin: 0 30px;
+  width: 200px;
+  height: 40px;
+  margin: 0 5px;
   border-radius: 5px;
-  background-color: ${(props) => (props.tabMatch ? "gold" : "#333")};
-  color: #fff;
+  background-color: ${(props) => (props.tabMatch ? "#ff3d3d" : "#d9d9d9")};
+  color: #333;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};
   cursor: pointer;
+  :hover {
+    filter: brightness(0.9);
+  }
 `;
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-template-rows: repeat(auto-fill, 1fr);
-  gap: 10px;
-  max-width: 1920px;
-  margin: 30px auto;
-`;
-const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-`;
-const Img = styled.div`
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: auto;
+  gap: 20px;
   width: 100%;
-  height: 200px;
-  background-position: center;
-  background-size: cover;
-  background-image: url(${(props) => props.bgImg});
+  margin: 0px auto;
+  height: max-content;
+  padding: 15px;
 `;
 
 const Contents = styled.div``;
@@ -103,7 +99,7 @@ export default function SearchedInfo() {
               onClick={() => setTab("movie")}
               tabMatch={tab === "movie" ? true : false}
             >
-              영화
+              Movie
             </Tab>
             <Tab
               onClick={() => setTab("tv")}
@@ -116,21 +112,35 @@ export default function SearchedInfo() {
             {tab === "movie" ? (
               <Grid>
                 {movies?.map((movie) => (
-                  <Item key={movie.id}>
-                    <Img bgImg={makeImgPath(movie.backdrop_path, "w500")} />
-                    <h3>{movie.title}</h3>
-                    <p>평점: {movie.vote_average}</p>
-                  </Item>
+                  <Link to={`/movie/${movie.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        movie.backdrop_path
+                          ? makeImgPath(movie.backdrop_path, "w500")
+                          : null
+                      }
+                      name={movie.title}
+                      voteAverage={movie.vote_average}
+                      firstDate={movie.release_date}
+                    ></InfoBox>
+                  </Link>
                 ))}
               </Grid>
             ) : (
               <Grid>
                 {tvs?.map((tv) => (
-                  <Item key={tv.id}>
-                    <Img bgImg={makeImgPath(tv.backdrop_path, "w500")} />
-                    <h3>{tv.title}</h3>
-                    <p>평점: {tv.vote_average}</p>
-                  </Item>
+                  <Link to={`/tv/${tv.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        tv.backdrop_path
+                          ? makeImgPath(tv.backdrop_path, "w500")
+                          : null
+                      }
+                      name={tv.name}
+                      voteAverage={tv.vote_average}
+                      firstDate={tv.first_air_date}
+                    ></InfoBox>
+                  </Link>
                 ))}
               </Grid>
             )}

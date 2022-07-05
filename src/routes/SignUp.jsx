@@ -92,7 +92,7 @@ export default function SignUp() {
         <SignUpForm onSubmit={handleSubmit(onValid)}>
           <h2>무비앱 회원가입</h2>
           <input
-            {...register("ninkname", {
+            {...register("nickname", {
               required: { value: true, message: "닉네임은 필수입니다." },
               minLength: {
                 value: 3,

@@ -7,6 +7,7 @@ import Movies from "./routes/Movies";
 import ChatBot from "./components/ChatBot";
 import SignUp from "./routes/SignUp";
 import TvDetail from "./routes/TvDetail";
+import PopulaTv from "./routes/PopulaTv";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
+          <Route path="/tv/popula" element={<PopulaTv />}></Route>
           <Route path="/tv/:id" element={<TvDetail />}></Route>
           <Route path="/tv" element={<Tv />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>

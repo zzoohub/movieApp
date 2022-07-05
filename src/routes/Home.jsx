@@ -43,24 +43,21 @@ const SearchForm = styled.form`
   button {
     position: absolute;
     right: 5px;
-    top: 35px;
+    top: 34px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
+    width: 40px;
     height: 40px;
-    background-color: #1bb9b9;
     border: none;
     border-radius: 100px;
     cursor: pointer;
     transition: all ease-in-out 0.2s;
-    &:hover {
-      background-color: aqua;
-    }
+    background-color: transparent;
     &:hover svg {
-      width: 35px;
-      height: 35px;
-      color: #fff;
+      width: 40px;
+      height: 40px;
+      color: aqua;
     }
     svg {
       transition: all ease-in-out 0.2s;
