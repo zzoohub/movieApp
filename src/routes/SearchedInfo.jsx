@@ -62,7 +62,7 @@ export default function SearchedInfo() {
   const [searchedData, setSearchedData] = useState(undefined);
   const [tvs, setTvs] = useState(undefined);
   const [movies, setMovies] = useState(undefined);
-  const [tab, setTab] = useState("movie");
+  const [tab, setTab] = useState("tv");
   const [page, setPage] = useState(undefined);
   const location = useLocation();
   let keyword = new URLSearchParams(location.search).get("keyword");
@@ -96,16 +96,16 @@ export default function SearchedInfo() {
           </Title>
           <Tabs>
             <Tab
-              onClick={() => setTab("movie")}
-              tabMatch={tab === "movie" ? true : false}
-            >
-              Movie
-            </Tab>
-            <Tab
               onClick={() => setTab("tv")}
               tabMatch={tab === "tv" ? true : false}
             >
               TV
+            </Tab>
+            <Tab
+              onClick={() => setTab("movie")}
+              tabMatch={tab === "movie" ? true : false}
+            >
+              Movie
             </Tab>
           </Tabs>
           <Contents>
