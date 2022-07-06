@@ -82,7 +82,7 @@ const ChatUl = styled.ul`
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 2px 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   li {
     display: flex;
     justify-content: space-between;
