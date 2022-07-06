@@ -70,12 +70,19 @@ const ChatBox = styled.div`
     }
   }
 `;
+const ChatBalloonWrap = styled.div`
+  height: 530px;
+  width: 270px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+`;
 const ChatUl = styled.ul`
   position: relative;
-  height: 530px;
+  height: 485px;
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 2px 5px;
+  overflow-y: scroll;
   li {
     display: flex;
     justify-content: space-between;
@@ -121,28 +128,33 @@ const ThumNail = styled.div`
 const Form = styled.form`
   position: absolute;
   left: 23px;
-  bottom: 25px;
+  bottom: 20px;
   display: flex;
   width: 254px;
-  height: 28px;
+  height: 32px;
   margin-top: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fff;
   textarea {
     resize: none;
     width: 85%;
     outline: none;
     border: none;
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
-    padding: 5px;
+    line-height: 18px;
+    padding: 7px;
   }
   button {
-    width: 15%;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 28px;
+    height: 28px;
     border: none;
-    color: #f9f9f9;
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
-    background-color: #007d51;
+    border-radius: 50%;
+
     text-align: right;
+    cursor: pointer;
   }
 `;
 
@@ -180,7 +192,7 @@ function ChatBalloon() {
   };
 
   return (
-    <div>
+    <ChatBalloonWrap>
       <ChatUl>
         {chatList.map((list) => (
           <li key={list.id}>
@@ -204,9 +216,17 @@ function ChatBalloon() {
         >
           {inputText}
         </textarea>
-        <button onClick={onClick}>전송</button>
+        <button onClick={onClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            fill="#1C8FFC"
+          >
+            <path d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z" />
+          </svg>
+        </button>
       </Form>
-    </div>
+    </ChatBalloonWrap>
   );
 }
 
