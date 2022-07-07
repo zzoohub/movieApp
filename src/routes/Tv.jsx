@@ -111,7 +111,6 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
-  console.log(fitered);
 
   return (
     <Wrapper>

@@ -20,4 +20,10 @@ export const getNowPlay = async () => {
     `${BASE_URL}/movie/now_playing?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+export const getSimilarTvs = async (id) => {
+  return await fetch(
+    `${BASE_URL}/tv/${id}/similar?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
+
 // getMovie

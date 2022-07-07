@@ -33,6 +33,8 @@ body {
     font-family: 'Roboto', sans-serif;
 	line-height: 1;    
 	background-color: #2c3e50;
+	max-width: 100vw;
+	overflow-x: hidden;
 }
 ol, ul {
 	list-style: none;

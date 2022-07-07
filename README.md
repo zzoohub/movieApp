@@ -8,6 +8,8 @@
 
 ### bgColor = #2c3e50
 
+### 강아지 랜덤 비디오 = https://dogs-api.nomadcoders.workers.dev
+
 ### 공통이라고 하지만 꼭 이 컬러 안써도 됩니다.
 
 ## 깃 클론 후

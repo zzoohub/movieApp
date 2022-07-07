@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getTvDetail } from "../api";
+import { getSimilarTvs, getTvDetail } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -30,11 +31,13 @@ const DetailInfo = styled.section`
   width: 100%;
   height: max-content;
   margin-top: 100px;
-  padding: 15px;
+  padding: 50px;
   color: #f9f9f9;
 `;
 const Title = styled.h2`
-  font-size: 58px;
+  margin-top: 50px;
+  font-size: 77px;
+  margin-bottom: 30px;
 `;
 const Ban = styled.div`
   position: absolute;
@@ -49,31 +52,47 @@ const Ban = styled.div`
 const MoreDetail = styled.div`
   display: flex;
   flex-direction: column;
+  strong {
+    margin: 20px 0px 10px 0px;
+    font-size: 18px;
+  }
 `;
 const Creator = styled.ul`
   display: flex;
   li {
     display: flex;
     flex-direction: column;
-    img {
+    width: 100px;
+    margin-right: 10px;
+    img,
+    div {
       display: block;
       width: 100px;
       height: 100px;
       object-fit: cover;
       border-radius: 5px;
+      background-color: #333;
+    }
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 5px;
     }
   }
 `;
 const Genre = styled.ul`
   display: flex;
+  margin: 10px 0px;
   li {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #333;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #d9d9d9;
+    padding: 5px;
+    border-radius: 2px;
     margin-right: 10px;
+    color: #333;
   }
 `;
 const Period = styled.span``;
@@ -92,11 +111,78 @@ const Rating = styled.div`
 const Overview = styled.p`
   max-width: 50%;
 `;
-
+const SimilarTitle = styled.h2`
+  font-size: 22px;
+  color: #ff3d3d;
+  font-weight: bold;
+  margin-top: 100px;
+`;
+const SimilarTvsWrap = styled.div`
+  width: 100%;
+  overflow-x: scroll;
+  height: 200px;
+`;
+const SimilarTvs = styled.div`
+  display: flex;
+  gap: 15px;
+  width: max-content;
+  padding: 0px 10px;
+  margin-top: 20px;
+`;
+const SimilarTv = styled.div`
+  position: relative;
+  width: 200px;
+  height: 150px;
+  background-color: transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #f9f9f9;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+  overflow: hidden;
+  :hover {
+    transform: scale(1.03);
+    border: 3px solid #ff3d3d;
+  }
+  :hover h3 {
+    bottom: 0px;
+  }
+`;
+const SimilarTvImg = styled.div`
+  height: 100%;
+  background-image: url(${(props) => props.bgImg});
+  background-position: center;
+  background-size: cover;
+`;
+const SimilarTvName = styled.h3`
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  height: 30px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #f9f9f9;
+  padding: 5px;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all ease-in-out 0.2s;
+`;
 export default function TvDetail() {
   const { id } = useParams();
-  const { data, isLoading } = useQuery(["tv", "detail"], () => getTvDetail(id));
-  console.log(data);
+  const { data, isLoading, refetch } = useQuery(["tv", "detail"], () =>
+    getTvDetail(id)
+  );
+  const {
+    data: similarData,
+    isLoading: similarLoading,
+    refetch: similarRefetch,
+  } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
+
+  useEffect(() => {
+    refetch();
+    similarRefetch();
+  }, [id]);
 
   return (
     <Wrapper>
@@ -109,18 +195,17 @@ export default function TvDetail() {
             <DetailInfo>
               {data?.adult ? <Ban>19금</Ban> : null}
               <Title>{data?.name}</Title>
-              <Overview>{data.overview}</Overview>
-              <strong>장르</strong>
-              <Genre>
-                {data.genres.map((genre) => (
-                  <li>{genre.name}</li>
-                ))}
-              </Genre>
+
               <MoreDetail>
                 <Period>
-                  방영기간 {data.first_air_date} ~ {data.last_air_date}
+                  {data.first_air_date} ~ {data.last_air_date}{" "}
+                  &nbsp;&nbsp;&nbsp;총 {data.number_of_episodes}회
                 </Period>
-                <span>총 {data.number_of_episodes}부작</span>
+                <Genre>
+                  {data.genres.map((genre) => (
+                    <li key={genre.name}>{genre.name}</li>
+                  ))}
+                </Genre>
                 <Rating>
                   <span>평점</span>
                   {[1, 2, 3, 4, 5].map((index) =>
@@ -137,21 +222,47 @@ export default function TvDetail() {
                     ) : null
                   )}
                 </Rating>
-                <Creator>
-                  {data?.created_by.map((person) => (
-                    <li key={person.id}>
-                      <img
-                        src={
-                          person.profile_path
-                            ? makeImgPath(person.profile_path, "w500")
-                            : null
-                        }
-                        alt=""
-                      />
-                      <span>{person.name}</span>
-                    </li>
-                  ))}
-                </Creator>
+
+                {data?.created_by[0] !== undefined ? (
+                  <>
+                    <strong>연출</strong>
+                    <Creator>
+                      {data?.created_by.map((person) => (
+                        <li key={person.id}>
+                          {person.profile_path ? (
+                            <img
+                              src={makeImgPath(person.profile_path, "w500")}
+                              alt=""
+                            />
+                          ) : (
+                            <div className="img"></div>
+                          )}
+                          <span>{person.name}</span>
+                        </li>
+                      ))}
+                    </Creator>
+                  </>
+                ) : null}
+                <Overview>{data.overview}</Overview>
+                <SimilarTitle>비슷한 TV쇼</SimilarTitle>
+                <SimilarTvsWrap>
+                  <SimilarTvs>
+                    {similarData?.results.map((result) => (
+                      <Link key={result.id} to={`/tv/${result.id}`}>
+                        <SimilarTv>
+                          <SimilarTvImg
+                            bgImg={
+                              result.backdrop_path
+                                ? makeImgPath(result.backdrop_path, "w500")
+                                : "null"
+                            }
+                          ></SimilarTvImg>
+                          <SimilarTvName>{result.name}</SimilarTvName>
+                        </SimilarTv>
+                      </Link>
+                    ))}
+                  </SimilarTvs>
+                </SimilarTvsWrap>
               </MoreDetail>
             </DetailInfo>
           </>
