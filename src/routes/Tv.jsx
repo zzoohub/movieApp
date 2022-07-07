@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { getTvAiringToday } from "../api";
 import InfoBox from "../components/InfoBox";
 import OnTheAiringTV from "../components/OnTheAiringTV";
-import PoupularTV from "../components/PoupularTV";
+import PopularTV from "../components/PopularTV";
 import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 
@@ -143,7 +143,7 @@ export default function Tv() {
             ))}
           </Grid>
           <OnTheAiringTV />
-          <PoupularTV />
+          <PopularTV />
           <LatestTV />
         </Main>
       )}
