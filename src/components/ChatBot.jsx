@@ -23,6 +23,8 @@ const ChatBotBtn = styled.button`
   cursor: pointer;
   :hover {
     transform: scale(1.1);
+    font-weight: bold;
+    transition: all ease 0.1s;
   }
 `;
 const ChatBox = styled.div`
@@ -89,6 +91,29 @@ const ChatUl = styled.ul`
     align-items: center;
     margin: 15px 0px;
     padding: 0px 8px;
+  }
+  li:first-child div:nth-child(2) {
+    position: relative;
+    width: 80%;
+    text-align: justify;
+    word-break: break-all;
+    color: #000;
+    ::before {
+      content: "";
+      position: absolute;
+      left: -33px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-bottom: 10px solid transparent;
+      border-top: 10px solid transparent;
+      border-left: 20px solid transparent;
+      border-right: 20px solid #d9d9d9;
+    }
+  }
+  li:not(:first-child) {
+    flex-direction: row-reverse;
     div:nth-child(2) {
       position: relative;
       width: 80%;
@@ -98,15 +123,15 @@ const ChatUl = styled.ul`
       ::before {
         content: "";
         position: absolute;
-        left: -33px;
+        right: -33px;
         top: 50%;
         transform: translateY(-50%);
         width: 0;
         height: 0;
         border-bottom: 10px solid transparent;
         border-top: 10px solid transparent;
-        border-left: 20px solid transparent;
-        border-right: 20px solid #d9d9d9;
+        border-right: 20px solid transparent;
+        border-left: 20px solid #d9d9d9;
       }
     }
   }
@@ -136,8 +161,7 @@ const Form = styled.form`
   border-radius: 20px;
   overflow: hidden;
   background-color: #fff;
-  textarea {
-    resize: none;
+  input {
     width: 85%;
     outline: none;
     border: none;
@@ -167,10 +191,9 @@ function ChatBalloon() {
     {
       id: 1,
       profile: "",
-      text: "더운 여름에 시원하게 볼 수 있는 공포영화 추천해 주세요.",
+      text: "더운 여름에 시원하게 볼 수 있는 공포영화 어떠세요?",
     },
   ];
-  console.log(lists);
 
   const [chatList, setChatList] = useState(lists);
   const [nextId, setNextId] = useState(2);
@@ -186,8 +209,6 @@ function ChatBalloon() {
       setChatList(chatList);
       setNextId(nextId + 1);
       setInputText("");
-
-      console.log(chatList, nextId);
     }
   };
 
@@ -196,26 +217,20 @@ function ChatBalloon() {
       <ChatUl>
         {chatList.map((list) => (
           <li key={list.id}>
-            <ThumNail>
-              {/* {list.profile.length < 4
-                ? list.profile
-                : list.profile.slice(undefined, 3)} */}
-            </ThumNail>
+            <ThumNail />
             <Text>{list.text}</Text>
           </li>
         ))}
       </ChatUl>
       <Form>
-        <textarea
+        <input
           type="text"
           placeholder="무엇이든 물어보세요."
           onChange={userInput}
           id={nextId}
           value={inputText}
           profile={"user"}
-        >
-          {inputText}
-        </textarea>
+        ></input>
         <button onClick={onClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

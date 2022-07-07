@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getTvAiringToday } from "../api";
 import InfoBox from "../components/InfoBox";
+import OnTheAiringTV from "../components/OnTheAiringTV";
+import PopularTV from "../components/PopularTV";
+import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -139,6 +142,9 @@ export default function Tv() {
               </Link>
             ))}
           </Grid>
+          <OnTheAiringTV />
+          <PopularTV />
+          <LatestTV />
         </Main>
       )}
     </Wrapper>
