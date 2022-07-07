@@ -2,7 +2,7 @@ export default function PoupularTV() {
 
   
   return (
-    <div>PoupularTV</div>
+    <div>PoupularT V</div>
 
   )
 }
