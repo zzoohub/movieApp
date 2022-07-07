@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
 
@@ -14,7 +13,7 @@ const Main = styled.main`
   margin: 0 auto;
   margin-top: 100px;
 `;
-const SignUpForm = styled.form`
+const LoginForm = styled.form`
   width: 50%;
   max-width: 500px;
   min-width: 300px;
@@ -69,30 +68,24 @@ const SignUpForm = styled.form`
     background-color: #8c0000;
   }
 `;
-
-export default function SignUp() {
-  const navigate = useNavigate();
+export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const onValid = (form) => {
-    localStorage.setItem("user", JSON.stringify(form));
-    localStorage.setItem("loginUser", JSON.stringify(form));
-    navigate("/");
-    window.location.reload();
-  };
   const { user } = useUser();
+  const navigate = useNavigate();
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) {
+      navigate("/");
+    }
   }, [user]);
-
+  const onValid = () => {};
   return (
     <Wrapper>
       <Main>
-        <SignUpForm onSubmit={handleSubmit(onValid)}>
+        <LoginForm onSubmit={handleSubmit(onValid)}>
           <h2>무비앱 회원가입</h2>
           <input
             {...register("nickname", {
@@ -131,9 +124,9 @@ export default function SignUp() {
           ) : (
             <strong>비밀번호는 로컬스토리지에 저장됩니다.</strong>
           )}
-          <button>회원가입</button>
-          <Link to="/login">로그인</Link>
-        </SignUpForm>
+          <Link to="/signup">회원가입</Link>
+          <button>로그인</button>
+        </LoginForm>
       </Main>
     </Wrapper>
   );
