@@ -4,7 +4,7 @@ window.env = {
   "TERM_PROGRAM": "vscode",
   "NODE": "/Users/youngseokjoo/.nvm/versions/node/v16.14.2/bin/node",
   "INIT_CWD": "/Users/youngseokjoo/Documents/movie_app",
-  "_P9K_TTY": "/dev/ttys001",
+  "_P9K_TTY": "/dev/ttys003",
   "NVM_CD_FLAGS": "-q",
   "SHELL": "/bin/zsh",
   "TERM": "xterm-256color",

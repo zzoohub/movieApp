@@ -1,76 +1,112 @@
+import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getNowPlay } from "../api";
+import { getNowPlay, getPopulaMovies } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
-  height: 200vh;
-  width: 100%;
-`;
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-template-rows: auto;
-  gap: 10px;
-  width: 100%;
-  height: max-content;
+  min-height: 100vh;
   max-width: 1920px;
-  margin: 0 auto;
-  margin-top: 150px;
 `;
-const Movie = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-`;
-const MovieImg = styled.div`
+const Banner = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(${(props) => props.bgImg});
-  background-size: cover;
-  background-position: center center;
-  height: 200px;
-  svg {
-    width: 30px;
-    height: 30px;
+  width: 100%;
+  height: 800px;
+  background-color: #333;
+`;
+const Slider = styled.div`
+  position: relative;
+  width: 100%;
+  height: 550px;
+  button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    :first-of-type {
+      left: 5%;
+    }
+    :last-of-type {
+      right: 5%;
+    }
+  }
+`;
+const Slide = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  transform: translateX(10vw);
+  display: flex;
+  height: 100%;
+  transition: all ease-in-out 0.5s;
+`;
+const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  img {
+    width: 92%;
+    height: ${(props) => (props.active ? "100%" : "85%")};
+    object-fit: cover;
+    transition: all ease-in-out 0.5s;
+    filter: brightness(${(props) => (props.active ? "100%" : "50%")});
   }
 `;
 
 export default function Movies() {
-  const { data, isLoading } = useQuery(["movie", "popula"], getNowPlay);
+  const { data: nowPlay, isLoading: nowPlayLoading } = useQuery(
+    ["movie", "popula"],
+    getNowPlay
+  );
+  const { data: popula, isLoading: populaLoading } = useQuery(
+    ["movie", "popula"],
+    getPopulaMovies
+  );
+  const slide = useRef();
+  const [index, setIndex] = useState(0);
+  const prevSlide = () => {
+    setIndex((prev) => prev - 1);
+  };
+  const nextSlide = () => {
+    setIndex((prev) => prev + 1);
+  };
 
   return (
     <Wrapper>
-      {isLoading ? (
-        <div>Loading</div>
-      ) : (
-        <Grid>
-          {data?.results.map((movie) => (
-            <Movie key={movie.id}>
-              <MovieImg bgImg={makeImgPath(movie.backdrop_path, "w500")}>
-                {movie.backdrop_path ? null : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                )}
-              </MovieImg>
-              <h1>{movie.name}</h1>
-            </Movie>
-          ))}
-        </Grid>
-      )}
+      <Banner>
+        <Slider>
+          <Slide
+            ref={slide}
+            style={{
+              width: `${popula?.results.length * 80}vw`,
+              transform: `translateX(-${index * 80 - 10}vw)`,
+            }}
+          >
+            {popula?.results.map((result) => (
+              <Box
+                key={result.id}
+                active={
+                  popula?.results.indexOf(result) === index ? true : false
+                }
+              >
+                <img
+                  src={
+                    result.backdrop_path
+                      ? makeImgPath(result.backdrop_path)
+                      : ""
+                  }
+                ></img>
+              </Box>
+            ))}
+          </Slide>
+          <button onClick={prevSlide}>prev</button>
+          <button onClick={nextSlide}>next</button>
+        </Slider>
+      </Banner>
     </Wrapper>
   );
 }
