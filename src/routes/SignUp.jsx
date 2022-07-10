@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 const Main = styled.main`
   max-width: 1920px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 150px;
 `;
 const SignUpForm = styled.form`
   width: 50%;
@@ -25,8 +25,9 @@ const SignUpForm = styled.form`
   margin: 100px auto;
   color: #f9f9f9;
   h2 {
-    font-size: 30px;
+    font-size: 38px;
     font-weight: bold;
+    margin-bottom: 20px;
   }
   input {
     width: 100%;
@@ -47,7 +48,9 @@ const SignUpForm = styled.form`
   strong {
     font-size: 12px;
     margin-top: 5px;
+    color: #f9f9f9;
   }
+
   button,
   a {
     display: flex;
@@ -62,11 +65,17 @@ const SignUpForm = styled.form`
     font-size: 16px;
     cursor: pointer;
     &:nth-of-type(1) {
-      margin-top: 20px;
+      margin-top: 10px;
+    }
+    :hover {
+      filter: brightness(0.9);
     }
   }
   button {
-    background-color: #8c0000;
+    background-color: #a40000;
+    :hover {
+      filter: brightness(0.9);
+    }
   }
 `;
 
@@ -80,9 +89,7 @@ export default function SignUp() {
 
   const onValid = (form) => {
     localStorage.setItem("user", JSON.stringify(form));
-    localStorage.setItem("loginUser", JSON.stringify(form));
-    navigate("/");
-    window.location.reload();
+    navigate("/login");
   };
   const { user } = useUser();
   useEffect(() => {
@@ -99,7 +106,7 @@ export default function SignUp() {
               required: { value: true, message: "닉네임은 필수입니다." },
               minLength: {
                 value: 3,
-                message: "닉네인 최소 3글자 이상이어야 합니다.",
+                message: "닉네임은 최소 3글자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 12,

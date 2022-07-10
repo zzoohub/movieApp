@@ -152,8 +152,6 @@ export default function NavBar() {
   const searchMatch = useMatch("/search");
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movies");
-  const tvMenuRef = useRef();
-  const movieMenuRef = useRef();
   const { user } = useUser();
   const [showNav, setShowNav] = useState(true);
   const controllNav = (event) => {
@@ -163,21 +161,21 @@ export default function NavBar() {
       setShowNav(true);
     }
   };
-
+  console.log(user);
   window.addEventListener("scroll", controllNav);
 
-  const showTvMenu = (event) => {
-    tvMenuRef.current.style.display = "flex";
-  };
-  const hideTvMenu = (event) => {
-    tvMenuRef.current.style.display = "none";
-  };
-  const showMovieMenu = (event) => {
-    movieMenuRef.current.style.display = "flex";
-  };
-  const hideMovieMenu = (event) => {
-    movieMenuRef.current.style.display = "none";
-  };
+  // const showTvMenu = (event) => {
+  //   tvMenuRef.current.style.display = "flex";
+  // };
+  // const hideTvMenu = (event) => {
+  //   tvMenuRef.current.style.display = "none";
+  // };
+  // const showMovieMenu = (event) => {
+  //   movieMenuRef.current.style.display = "flex";
+  // };
+  // const hideMovieMenu = (event) => {
+  //   movieMenuRef.current.style.display = "none";
+  // };
 
   return (
     <HeaderWrap>
@@ -228,11 +226,11 @@ export default function NavBar() {
                 </svg>
               </Link>
             </Li>
-            <Li onMouseEnter={showTvMenu} onMouseLeave={hideTvMenu}>
+            <Li>
               <Link to="/tv" className={tvMatch ? "on" : ""}>
                 Tv
               </Link>
-              <TvSubMenu ref={tvMenuRef}>
+              {/* <TvSubMenu ref={tvMenuRef}>
                 <li>
                   <Link to="/tv/popula">인기 프로</Link>
                 </li>
@@ -242,13 +240,13 @@ export default function NavBar() {
                 <li>
                   <Link to="/tv/onair">절찬 상영중</Link>
                 </li>
-              </TvSubMenu>
+              </TvSubMenu> */}
             </Li>
-            <Li onMouseEnter={showMovieMenu} onMouseLeave={hideMovieMenu}>
+            <Li>
               <Link to="/movies" className={movieMatch ? "on" : ""}>
                 Movie
               </Link>
-              <MovieSubMenu ref={movieMenuRef}>
+              {/* <MovieSubMenu ref={movieMenuRef}>
                 <li>
                   <Link to="/movies/popula">인기 프로</Link>
                 </li>
@@ -258,7 +256,7 @@ export default function NavBar() {
                 <li>
                   <Link to="/movies/onair">절찬 상영중</Link>
                 </li>
-              </MovieSubMenu>
+              </MovieSubMenu> */}
             </Li>
           </Nav>
           <UserInfo>
@@ -276,7 +274,7 @@ export default function NavBar() {
                 />
               </svg>
             ) : (
-              <Link to="/signup">로그인/회원가입</Link>
+              <Link to="/login">로그인/회원가입</Link>
             )}
           </UserInfo>
         </Header>

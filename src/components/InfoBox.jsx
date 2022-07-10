@@ -12,7 +12,7 @@ const TvItem = styled.div`
   transition: all ease-in-out 0.1s;
   :hover {
     transform: scale(1.02);
-    border: 3px solid #d9d9d9;
+    border: 3px solid #fff;
   }
 `;
 const TvItemImg = styled.div`

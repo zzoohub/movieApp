@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const Main = styled.main`
   max-width: 1920px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 150px;
 `;
 const LoginForm = styled.form`
   width: 50%;
@@ -24,8 +24,9 @@ const LoginForm = styled.form`
   margin: 100px auto;
   color: #f9f9f9;
   h2 {
-    font-size: 30px;
+    font-size: 38px;
     font-weight: bold;
+    margin-bottom: 20px;
   }
   input {
     width: 100%;
@@ -42,6 +43,10 @@ const LoginForm = styled.form`
     font-size: 12px;
     margin-top: 5px;
     color: red;
+    &.strong {
+      font-size: 16px;
+      margin-top: 10px;
+    }
   }
   strong {
     font-size: 12px;
@@ -54,18 +59,23 @@ const LoginForm = styled.form`
     align-items: center;
     width: 100%;
     height: 50px;
-    margin-top: 10px;
     color: #f9f9f9;
     background-color: #222;
     border: none;
     font-size: 16px;
     cursor: pointer;
     &:nth-of-type(1) {
-      margin-top: 20px;
+      margin-top: 10px;
+    }
+    :hover {
+      filter: brightness(0.9);
     }
   }
   button {
-    background-color: #8c0000;
+    background-color: #a40000;
+    :hover {
+      filter: brightness(0.9);
+    }
   }
 `;
 export default function Login() {
@@ -73,6 +83,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
   const { user } = useUser();
   const navigate = useNavigate();
@@ -81,15 +92,32 @@ export default function Login() {
       navigate("/");
     }
   }, [user]);
-  const onValid = () => {};
+  const onValid = (form) => {
+    const existingUser = JSON.parse(localStorage.getItem("user"));
+    if (!existingUser) return;
+    if (
+      existingUser.nickname === form.nickname &&
+      existingUser.password === form.password
+    ) {
+      localStorage.setItem("loginUser", JSON.stringify(form));
+      navigate("/");
+    } else {
+      console.log(form, existingUser);
+      setError("loginError", {
+        type: "custom",
+        message: "아이디 또는 패스워드가 일치하지 않습니다.",
+      });
+    }
+    window.location.reload();
+  };
   return (
     <Wrapper>
       <Main>
         <LoginForm onSubmit={handleSubmit(onValid)}>
-          <h2>무비앱 회원가입</h2>
+          <h2>로그인</h2>
           <input
             {...register("nickname", {
-              required: { value: true, message: "닉네임은 필수입니다." },
+              required: { value: true, message: "닉네임을 입력하세요." },
               minLength: {
                 value: 3,
                 message: "닉네인 최소 3글자 이상이어야 합니다.",
@@ -100,12 +128,12 @@ export default function Login() {
               },
             })}
             type="text"
-            placeholder="닉네임을 지어주세요."
+            placeholder="닉네임"
           />
-          {errors?.ninkname ? (
-            <em>{errors.ninkname.message}</em>
+          {errors?.nickname ? (
+            <em>{errors.nickname.message}</em>
           ) : (
-            <strong>닉네임은 아이디로 사용됩니다.</strong>
+            <strong></strong>
           )}
           <input
             {...register("password", {
@@ -117,15 +145,18 @@ export default function Login() {
               },
             })}
             type="password"
-            placeholder="비밀번호를 입력하세요."
+            placeholder="비밀번호"
           />
           {errors?.password ? (
             <em>{errors.password.message}</em>
           ) : (
-            <strong>비밀번호는 로컬스토리지에 저장됩니다.</strong>
+            <strong></strong>
           )}
-          <Link to="/signup">회원가입</Link>
           <button>로그인</button>
+          <Link to="/signup">회원가입</Link>
+          <em className="strong">
+            {errors?.loginError ? errors.loginError.message : null}
+          </em>
         </LoginForm>
       </Main>
     </Wrapper>

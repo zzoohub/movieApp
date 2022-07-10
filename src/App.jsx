@@ -7,9 +7,8 @@ import Movies from "./routes/Movies";
 import ChatBot from "./components/ChatBot";
 import SignUp from "./routes/SignUp";
 import TvDetail from "./routes/TvDetail";
-import PopulaTv from "./routes/PopulaTv";
-import OnAirMovies from "./routes/OnAirMovies";
 import Login from "./routes/Login";
+import MovieDetail from "./routes/MovieDetail";
 
 function App() {
   return (
@@ -17,13 +16,14 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/tv/popula" element={<PopulaTv />}></Route>
-          <Route path="/tv/:id" element={<TvDetail />}></Route>
           <Route path="/tv" element={<Tv />}></Route>
+          <Route path="/tv/:id" element={<TvDetail />} />
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/movies/onair" element={<OnAirMovies />}></Route>
-          <Route path="/movies" element={<Movies />}></Route>
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:id" element={<MovieDetail />}>
+            <Route path=":id" element={<MovieDetail />} />
+          </Route>
           <Route path="/*" exact element={<Home />}></Route>
         </Routes>
         <ChatBot />

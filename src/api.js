@@ -35,4 +35,14 @@ export const getPopulaMovies = async () => {
     `${BASE_URL}/movie/popular?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+export const getUpcomingMovies = async () => {
+  return await fetch(
+    `${BASE_URL}/movie/upcoming?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
+export const getTopRatedMovies = async () => {
+  return await fetch(
+    `${BASE_URL}/movie/top_rated?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
 // getMovie
