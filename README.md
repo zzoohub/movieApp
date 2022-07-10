@@ -16,12 +16,16 @@
 
 ## reference
 
+- api사이트 = https://developers.themoviedb.org/3
 - 강아지 랜덤 비디오 = https://dogs-api.nomadcoders.workers.dev
 
 ### 주영석
 
 1. 로그인 페이지, 로그인 로그아웃 구현 (완료)
 2. movie 페이지 제작 중 (완료)
-3. profile, favorits (진행중) \*프로필사진 업로드 방법 찾기
-4. 강아지동영삽 삽입 (진행예정)
-5. home 페이지 개선 (진행예정)
+3. 로딩페이지 구현(진행중)
+4. profile, favorits (진행예정) \*프로필사진 업로드 방법 찾기
+5. 강아지동영삽 삽입 (진행예정)
+6. autoSlide, slide스크롤바 해결하기 (진행예정)
+7. movie detail 페이지 제작(진행예정)
+8. home 페이지 개선 (진행예정)

@@ -160,13 +160,17 @@ const ProfileMenu = styled.ul`
   width: 80px;
   border: 1px solid #333;
   border-radius: 5px;
-  background-color: #d9d9d9;
+  overflow: hidden;
   li {
     padding: 10px;
     cursor: pointer;
     text-align: center;
     font-size: 12px;
     border-top: 1px solid #333;
+    background-color: #d9d9d9;
+    :hover {
+      opacity: 0.8;
+    }
     :first-child {
       border: none;
     }

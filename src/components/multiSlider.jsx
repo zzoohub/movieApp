@@ -19,8 +19,9 @@ const MultiSlide = styled.div`
     border: none;
     background-color: transparent;
     z-index: 3;
+    background-color: rgba(0, 0, 0, 0.2);
     :hover {
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.6);
     }
     :hover svg {
       color: rgba(255, 255, 255, 0.8);
@@ -116,7 +117,6 @@ const Next = styled.button`
 
 export default function SlideMulti({ offset, data }) {
   const [page, setPage] = useState(0);
-  console.log(data);
   return (
     <>
       {data ? (
