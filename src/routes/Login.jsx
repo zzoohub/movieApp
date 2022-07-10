@@ -82,6 +82,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    clearErrors,
     formState: { errors },
     setError,
   } = useForm();
@@ -101,6 +102,7 @@ export default function Login() {
     ) {
       localStorage.setItem("loginUser", JSON.stringify(form));
       navigate("/");
+      window.location.reload();
     } else {
       console.log(form, existingUser);
       setError("loginError", {
@@ -108,7 +110,6 @@ export default function Login() {
         message: "아이디 또는 패스워드가 일치하지 않습니다.",
       });
     }
-    window.location.reload();
   };
   return (
     <Wrapper>
@@ -128,6 +129,7 @@ export default function Login() {
               },
             })}
             type="text"
+            onInput={() => clearErrors()}
             placeholder="닉네임"
           />
           {errors?.nickname ? (
@@ -144,6 +146,7 @@ export default function Login() {
                 message: "비밀번호는 최대 18글자입니다.",
               },
             })}
+            onInput={() => clearErrors()}
             type="password"
             placeholder="비밀번호"
           />

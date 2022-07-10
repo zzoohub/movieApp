@@ -30,11 +30,21 @@ const AutoSlide = styled.div`
 `;
 const AutoBox = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 250px;
   height: 100%;
   background-image: url(${(props) => props.autoBoxBgUrl});
   background-position: center;
   background-size: cover;
+  border: ${(props) =>
+    props.autoBoxBgUrl === "no" ? "1px solid #d9d9d9" : null};
+  svg {
+    color: #d9d9d9;
+    width: 100px;
+    height: 100px;
+  }
   :hover {
     transform: scale(1.03);
     border: 2px solid #fff;
@@ -72,6 +82,22 @@ export default function SlideAuto({ data, reversed }) {
                   : "no"
               }
             >
+              {!item.backdrop_path ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              ) : null}
               <Title>{item.title}</Title>
             </AutoBox>
           </Link>
