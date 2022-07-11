@@ -13,6 +13,11 @@ export const getTvDetail = async (id) => {
     `${BASE_URL}/tv/${id}?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+export const getTvPopular = async (id) => {
+  return await fetch(
+    `${BASE_URL}/tv/popular?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
 
 // getMovie
 export const getNowPlay = async () => {
