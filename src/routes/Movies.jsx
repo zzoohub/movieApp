@@ -246,6 +246,7 @@ export default function Movies() {
         <InfiniteSlide
           url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
           offset={5}
+          gap={10}
         ></InfiniteSlide>
       </NowPlay>
       <TopRated>

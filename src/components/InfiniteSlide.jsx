@@ -14,7 +14,21 @@ const Slider = styled.div`
     align-items: center;
     height: 200px;
     width: 50px;
+    z-index: 3;
+    border: none;
+    cursor: pointer;
     background-color: rgba(0, 0, 0, 0.5);
+    :hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    :hover svg {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    svg {
+      width: 80px;
+      height: 80px;
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 `;
 const Slide = styled.div`
@@ -23,53 +37,75 @@ const Slide = styled.div`
   position: absolute;
   display: flex;
   height: 200px;
-  gap: 10px;
-  transition: all ease-in-out 0.3s;
+  gap: ${(props) => props.gap}px;
+  padding: 0px 5px;
+  transition: all ease 0.3s;
 `;
 const Box = styled.div`
   height: 100%;
-  width: 350px;
   background-image: url(${(props) => props.bgUrl});
   background-position: center;
   background-size: cover;
+  :hover {
+    border: 1px solid #fff;
+    transform: scale(1.01);
+  }
+  :hover h3 {
+    transform: translateY(-15px);
+    opacity: 1;
+  }
 `;
 const Prev = styled.button`
-  left: 0px;
+  left: 5px;
 `;
 const Next = styled.button`
-  right: 0px;
+  right: 5px;
+`;
+const Title = styled.h3`
+  position: absolute;
+  bottom: 0%;
+  left: 5%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #f9f9f9;
+  padding: 5px 7px;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all ease-in-out 0.2s;
 `;
 
-export default function InfiniteSlide({ url, offset }) {
+export default function InfiniteSlide({ url, offset, gap }) {
   const [nowPlay, setNowPlay] = useState([]);
   const [scale, setScale] = useState((window.innerWidth / 1920).toFixed(2));
+  const [boxWidth, setBoxWidth] = useState(
+    (window.innerWidth / offset).toFixed() - gap
+  );
+  const [count, setCount] = useState(1);
   const slideRef = useRef();
-  const boxRef = useRef();
+  const MAX_SLIDES = 30;
 
   window.addEventListener("resize", (event) => {
     setScale((window.innerWidth / 1920).toFixed(2));
+    setBoxWidth((window.innerWidth / offset).toFixed());
   });
-
-  const BOX_MARGIN = 10;
-  const BOX_WIDTH = 350;
-  const MAX_SLIDES = 30;
-
-  let fullData = [];
 
   async function setting() {
     const data = await fetch(url).then((res) => res.json());
     const first = data.results.slice(0, 5);
     const last = data.results.slice(-5);
-    slideRef.current.style.width = `${BOX_WIDTH + BOX_MARGIN * MAX_SLIDES}px`;
+    slideRef.current.style.width = `${boxWidth + gap * MAX_SLIDES}px`;
     slideRef.current.style.transform = `translateX(-${
-      (BOX_WIDTH + BOX_MARGIN) * offset * count
+      (boxWidth + gap) * offset * count
     }px)`;
     await setNowPlay([...last, ...data.results, ...first]);
   }
-  const [count, setCount] = useState(1);
-  const maxCount = useEffect(() => {
+
+  useEffect(() => {
+    slideRef.current.style.transition = "none";
+  }, []);
+  useEffect(() => {
     setting();
-  }, [count]);
+  }, [count, url]);
 
   const countUp = () => {
     if (count < 4) {
@@ -101,7 +137,7 @@ export default function InfiniteSlide({ url, offset }) {
   return (
     <Slider>
       {nowPlay ? (
-        <Slide ref={slideRef} scale={scale}>
+        <Slide ref={slideRef} scale={scale} gap={gap}>
           {nowPlay.map((item, index) => (
             <Link to={`/movies/${item.id}`} key={index}>
               <Box
@@ -110,14 +146,42 @@ export default function InfiniteSlide({ url, offset }) {
                     ? makeImgPath(item.backdrop_path, "w500")
                     : "no"
                 }
-                width={((window.innerWidth / 1920) * 350).toFixed(0)}
-              ></Box>
+                style={{ width: `${boxWidth}px` }}
+              >
+                <Title>{item.title}</Title>
+              </Box>
             </Link>
           ))}
         </Slide>
       ) : null}
-      <Prev onClick={countDown}></Prev>
-      <Next onClick={countUp}></Next>
+      <Prev onClick={countDown}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </Prev>
+      <Next onClick={countUp}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </Next>
     </Slider>
   );
 }
