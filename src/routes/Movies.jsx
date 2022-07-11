@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import env from "react-dotenv";
 import styled from "styled-components";
 import {
   getNowPlay,
@@ -9,6 +10,7 @@ import {
   getUpcomingMovies,
 } from "../api";
 import SlideAuto from "../components/AutoSlider";
+import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
 
@@ -235,14 +237,17 @@ export default function Movies() {
           ) : null}
         </Slider>
       </Banner>
-      <NowPlay>
-        <Title>상영중인 영화</Title>
-        <SlideAuto data={nowPlay?.results} reversed={true}></SlideAuto>
-      </NowPlay>
       <Upcoming>
         <Title>개봉예정 영화</Title>
         <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
       </Upcoming>
+      <NowPlay>
+        <Title>상영중인 영화</Title>
+        <InfiniteSlide
+          url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
+          offset={5}
+        ></InfiniteSlide>
+      </NowPlay>
       <TopRated>
         <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
       </TopRated>
