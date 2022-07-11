@@ -9,6 +9,7 @@ const ChatBotWrap = styled.div`
   width: 70px;
   /* background-color: #dd4982; */
   height: 70px;
+  z-index: 10;
 `;
 const ChatBotBtn = styled.button`
   position: absolute;

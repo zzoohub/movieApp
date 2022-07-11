@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
 
@@ -134,9 +134,13 @@ const MovieSubMenu = styled.ul`
   }
 `;
 const UserInfo = styled.div`
+  position: relative;
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  width: 100px;
+  height: 50px;
   align-items: center;
+  margin-right: 30px;
   svg {
     width: 30px;
     height: 30px;
@@ -146,16 +150,42 @@ const UserInfo = styled.div`
     color: #f9f9f9;
   }
 `;
+const ProfileMenu = styled.ul`
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  width: 80px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+  li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    border-top: 1px solid #333;
+    background-color: #d9d9d9;
+    :hover {
+      opacity: 0.8;
+    }
+    :first-child {
+      border: none;
+    }
+  }
+`;
 
 export default function NavBar() {
   const homeMatch = useMatch("/");
   const searchMatch = useMatch("/search");
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movies");
-  const tvMenuRef = useRef();
-  const movieMenuRef = useRef();
   const { user } = useUser();
   const [showNav, setShowNav] = useState(true);
+  const profileMenu = useRef();
+  const navigate = useNavigate();
   const controllNav = (event) => {
     if (window.scrollY > 80) {
       setShowNav(false);
@@ -163,20 +193,17 @@ export default function NavBar() {
       setShowNav(true);
     }
   };
-
   window.addEventListener("scroll", controllNav);
-
-  const showTvMenu = (event) => {
-    tvMenuRef.current.style.display = "flex";
+  const logout = () => {
+    localStorage.removeItem("loginUser");
+    navigate("/");
+    window.location.reload();
   };
-  const hideTvMenu = (event) => {
-    tvMenuRef.current.style.display = "none";
+  const mouseOver = () => {
+    profileMenu.current.style.display = "flex";
   };
-  const showMovieMenu = (event) => {
-    movieMenuRef.current.style.display = "flex";
-  };
-  const hideMovieMenu = (event) => {
-    movieMenuRef.current.style.display = "none";
+  const mouseLeave = () => {
+    profileMenu.current.style.display = "none";
   };
 
   return (
@@ -228,55 +255,40 @@ export default function NavBar() {
                 </svg>
               </Link>
             </Li>
-            <Li onMouseEnter={showTvMenu} onMouseLeave={hideTvMenu}>
+            <Li>
               <Link to="/tv" className={tvMatch ? "on" : ""}>
                 Tv
               </Link>
-              <TvSubMenu ref={tvMenuRef}>
-                <li>
-                  <Link to="/tv/popula">인기 프로</Link>
-                </li>
-                <li>
-                  <Link to="/tv/top">평점 높은</Link>
-                </li>
-                <li>
-                  <Link to="/tv/onair">절찬 상영중</Link>
-                </li>
-              </TvSubMenu>
             </Li>
-            <Li onMouseEnter={showMovieMenu} onMouseLeave={hideMovieMenu}>
+            <Li>
               <Link to="/movies" className={movieMatch ? "on" : ""}>
                 Movie
               </Link>
-              <MovieSubMenu ref={movieMenuRef}>
-                <li>
-                  <Link to="/movies/popula">인기 프로</Link>
-                </li>
-                <li>
-                  <Link to="/movies/top">평점 높은</Link>
-                </li>
-                <li>
-                  <Link to="/movies/onair">절찬 상영중</Link>
-                </li>
-              </MovieSubMenu>
             </Li>
           </Nav>
-          <UserInfo>
+          <UserInfo onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
             {user ? (
-              <svg
-                className="w-6 h-6"
-                fill="#f9f9f9"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <>
+                <svg
+                  className="w-6 h-6"
+                  fill="#f9f9f9"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <ProfileMenu ref={profileMenu}>
+                  <li onClick={() => navigate(`/profile`)}>Profile</li>
+                  <li onClick={() => navigate(`/favorits`)}>Favorits</li>
+                  <li onClick={logout}>Log out</li>
+                </ProfileMenu>
+              </>
             ) : (
-              <Link to="/signup">로그인/회원가입</Link>
+              <Link to="/login">Login</Link>
             )}
           </UserInfo>
         </Header>
