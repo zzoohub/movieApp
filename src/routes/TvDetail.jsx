@@ -36,7 +36,8 @@ const DetailInfo = styled.section`
 `;
 const Title = styled.h2`
   margin-top: 50px;
-  font-size: 77px;
+  font-size: 64px;
+  font-weight: bold;
   margin-bottom: 30px;
 `;
 const Ban = styled.div`
