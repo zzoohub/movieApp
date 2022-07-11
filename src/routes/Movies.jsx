@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-=======
 import { useRef, useState } from "react";
->>>>>>> d3e89bdffd6af4a7ead572a3a54c66f6c8bd91d6
 import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-<<<<<<< HEAD
-import { getLatestMovies, getNowPlay, getPopulaMovies } from "../api";
-=======
 import {
   getNowPlay,
   getPopulaMovies,
@@ -17,7 +10,6 @@ import {
 } from "../api";
 import SlideAuto from "../components/AutoSlider";
 import SlideMulti from "../components/multiSlider";
->>>>>>> d3e89bdffd6af4a7ead572a3a54c66f6c8bd91d6
 import { makeImgPath } from "../util/makeImgPath";
 
 const Wrapper = styled.div`
@@ -42,36 +34,6 @@ const BigTitle = styled.h2`
   font-weight: bold;
   color: #f9f9f9;
 `;
-<<<<<<< HEAD
-const Banner = styled.div`
-  max-width: 1920px;
-  height: 800px;
-  margin-top: 100px;
-  overflow-x: hidden;
-`;
-const SliderWrap = styled.div`
-  position: relative;
-  width: 100%;
-  height: 800px;
-  overflow-x: scroll;
-`;
-const Slider = styled.div`
-  position: absolute;
-  display: flex;
-`;
-const Slide = styled.div`
-  width: 80vw;
-  height: 700px;
-  background-image: url(${(props) => props.bgUrl});
-  background-position: center;
-  background-size: cover;
-`;
-
-export default function Movies() {
-  const { data: latest, isLoading: latestLoading } = useQuery(
-    ["movie", "latest"],
-    getLatestMovies
-=======
 const Slider = styled.div`
   position: relative;
   width: 100%;
@@ -181,25 +143,11 @@ export default function Movies() {
   const { data: popula, isLoading: populaLoading } = useQuery(
     ["movie", "popula"],
     getPopulaMovies
->>>>>>> d3e89bdffd6af4a7ead572a3a54c66f6c8bd91d6
   );
   const { data: nowPlay, isLoading: nowPlayLoading } = useQuery(
     ["movie", "popula"],
     getNowPlay
   );
-<<<<<<< HEAD
-  const { data: popula, isLoading: populaLoading } = useQuery(
-    ["movie", "popula"],
-    getPopulaMovies
-  );
-  const [screenX, setScreenX] = useState();
-
-  useEffect(() => {
-    window.addEventListener("resize", (event) => {
-      setScreenX(event.target.outerWidth);
-    });
-  }, [window.screenX, setScreenX]);
-=======
   const { data: upcoming, isLoading: upcomingLoading } = useQuery(
     ["movie", "upcoming"],
     getUpcomingMovies
@@ -217,32 +165,10 @@ export default function Movies() {
   const nextSlide = () => {
     setIndex((prev) => prev + 1);
   };
->>>>>>> d3e89bdffd6af4a7ead572a3a54c66f6c8bd91d6
 
   return (
     <Wrapper>
       <Banner>
-<<<<<<< HEAD
-        <SliderWrap>
-          <Slider style={{ width: `${latest?.results?.length * screenX}px` }}>
-            {popula?.results.map((result) => (
-              <Slide
-                key={result.id}
-                bgUrl={
-                  result.backdrop_path
-                    ? makeImgPath(result.backdrop_path)
-                    : "noImg"
-                }
-                style={{
-                  width: `${(screenX * 0.8).toFixed(0)}px`,
-                  margin: `${screenX * (0.1).toFixed(0)}px`,
-                }}
-              ></Slide>
-            ))}
-          </Slider>
-        </SliderWrap>
-      </Banner>
-=======
         <BigTitle>Popula Movies</BigTitle>
         <Slider>
           <Slide
@@ -320,7 +246,6 @@ export default function Movies() {
       <TopRated>
         <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
       </TopRated>
->>>>>>> d3e89bdffd6af4a7ead572a3a54c66f6c8bd91d6
     </Wrapper>
   );
 }
