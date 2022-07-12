@@ -2,7 +2,7 @@ window.env = {
   "ALLUSERSPROFILE": "C:\\ProgramData",
   "API_KEY": "e51171931820c845ce6637f3e578d769",
   "APPDATA": "C:\\Users\\user\\AppData\\Roaming",
-  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_16164_WVHPVGISMPRGSXSY",
+  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_18036_DMBFRIVWYRXGJUYI",
   "CLASSPATH": ".;C:\\Program Files (x86)\\QuickTime\\QTSystem\\QTJava.zip",
   "CLSID": "{5EAF0123-505A-0140-A0D7-A79A06EF21F5}",
   "COLOR": "1",

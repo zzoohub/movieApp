@@ -30,8 +30,9 @@ const Item = styled.div`
 export default function Favorits() {
   const { user } = useUser();
   const [tvs, setTvs] = useState([]);
+  const [movies, setMovies] = useState([]);
 
-  function fetchLoop() {
+  function fetchTv() {
     if (user?.like?.tv) {
       for (const tv of user?.like?.tv) {
         fetch(
@@ -42,11 +43,22 @@ export default function Favorits() {
       }
     }
   }
-  console.log(tvs);
+  function fetchMovie() {
+    if (user?.like?.movie) {
+      for (const movie of user?.like?.movie) {
+        fetch(
+          `https://api.themoviedb.org/3/movie/${movie}?api_key=${env.API_KEY}&language=ko`
+        )
+          .then((res) => res.json())
+          .then((json) => setMovies((old) => [...old, json]));
+      }
+    }
+  }
 
   useEffect(() => {
-    fetchLoop();
-  }, [user?.like?.tv]);
+    fetchTv();
+    fetchMovie();
+  }, [user?.like]);
   return (
     <Wrapper>
       <Grid>

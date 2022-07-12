@@ -208,17 +208,18 @@ export default function TvDetail() {
   } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
   const [mp4, setMp4] = useState();
   const [isLiked, setIsLiked] = useState(false);
+
   const toggleLike = () => {
-    const user = JSON.parse(localStorage.getItem("loginUser"));
-    const aleadyLiked = user.like.tv.find((value) => value === id);
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    const aleadyLiked = loginUser.like.tv.find((value) => value === id);
     if (aleadyLiked) {
-      const removed = user.like.tv.filter((value) => value !== id);
-      user.like.tv = removed;
-      localStorage.setItem("loginUser", JSON.stringify(user));
+      const removed = loginUser.like.tv.filter((value) => value !== id);
+      loginUser.like.tv = removed;
+      localStorage.setItem("loginUser", JSON.stringify(loginUser));
       setIsLiked(false);
     } else {
-      user.like.tv = [...user.like.tv, id];
-      localStorage.setItem("loginUser", JSON.stringify(user));
+      loginUser.like.tv = [...loginUser.like.tv, id];
+      localStorage.setItem("loginUser", JSON.stringify(loginUser));
       setIsLiked(true);
     }
   };
@@ -230,6 +231,13 @@ export default function TvDetail() {
     fetch(`https://dogs-api.nomadcoders.workers.dev`)
       .then((res) => res.json())
       .then((json) => setMp4(json));
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    const aleadyLiked = loginUser.like.tv.find((value) => value === id);
+    if (aleadyLiked) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
   }, [id]);
 
   return (
