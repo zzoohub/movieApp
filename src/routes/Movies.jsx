@@ -146,10 +146,10 @@ export default function Movies() {
     ["movie", "popula"],
     getPopulaMovies
   );
-  const { data: nowPlay, isLoading: nowPlayLoading } = useQuery(
-    ["movie", "popula"],
-    getNowPlay
-  );
+  // const { data: nowPlay, isLoading: nowPlayLoading } = useQuery(
+  //   ["movie", "nowPlay"],
+  //   getNowPlay
+  // );
   const { data: upcoming, isLoading: upcomingLoading } = useQuery(
     ["movie", "upcoming"],
     getUpcomingMovies
@@ -180,7 +180,6 @@ export default function Movies() {
           >
             {popula?.results.map((result) => (
               <Box
-                // onClick={navigate(`/movies/${result.id}`)}
                 key={result.id}
                 active={
                   popula?.results.indexOf(result) === index ? true : false
@@ -247,6 +246,7 @@ export default function Movies() {
           url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
           offset={5}
           gap={10}
+          type="movie"
         ></InfiniteSlide>
       </NowPlay>
       <TopRated>

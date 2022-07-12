@@ -36,7 +36,7 @@ const DetailInfo = styled.section`
   video {
     position: absolute;
     top: 17%;
-    left: 50%;
+    left: 55%;
     width: 500px;
     height: 300px;
     background-color: #333;
@@ -123,6 +123,17 @@ const Rating = styled.div`
     color: gold;
   }
 `;
+const LikeBtn = styled.button`
+  background-color: #222;
+  padding: 7px 10px;
+  color: gold;
+  border-radius: 5px;
+  margin-left: 30px;
+  cursor: pointer;
+  :active {
+    transform: scale(0.95);
+  }
+`;
 const Overview = styled.p`
   max-width: 50%;
   line-height: 1.5;
@@ -196,10 +207,26 @@ export default function TvDetail() {
     refetch: similarRefetch,
   } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
   const [mp4, setMp4] = useState();
+  const [isLiked, setIsLiked] = useState(false);
+  const toggleLike = () => {
+    const user = JSON.parse(localStorage.getItem("loginUser"));
+    const aleadyLiked = user.like.tv.find((value) => value === id);
+    if (aleadyLiked) {
+      const removed = user.like.tv.filter((value) => value !== id);
+      user.like.tv = removed;
+      localStorage.setItem("loginUser", JSON.stringify(user));
+      setIsLiked(false);
+    } else {
+      user.like.tv = [...user.like.tv, id];
+      localStorage.setItem("loginUser", JSON.stringify(user));
+      setIsLiked(true);
+    }
+  };
 
   useEffect(() => {
     refetch();
     similarRefetch();
+    setIsLiked(false);
     fetch(`https://dogs-api.nomadcoders.workers.dev`)
       .then((res) => res.json())
       .then((json) => setMp4(json));
@@ -216,7 +243,6 @@ export default function TvDetail() {
             <DetailInfo>
               {data?.adult ? <Ban>19금</Ban> : null}
               <Title>{data?.name}</Title>
-
               <MoreDetail>
                 <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
                 <BaseInfo>
@@ -244,6 +270,9 @@ export default function TvDetail() {
                         </svg>
                       ) : null
                     )}
+                    <LikeBtn onClick={toggleLike}>
+                      {isLiked ? "Unlike" : "Like"}
+                    </LikeBtn>
                   </Rating>
 
                   {data?.created_by[0] !== undefined ? (

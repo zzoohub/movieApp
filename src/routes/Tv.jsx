@@ -28,7 +28,7 @@ const Banner = styled.section`
   flex-direction: column;
   padding: 50px;
   width: 100%;
-  height: 70vh;
+  height: 85vh;
   background-image: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.3),

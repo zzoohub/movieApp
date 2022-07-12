@@ -1,11 +1,10 @@
 import { getTvPopular } from "../api";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { makeImgPath } from "../util/makeImgPath";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
 import InfiniteSlide from "./InfiniteSlide";
+import env from "react-dotenv";
 
 const Wrapper = styled.div`
   height: max-content;
