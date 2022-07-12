@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { makeImgPath } from "../util/makeImgPath";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
+import env from "react-dotenv";
 import InfiniteSlide from "./InfiniteSlide";
 
 const Wrapper = styled.div`
