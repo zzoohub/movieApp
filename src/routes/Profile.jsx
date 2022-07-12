@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import Loading from "../components/Loading";
 
 const Wrapper = styled.div`
   position: relative;
@@ -34,10 +36,11 @@ const Main = styled.main`
   border: 1px solid #fff;
 `;
 export default function Profile() {
+  const [loading, setLoading] = useState(true);
   return (
     <Wrapper>
       <SideBar></SideBar>
-      <Main></Main>
+      <Main>{loading ? <Loading></Loading> : null}</Main>
     </Wrapper>
   );
 }

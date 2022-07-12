@@ -266,7 +266,22 @@ export default function NavBar() {
               </Link>
             </Li>
           </Nav>
-          <UserInfo onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
+          <UserInfo
+            onMouseOver={
+              user
+                ? mouseOver
+                : () => {
+                    return;
+                  }
+            }
+            onMouseLeave={
+              user
+                ? mouseLeave
+                : () => {
+                    return;
+                  }
+            }
+          >
             {user ? (
               <>
                 <svg

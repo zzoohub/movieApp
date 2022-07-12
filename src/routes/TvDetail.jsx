@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -33,6 +33,15 @@ const DetailInfo = styled.section`
   margin-top: 100px;
   padding: 50px;
   color: #f9f9f9;
+  video {
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    width: 500px;
+    height: 300px;
+    background-color: #333;
+    object-fit: cover;
+  }
 `;
 const Title = styled.h2`
   margin-top: 50px;
@@ -186,13 +195,15 @@ export default function TvDetail() {
     isLoading: similarLoading,
     refetch: similarRefetch,
   } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
+  const [mp4, setMp4] = useState();
 
   useEffect(() => {
     refetch();
     similarRefetch();
+    fetch(`https://dogs-api.nomadcoders.workers.dev`)
+      .then((res) => res.json())
+      .then((json) => setMp4(json));
   }, [id]);
-
-  console.log(data?.overview?.length);
 
   return (
     <Wrapper>
@@ -207,6 +218,7 @@ export default function TvDetail() {
               <Title>{data?.name}</Title>
 
               <MoreDetail>
+                <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
                 <BaseInfo>
                   <Period>
                     {data.first_air_date} ~ {data.last_air_date}{" "}
