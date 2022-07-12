@@ -38,9 +38,15 @@ const Main = styled.main`
 export default function Profile() {
   const [loading, setLoading] = useState(true);
   return (
-    <Wrapper>
-      <SideBar></SideBar>
-      <Main>{loading ? <Loading></Loading> : null}</Main>
-    </Wrapper>
+    <>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <Wrapper>
+          <SideBar></SideBar>
+          <Main></Main>
+        </Wrapper>
+      )}
+    </>
   );
 }
