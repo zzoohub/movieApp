@@ -116,7 +116,6 @@ export default function PopularTV() {
   const nextSlide = () => {
     setCount(count - 1);
   };
-  console.log(count);
   return (
     <Wrapper>
       <Title>Popular TV</Title>
