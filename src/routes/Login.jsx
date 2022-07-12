@@ -121,7 +121,7 @@ export default function Login() {
               required: { value: true, message: "닉네임을 입력하세요." },
               minLength: {
                 value: 3,
-                message: "닉네인 최소 3글자 이상이어야 합니다.",
+                message: "닉네임은 최소 3글자 이상이어야 합니다.",
               },
               maxLength: {
                 value: 12,
