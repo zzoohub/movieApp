@@ -63,7 +63,7 @@ const Main = styled.main`
     }
   }
   em {
-    display: block;
+    /* display: block; */
     font-size: 12px;
     text-align: center;
     color: red;
@@ -86,9 +86,8 @@ const Form = styled.form`
   }
   & > div:nth-child(1) {
     display: flex;
-    align-items: center;
     line-height: 28px;
-    > div:nth-child(2) {
+    & > div:nth-child(2) {
       width: calc(100% - 230px);
     }
   }
@@ -136,7 +135,7 @@ export default function Profile() {
     setError,
   } = useForm();
   const onValid = (form) => {
-    console.log(form);
+    console.log(form.checkPassword);
   };
   return (
     <>
@@ -171,12 +170,16 @@ export default function Profile() {
                   accept="image/*"
                 />
                 <div>
-                  <p>닉네임 | </p>
+                  <p>닉네임 | {errors?.nickname ? (
+                <em>{errors?.nickname.message}</em>
+              ) : (
+                <strong> </strong>
+              )}</p>
                   <input
                     {...register("nickname", {
                       required: {
                         value: true,
-                        message: "닉네임을 입력하세요.",
+                        message: "닉네임을 입력해주세요.",
                       },
                       minLength: {
                         value: 3,
@@ -194,7 +197,11 @@ export default function Profile() {
                   />
                 </div>
                 <div>
-                  <p>비밀번호 변경 | </p>
+                  <p>비밀번호 변경 | {errors?.password ? (
+              <em>{errors?.password.message}</em>
+            ) : (
+              <strong> </strong>
+            )}</p>
                   <input
                     {...register("password", {
                       required: {
@@ -215,36 +222,31 @@ export default function Profile() {
                     placeholder="비밀번호"
                     defaultValue={user?.password}
                   />
+                              
                 </div>
                 <div>
-                  <p>비밀번호 확인 | </p>
+                  <p>비밀번호 확인 | {errors?.checkPassword ? (
+              <em>{errors?.checkPassword.message}</em>
+            ) : (
+              <strong> </strong>
+            )}</p>
                   <input
                     {...register("checkPassword", {
                       required: {
                         value: true,
-                        message: "비밀번호를 입력해주세요.",
-                      },
-                      minLength: {
-                        value: 6,
-                        message: "비밀번호는 최소 6글자입니다.",
-                      },
-                      maxLength: {
-                        value: 18,
-                        message: "비밀번호는 최대 18글자입니다.",
+                        message: "비밀번호가 일치하지 않습니다.",
                       },
                     })}
                     onInput={() => clearErrors()}
                     type="password"
                     placeholder="비밀번호"
                   />
+                              
                 </div>
               </div>
             </div>
-            {errors?.checkPassword ? (
-              <em>{errors?.checkPassword.message}</em>
-            ) : (
-              <strong> </strong>
-            )}
+            
+
             <button>회원 정보 수정하기</button>
           </Form>
         </Main>
