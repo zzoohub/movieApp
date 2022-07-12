@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
-import InfiniteSlide from "./InfiniteSlide";
 import env from "react-dotenv";
+import InfiniteSlide from "./InfiniteSlide";
 
 const Wrapper = styled.div`
   height: max-content;
