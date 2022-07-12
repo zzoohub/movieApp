@@ -1,8 +1,6 @@
 import { getTvPopular } from "../api";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { makeImgPath } from "../util/makeImgPath";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
 import env from "react-dotenv";
@@ -139,7 +137,6 @@ export default function PopularTV() {
     }
   };
 
-  console.log(count, lists);
   return (
     <Wrapper>
       <Title>Popular TV</Title>

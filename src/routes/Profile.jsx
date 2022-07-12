@@ -109,7 +109,7 @@ const ImgBox = styled.div`
 `;
 
 export default function Profile() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [read, setRead] = useState(true);
   const { user } = useUser();
   const userName = user?.nickname;
@@ -126,88 +126,90 @@ export default function Profile() {
   const onChangeMode = () => setRead(!read);
   const onSubmit = () => {};
   return (
-    <Wrapper>
+    <>
       {loading ? <Loading></Loading> : null}
-      <SideBar></SideBar>
-      <Main>
-        <h2>My Page</h2>
-        {read ? (
-          <Read>
-            <ImgBox url={user?.img}>
-              {!user?.img ? (
-                <svg
-                  className="w-6 h-6"
-                  fill="#f9f9f9"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              ) : null}
-            </ImgBox>
-            <div>
+      <Wrapper>
+        <SideBar></SideBar>
+        <Main>
+          <h2>My Page</h2>
+          {read ? (
+            <Read>
+              <ImgBox url={user?.img}>
+                {!user?.img ? (
+                  <svg
+                    className="w-6 h-6"
+                    fill="#f9f9f9"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : null}
+              </ImgBox>
               <div>
-                <span>닉네임 | </span>
-                <span>{userName}</span>
-              </div>
+                <div>
+                  <span>닉네임 | </span>
+                  <span>{userName}</span>
+                </div>
 
-              <div>
-                <span>이메일 | </span>
-                <span>
-                  {user?.email === undefined
-                    ? "등록된 이메일이 없습니다."
-                    : user?.email}
-                </span>
+                <div>
+                  <span>이메일 | </span>
+                  <span>
+                    {user?.email === undefined
+                      ? "등록된 이메일이 없습니다."
+                      : user?.email}
+                  </span>
+                </div>
               </div>
-            </div>
-          </Read>
-        ) : (
-          <Form>
-            <ImgBox url={user?.img}>
-              {!user?.img ? (
-                <svg
-                  className="w-6 h-6"
-                  fill="#f9f9f9"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                    clipRule="evenodd"
+            </Read>
+          ) : (
+            <Form>
+              <ImgBox url={user?.img}>
+                {!user?.img ? (
+                  <svg
+                    className="w-6 h-6"
+                    fill="#f9f9f9"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : null}
+              </ImgBox>
+              <div>
+                <button>프로필 변경</button>
+                <div>
+                  <p>닉네임 | </p>
+                  <input
+                    type="text"
+                    defaultValue={user?.nickname}
+                    onChange={nameInput}
                   />
-                </svg>
-              ) : null}
-            </ImgBox>
-            <div>
-              <button>프로필 변경</button>
-              <div>
-                <p>닉네임 | </p>
-                <input
-                  type="text"
-                  defaultValue={user?.nickname}
-                  onChange={nameInput}
-                />
+                </div>
+                <div>
+                  <p>신규 비밀번호 | </p>
+                  <input type="password" defaultValue={user?.password} />
+                </div>
+                <div>
+                  <p>비밀번호 확인 | </p>
+                  <input type="password" defaultValue={""} />
+                </div>
               </div>
-              <div>
-                <p>신규 비밀번호 | </p>
-                <input type="password" defaultValue={user?.password} />
-              </div>
-              <div>
-                <p>비밀번호 확인 | </p>
-                <input type="password" defaultValue={""} />
-              </div>
-            </div>
-          </Form>
-        )}
-        <button onClick={read ? onChangeMode : onSubmit}>
-          {read ? "회원 정보 수정하기" : "변경 내용 저장"}
-        </button>
-      </Main>
-    </Wrapper>
+            </Form>
+          )}
+          <button onClick={read ? onChangeMode : onSubmit}>
+            {read ? "회원 정보 수정하기" : "변경 내용 저장"}
+          </button>
+        </Main>
+      </Wrapper>
+    </>
   );
 }

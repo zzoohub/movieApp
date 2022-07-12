@@ -42,10 +42,14 @@ const Slide = styled.div`
   transition: all ease 0.3s;
 `;
 const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   background-image: url(${(props) => props.bgUrl});
   background-position: center;
   background-size: cover;
+  border: ${(props) => (props.bgUrl === "no" ? "1px solid gray" : "none")};
   :hover {
     border: 1px solid #fff;
     transform: scale(1.01);
@@ -53,6 +57,11 @@ const Box = styled.div`
   :hover h3 {
     transform: translateY(-15px);
     opacity: 1;
+  }
+  svg {
+    color: #d9d9d9;
+    width: 50px;
+    height: 50px;
   }
 `;
 const Prev = styled.button`
@@ -74,7 +83,7 @@ const Title = styled.h3`
   transition: all ease-in-out 0.2s;
 `;
 
-export default function InfiniteSlide({ url, offset, gap }) {
+export default function InfiniteSlide({ url, offset, gap, type }) {
   const [nowPlay, setNowPlay] = useState([]);
   const [scale, setScale] = useState((window.innerWidth / 1920).toFixed(2));
   const [boxWidth, setBoxWidth] = useState(
@@ -148,7 +157,23 @@ export default function InfiniteSlide({ url, offset, gap }) {
                 }
                 style={{ width: `${boxWidth}px` }}
               >
-                <Title>{item.title}</Title>
+                <Title>{type === "movie" ? item.title : item.name}</Title>
+                {item.backdrop_path ? null : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3 w-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                )}
               </Box>
             </Link>
           ))}
