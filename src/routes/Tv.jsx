@@ -7,6 +7,7 @@ import OnTheAiringTV from "../components/OnTheAiringTV";
 import PopularTV from "../components/PopularTV";
 import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
+import Loading from "../components/Loading";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -113,39 +114,41 @@ export default function Tv() {
   );
 
   return (
-    <Wrapper>
+    <>
       {isLoading ? (
-        <div>Loading</div>
+        <Loading></Loading>
       ) : (
-        <Main>
-          <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-            <h3>{bannerData?.original_name}</h3>
-            <span>첫방송 {bannerData.first_air_date}</span>
-            <span>평점 {bannerData.vote_average}</span>
-            <span>{bannerData?.overview}</span>
-          </Banner>
-          <Title>Today Tv Shows</Title>
-          <Grid>
-            {fitered.map((tv) => (
-              <Link to={`/tv/${tv.id}`} key={tv.id}>
-                <InfoBox
-                  bgUrl={
-                    tv.backdrop_path
-                      ? makeImgPath(tv.backdrop_path, "w500")
-                      : null
-                  }
-                  name={tv.name}
-                  firstDate={tv.first_air_date}
-                  voteAverage={tv.vote_average}
-                ></InfoBox>
-              </Link>
-            ))}
-          </Grid>
-          <OnTheAiringTV />
-          <PopularTV />
-          <LatestTV />
-        </Main>
+        <Wrapper>
+          <Main>
+            <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
+              <h3>{bannerData?.original_name}</h3>
+              <span>첫방송 {bannerData.first_air_date}</span>
+              <span>평점 {bannerData.vote_average}</span>
+              <span>{bannerData?.overview}</span>
+            </Banner>
+            <Title>Today Tv Shows</Title>
+            <Grid>
+              {fitered.map((tv) => (
+                <Link to={`/tv/${tv.id}`} key={tv.id}>
+                  <InfoBox
+                    bgUrl={
+                      tv.backdrop_path
+                        ? makeImgPath(tv.backdrop_path, "w500")
+                        : null
+                    }
+                    name={tv.name}
+                    firstDate={tv.first_air_date}
+                    voteAverage={tv.vote_average}
+                  ></InfoBox>
+                </Link>
+              ))}
+            </Grid>
+            <OnTheAiringTV />
+            <PopularTV />
+            <LatestTV />
+          </Main>
+        </Wrapper>
       )}
-    </Wrapper>
+    </>
   );
 }

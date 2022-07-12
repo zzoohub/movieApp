@@ -13,6 +13,7 @@ import SlideAuto from "../components/AutoSlider";
 import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
+import Loading from "../components/Loading";
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -169,89 +170,95 @@ export default function Movies() {
   };
 
   return (
-    <Wrapper>
-      <Banner>
-        <BigTitle>Popula Movies</BigTitle>
-        <Slider>
-          <Slide
-            ref={slide}
-            slideWidth={popula?.results.length * 80}
-            translate={index ? index * 80 - 10 : "base"}
-          >
-            {popula?.results.map((result) => (
-              <Box
-                key={result.id}
-                active={
-                  popula?.results.indexOf(result) === index ? true : false
-                }
+    <>
+      {populaLoading || upcomingLoading || topRatedLoading ? (
+        <Loading></Loading>
+      ) : (
+        <Wrapper>
+          <Banner>
+            <BigTitle>Popula Movies</BigTitle>
+            <Slider>
+              <Slide
+                ref={slide}
+                slideWidth={popula?.results.length * 80}
+                translate={index ? index * 80 - 10 : "base"}
               >
-                <Link to={`/movies/${result.id}`}>
-                  <img
-                    src={
-                      result.backdrop_path
-                        ? makeImgPath(result.backdrop_path)
-                        : ""
+                {popula?.results.map((result) => (
+                  <Box
+                    key={result.id}
+                    active={
+                      popula?.results.indexOf(result) === index ? true : false
                     }
-                  ></img>
-                </Link>
-                <BoxDetail>{result.title}</BoxDetail>
-              </Box>
-            ))}
-          </Slide>
-          {index ? (
-            <Prev onClick={prevSlide}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </Prev>
-          ) : null}
-          {index !== popula?.results.length - 1 ? (
-            <Next onClick={nextSlide}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Next>
-          ) : null}
-        </Slider>
-      </Banner>
-      <Upcoming>
-        <Title>개봉예정 영화</Title>
-        <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
-      </Upcoming>
-      <NowPlay>
-        <Title>상영중인 영화</Title>
-        <InfiniteSlide
-          url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
-          offset={5}
-          gap={10}
-          type="movie"
-        ></InfiniteSlide>
-      </NowPlay>
-      <TopRated>
-        <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
-      </TopRated>
-    </Wrapper>
+                  >
+                    <Link to={`/movies/${result.id}`}>
+                      <img
+                        src={
+                          result.backdrop_path
+                            ? makeImgPath(result.backdrop_path)
+                            : ""
+                        }
+                      ></img>
+                    </Link>
+                    <BoxDetail>{result.title}</BoxDetail>
+                  </Box>
+                ))}
+              </Slide>
+              {index ? (
+                <Prev onClick={prevSlide}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </Prev>
+              ) : null}
+              {index !== popula?.results.length - 1 ? (
+                <Next onClick={nextSlide}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </Next>
+              ) : null}
+            </Slider>
+          </Banner>
+          <Upcoming>
+            <Title>개봉예정 영화</Title>
+            <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
+          </Upcoming>
+          <NowPlay>
+            <Title>상영중인 영화</Title>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
+          </NowPlay>
+          <TopRated>
+            <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
+          </TopRated>
+        </Wrapper>
+      )}
+    </>
   );
 }
