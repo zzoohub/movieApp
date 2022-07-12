@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { makeImgPath } from "../util/makeImgPath";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
+import InfiniteSlide from "./InfiniteSlide";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -141,73 +142,11 @@ export default function PopularTV() {
   return (
     <Wrapper>
       <Title>Popular TV</Title>
-      <PopTv>
-        <Slider>
-          <Slide ref={slide} count={count}>
-            {popular?.results.map((item) => (
-              <Link to={`/tv/${item.id}`} key={item.id}>
-                <Box
-                  autoBoxBgUrl={
-                    item.backdrop_path
-                      ? makeImgPath(item.backdrop_path, "w500")
-                      : "no"
-                  }
-                >
-                  {!item.backdrop_path ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
-                    </svg>
-                  ) : null}
-                  <TvTitle>{item.name}</TvTitle>
-                </Box>
-              </Link>
-            ))}
-          </Slide>
-        </Slider>
-        <Prev onClick={prevSlide}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </Prev>
-        <Next onClick={nextSlide}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </Next>
-      </PopTv>
+      <InfiniteSlide
+        url={`https://api.themoviedb.org/3/tv/popular?api_key=${env.API_KEY}&language=ko`}
+        offset={5}
+        gap={10}
+      ></InfiniteSlide>
     </Wrapper>
   );
 }
