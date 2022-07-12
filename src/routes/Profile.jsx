@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import { useUser } from "../util/useUser";
+import { useForm } from "react-hook-form";
 
 const Wrapper = styled.div`
   position: relative;
@@ -36,7 +37,7 @@ const Main = styled.main`
   min-height: 700px;
   height: max-content;
   border: 1px solid #fff;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 40px;
   h2 {
     font-size: 38px;
@@ -61,35 +62,44 @@ const Main = styled.main`
       filter: brightness(0.9);
     }
   }
+  em {
+    display: block;
+    font-size: 12px;
+    text-align: center;
+    color: red;
+    &.strong {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
 `;
 
 const Form = styled.form`
   width: 50%;
   margin: 50px auto;
-  display: flex;
-  align-items: center;
   line-height: 28px;
   input {
     display: block;
     width: 100%;
     outline: none;
-    font-size: 18px;
+    font-size: 16px;
   }
-  > div:nth-child(2) {
-    width: calc(100% - 230px);
+  & > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    line-height: 28px;
+    > div:nth-child(2) {
+      width: calc(100% - 230px);
+    }
   }
   button {
+    display: block;
     height: 30px;
+    margin-top: 30px;
     margin-right: 0;
   }
 `;
 
-const Read = styled.div`
-  width: 50%;
-  margin: 50px auto;
-  display: flex;
-  align-items: center;
-`;
 const ImgBox = styled.div`
   display: flex;
   justify-content: center;
@@ -109,22 +119,25 @@ const ImgBox = styled.div`
 `;
 
 export default function Profile() {
-  const [loading, setLoading] = useState(true);
-  const [read, setRead] = useState(true);
-  const { user } = useUser();
-  const userName = user?.nickname;
-  const userPW = user?.password;
-  const userEmail = user?.email;
-  const [inputName, setInputName] = useState(userName);
-  const [inputPW, setInputPW] = useState("");
-  console.log(inputName, userName, read);
+  const [loading, setLoading] = useState(false);
 
-  const nameInput = (e) => {
-    e.preventDefault();
-    setInputName(e.target.value);
+  const { user } = useUser();
+  const { profleImgInput } = useRef();
+
+  const [inputName, setInputName] = useState("");
+  const [inputPW, setInputPW] = useState("");
+  // console.log(inputPW, inputPW.length);
+  const [message, setMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+    setError,
+  } = useForm();
+  const onValid = (form) => {
+    console.log(form);
   };
-  const onChangeMode = () => setRead(!read);
-  const onSubmit = () => {};
   return (
     <>
       {loading ? <Loading></Loading> : null}
@@ -132,8 +145,8 @@ export default function Profile() {
         <SideBar></SideBar>
         <Main>
           <h2>My Page</h2>
-          {read ? (
-            <Read>
+          <Form onSubmit={handleSubmit(onValid)}>
+            <div>
               <ImgBox url={user?.img}>
                 {!user?.img ? (
                   <svg
@@ -151,63 +164,89 @@ export default function Profile() {
                 ) : null}
               </ImgBox>
               <div>
-                <div>
-                  <span>닉네임 | </span>
-                  <span>{userName}</span>
-                </div>
-
-                <div>
-                  <span>이메일 | </span>
-                  <span>
-                    {user?.email === undefined
-                      ? "등록된 이메일이 없습니다."
-                      : user?.email}
-                  </span>
-                </div>
-              </div>
-            </Read>
-          ) : (
-            <Form>
-              <ImgBox url={user?.img}>
-                {!user?.img ? (
-                  <svg
-                    className="w-6 h-6"
-                    fill="#f9f9f9"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : null}
-              </ImgBox>
-              <div>
-                <button>프로필 변경</button>
+                <input
+                  ref={profleImgInput}
+                  type="file"
+                  name="file"
+                  accept="image/*"
+                />
                 <div>
                   <p>닉네임 | </p>
                   <input
+                    {...register("nickname", {
+                      required: {
+                        value: true,
+                        message: "닉네임을 입력하세요.",
+                      },
+                      minLength: {
+                        value: 3,
+                        message: "닉네임은 최소 3글자 이상이어야 합니다.",
+                      },
+                      maxLength: {
+                        value: 12,
+                        message: "닉네임은 최대 12글자를 넘으면 안됩니다.",
+                      },
+                    })}
                     type="text"
+                    onInput={() => clearErrors()}
+                    placeholder="닉네임"
                     defaultValue={user?.nickname}
-                    onChange={nameInput}
                   />
                 </div>
                 <div>
-                  <p>신규 비밀번호 | </p>
-                  <input type="password" defaultValue={user?.password} />
+                  <p>비밀번호 변경 | </p>
+                  <input
+                    {...register("password", {
+                      required: {
+                        value: true,
+                        message: "비밀번호를 입력해주세요.",
+                      },
+                      minLength: {
+                        value: 6,
+                        message: "비밀번호는 최소 6글자입니다.",
+                      },
+                      maxLength: {
+                        value: 18,
+                        message: "비밀번호는 최대 18글자입니다.",
+                      },
+                    })}
+                    onInput={() => clearErrors()}
+                    type="password"
+                    placeholder="비밀번호"
+                    defaultValue={user?.password}
+                  />
                 </div>
                 <div>
                   <p>비밀번호 확인 | </p>
-                  <input type="password" defaultValue={""} />
+                  <input
+                    {...register("checkPassword", {
+                      required: {
+                        value: true,
+                        message: "비밀번호를 입력해주세요.",
+                      },
+                      minLength: {
+                        value: 6,
+                        message: "비밀번호는 최소 6글자입니다.",
+                      },
+                      maxLength: {
+                        value: 18,
+                        message: "비밀번호는 최대 18글자입니다.",
+                      },
+                    })}
+                    onInput={() => clearErrors()}
+                    type="password"
+                    placeholder="비밀번호"
+                  />
                 </div>
               </div>
-            </Form>
-          )}
-          <button onClick={read ? onChangeMode : onSubmit}>
-            {read ? "회원 정보 수정하기" : "변경 내용 저장"}
-          </button>
+            </div>
+            {errors?.checkPassword ? (
+              <em>{errors?.checkPassword.message}</em>
+            ) : (
+              <strong> </strong>
+            )}
+            <button>회원 정보 수정하기</button>
+          </Form>
         </Main>
       </Wrapper>
     </>
