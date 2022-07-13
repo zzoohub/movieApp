@@ -49,6 +49,13 @@ const Banner = styled.section`
     font-weight: 600;
     max-width: 50%;
   }
+  p {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.7;
+    width: 50%;
+  }
 `;
 const Grid = styled.div`
   display: grid;
@@ -124,7 +131,7 @@ export default function Tv() {
               <h3>{bannerData?.original_name}</h3>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
-              <span>{bannerData?.overview}</span>
+              <p>{bannerData?.overview}</p>
             </Banner>
             <Title>Today Tv Shows</Title>
             <Grid>

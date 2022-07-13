@@ -83,6 +83,7 @@ const Box = styled.div`
   align-items: center;
   width: 80vw;
   height: 100%;
+  pointer-events: ${(props) => (props.active ? "all" : "none")};
   :hover h3 {
     display: block;
     opacity: 1;
@@ -144,6 +145,17 @@ const Title = styled.h3`
   color: #f9f9f9;
   margin: 15px 20px;
 `;
+const TopTitle = styled.h3`
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff3d3d;
+  margin: 20px 50px;
+  em {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #f9f9f9;
+  }
+`;
 
 export default function Movies() {
   const [popula, setPopula] = useState([]);
@@ -155,6 +167,7 @@ export default function Movies() {
     ["movie", "toprated"],
     getTopRatedMovies
   );
+  const slideRef = useRef();
 
   async function arrange() {
     const data = await fetch(
@@ -163,11 +176,14 @@ export default function Movies() {
     const first = data?.results.slice(0, 1);
     const last = data?.results.slice(-1);
     await setPopula([...last, ...data.results, ...first]);
+    if (slideRef) {
+      slideRef.current.style.transition = "none";
+    }
   }
   useEffect(() => {
     arrange();
   }, []);
-  const slideRef = useRef();
+
   const [index, setIndex] = useState(1);
 
   const prevSlide = () => {
@@ -269,11 +285,11 @@ export default function Movies() {
             </Slider>
           </Banner>
           <Upcoming>
-            <Title>개봉예정 영화</Title>
+            <Title>Upcoming</Title>
             <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
           </Upcoming>
           <NowPlay>
-            <Title>상영중인 영화</Title>
+            <Title>Now Playing</Title>
             <InfiniteSlide
               url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
               offset={5}
@@ -282,6 +298,9 @@ export default function Movies() {
             ></InfiniteSlide>
           </NowPlay>
           <TopRated>
+            <TopTitle>
+              TOP 20<em>Movies</em>
+            </TopTitle>
             <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
           </TopRated>
         </Wrapper>

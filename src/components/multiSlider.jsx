@@ -6,7 +6,7 @@ import { makeImgPath } from "../util/makeImgPath";
 const MultiSlide = styled.div`
   position: relative;
   max-width: 1920px;
-  height: 350px;
+  height: 250px;
   button {
     position: absolute;
     display: flex;
@@ -99,15 +99,6 @@ const Item = styled.div`
     background-color: #222;
   }
 `;
-
-const Title = styled.h3`
-  position: absolute;
-  left: 4%;
-  top: 15%;
-  font-size: 28px;
-  font-weight: bold;
-  color: #ff3d3d;
-`;
 const Prev = styled.button`
   left: 0px;
 `;
@@ -121,7 +112,6 @@ export default function SlideMulti({ offset, data }) {
     <>
       {data ? (
         <MultiSlide>
-          <Title>TOP 영화</Title>
           {[...Array(Math.ceil(data.length / offset))].map((v, indexes) => (
             <MultiSet key={indexes} className={page === indexes ? "on" : ""}>
               {[...Array(offset)].map((item, index) => (
