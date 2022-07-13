@@ -133,7 +133,6 @@ export default function PopularTV() {
       let firstLi = lists.slice(0, 5);
       lists.push(firstLi);
       setLists(lists);
-      console.log(lists);
     }
   };
 

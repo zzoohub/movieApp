@@ -18,18 +18,24 @@ export const getTvPopular = async (id) => {
     `${BASE_URL}/tv/popular?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
-
-// getMovie
-export const getNowPlay = async () => {
-  return await fetch(
-    `${BASE_URL}/movie/now_playing?api_key=${env.API_KEY}&language=ko`
-  ).then((res) => res.json());
-};
 export const getSimilarTvs = async (id) => {
   return await fetch(
     `${BASE_URL}/tv/${id}/similar?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+
+// getMovie
+export const getSimilarMovies = async (id) => {
+  return await fetch(
+    `${BASE_URL}/movie/${id}/similar?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
+export const getNowPlay = async () => {
+  return await fetch(
+    `${BASE_URL}/movie/now_playing?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
+
 export const getLatestMovies = async () => {
   return await fetch(
     `${BASE_URL}/movie/latest?api_key=${env.API_KEY}&language=ko`
@@ -50,4 +56,8 @@ export const getTopRatedMovies = async () => {
     `${BASE_URL}/movie/top_rated?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
-// getMovie
+export const getMovieDetail = async (id) => {
+  return await fetch(
+    `${BASE_URL}/movie/${id}?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};

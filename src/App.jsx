@@ -10,7 +10,7 @@ import TvDetail from "./routes/TvDetail";
 import Login from "./routes/Login";
 import MovieDetail from "./routes/MovieDetail";
 import Profile from "./routes/Profile";
-import Favorits from "./routes/Favorits";
+import Favorits, { FavoritMovie, FavoritTv } from "./routes/Favorits";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/movies/:id" element={<MovieDetail />}></Route>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/favorits" element={<Favorits />} />
+          <Route path="/favorits" element={<Favorits />}></Route>
           <Route path="/*" exact element={<Home />}></Route>
         </Routes>
         <ChatBot />

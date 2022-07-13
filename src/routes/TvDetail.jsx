@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getSimilarTvs, getTvDetail } from "../api";
 import { makeImgPath } from "../util/makeImgPath";
+import Loading from "../components/Loading";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -81,12 +82,18 @@ const Creator = styled.ul`
     margin-right: 10px;
     img,
     div {
-      display: block;
-      width: 100px;
-      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 80px;
       object-fit: cover;
       border-radius: 5px;
-      background-color: #333;
+      background-color: rgba(0, 0, 0, 0.3);
+      svg {
+        width: 40px;
+        height: 40px;
+      }
     }
     span {
       overflow: hidden;
@@ -211,6 +218,9 @@ export default function TvDetail() {
 
   const toggleLike = () => {
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    if (!loginUser) {
+      return alert("로그인이 필요합니다.");
+    }
     const aleadyLiked = loginUser.like.tv.find((value) => value === id);
     if (aleadyLiked) {
       const removed = loginUser.like.tv.filter((value) => value !== id);
@@ -232,7 +242,7 @@ export default function TvDetail() {
       .then((res) => res.json())
       .then((json) => setMp4(json));
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
-    const aleadyLiked = loginUser.like.tv.find((value) => value === id);
+    const aleadyLiked = loginUser?.like?.tv?.find((value) => value === id);
     if (aleadyLiked) {
       setIsLiked(true);
     } else {
@@ -241,98 +251,120 @@ export default function TvDetail() {
   }, [id]);
 
   return (
-    <Wrapper>
-      <Main>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <>
-            <Banner bannerImg={makeImgPath(data?.backdrop_path)}></Banner>
-            <DetailInfo>
-              {data?.adult ? <Ban>19금</Ban> : null}
-              <Title>{data?.name}</Title>
-              <MoreDetail>
-                <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
-                <BaseInfo>
-                  <Period>
-                    {data.first_air_date} ~ {data.last_air_date}{" "}
-                    &nbsp;&nbsp;&nbsp;총 {data.number_of_episodes}회
-                  </Period>
-                  <Genre>
-                    {data.genres.map((genre) => (
-                      <li key={genre.name}>{genre.name}</li>
-                    ))}
-                  </Genre>
-                  <Rating>
-                    <span>평점</span>
-                    {[1, 2, 3, 4, 5].map((index) =>
-                      Math.round(data.vote_average) / 2 >= index ? (
-                        <svg
-                          key={index}
-                          className="w-6 h-6"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ) : null
-                    )}
-                    <LikeBtn onClick={toggleLike}>
-                      {isLiked ? "Unlike" : "Like"}
-                    </LikeBtn>
-                  </Rating>
-
-                  {data?.created_by[0] !== undefined ? (
-                    <>
-                      <strong>연출</strong>
-                      <Creator>
-                        {data?.created_by.map((person) => (
-                          <li key={person.id}>
-                            {person.profile_path ? (
-                              <img
-                                src={makeImgPath(person.profile_path, "w500")}
-                                alt=""
-                              />
-                            ) : (
-                              <div className="img"></div>
-                            )}
-                            <span>{person.name}</span>
-                          </li>
+    <>
+      {isLoading || similarLoading ? (
+        <Loading></Loading>
+      ) : (
+        <Wrapper>
+          <Main>
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : (
+              <>
+                <Banner bannerImg={makeImgPath(data?.backdrop_path)}></Banner>
+                <DetailInfo>
+                  {data?.adult ? <Ban>19금</Ban> : null}
+                  <Title>{data?.name}</Title>
+                  <MoreDetail>
+                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    <BaseInfo>
+                      <Period>
+                        {data.first_air_date} ~ {data.last_air_date}{" "}
+                        &nbsp;&nbsp;&nbsp;총 {data.number_of_episodes}회
+                      </Period>
+                      <Genre>
+                        {data.genres.map((genre) => (
+                          <li key={genre.name}>{genre.name}</li>
                         ))}
-                      </Creator>
-                    </>
-                  ) : null}
-                  <Overview>
-                    {data.overview.length < 150
-                      ? data.overview
-                      : data.overview.slice(0, 150) + "..."}
-                  </Overview>
-                </BaseInfo>
-                <SimilarTitle>비슷한 TV쇼</SimilarTitle>
-                <SimilarTvsWrap>
-                  <SimilarTvs>
-                    {similarData?.results.map((result) => (
-                      <Link key={result.id} to={`/tv/${result.id}`}>
-                        <SimilarTv>
-                          <SimilarTvImg
-                            bgImg={
-                              result.backdrop_path
-                                ? makeImgPath(result.backdrop_path, "w500")
-                                : "null"
-                            }
-                          ></SimilarTvImg>
-                          <SimilarTvName>{result.name}</SimilarTvName>
-                        </SimilarTv>
-                      </Link>
-                    ))}
-                  </SimilarTvs>
-                </SimilarTvsWrap>
-              </MoreDetail>
-            </DetailInfo>
-          </>
-        )}
-      </Main>
-    </Wrapper>
+                      </Genre>
+                      <Rating>
+                        <span>평점</span>
+                        {[1, 2, 3, 4, 5].map((index) =>
+                          Math.round(data.vote_average) / 2 >= index ? (
+                            <svg
+                              key={index}
+                              className="w-6 h-6"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ) : null
+                        )}
+                        <LikeBtn onClick={toggleLike}>
+                          {isLiked ? "Unlike" : "Like"}
+                        </LikeBtn>
+                      </Rating>
+
+                      {data?.created_by[0] !== undefined ? (
+                        <>
+                          <strong>연출</strong>
+                          <Creator>
+                            {data?.created_by.map((person) => (
+                              <li key={person.id}>
+                                {person.profile_path ? (
+                                  <img
+                                    src={makeImgPath(
+                                      person.profile_path,
+                                      "w500"
+                                    )}
+                                    alt=""
+                                  />
+                                ) : (
+                                  <div className="img">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-5 w-5"
+                                      viewBox="0 0 20 20"
+                                      fill="currentColor"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clipRule="evenodd"
+                                      />
+                                    </svg>
+                                  </div>
+                                )}
+                                <span>{person.name}</span>
+                              </li>
+                            ))}
+                          </Creator>
+                        </>
+                      ) : null}
+                      <Overview>
+                        {data.overview.length < 150
+                          ? data.overview
+                          : data.overview.slice(0, 150) + "..."}
+                      </Overview>
+                    </BaseInfo>
+                    <SimilarTitle>비슷한 TV쇼</SimilarTitle>
+                    <SimilarTvsWrap>
+                      <SimilarTvs>
+                        {similarData?.results.map((result) => (
+                          <Link key={result.id} to={`/tv/${result.id}`}>
+                            <SimilarTv>
+                              <SimilarTvImg
+                                bgImg={
+                                  result.backdrop_path
+                                    ? makeImgPath(result.backdrop_path, "w500")
+                                    : "null"
+                                }
+                              ></SimilarTvImg>
+                              <SimilarTvName>{result.name}</SimilarTvName>
+                            </SimilarTv>
+                          </Link>
+                        ))}
+                      </SimilarTvs>
+                    </SimilarTvsWrap>
+                  </MoreDetail>
+                </DetailInfo>
+              </>
+            )}
+          </Main>
+        </Wrapper>
+      )}
+    </>
   );
 }

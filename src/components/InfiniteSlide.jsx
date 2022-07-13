@@ -120,7 +120,6 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
     if (count < 4) {
       slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev + 1);
-      console.log(count);
     } else {
       setCount((prev) => prev + 1);
       setTimeout(() => {
@@ -133,7 +132,6 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
     if (count > 1) {
       slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev - 1);
-      console.log(count);
     } else {
       setCount((prev) => prev - 1);
       setTimeout(() => {

@@ -195,9 +195,12 @@ export default function NavBar() {
   };
   window.addEventListener("scroll", controllNav);
   const logout = () => {
-    localStorage.removeItem("loginUser");
-    navigate("/");
-    window.location.reload();
+    if (window.confirm("로그아웃을 하시겠습니까?")) {
+      localStorage.removeItem("loginUser");
+      navigate("/");
+      window.location.reload();
+    }
+    return;
   };
   const mouseOver = () => {
     profileMenu.current.style.display = "flex";
