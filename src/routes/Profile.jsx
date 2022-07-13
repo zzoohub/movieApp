@@ -123,20 +123,20 @@ export default function Profile() {
   const { user } = useUser();
   const { profleImgInput } = useRef();
 
-  const [inputName, setInputName] = useState("");
-  const [inputPW, setInputPW] = useState("");
-  // console.log(inputPW, inputPW.length);
-  const [message, setMessage] = useState("");
   const {
     register,
     handleSubmit,
     clearErrors,
     formState: { errors },
     setError,
+    setValue,
   } = useForm();
   const onValid = (form) => {
     console.log(form.checkPassword);
   };
+  setValue("nickname", user?.nickname);
+  setValue("password", user?.password);
+
   return (
     <>
       {loading ? <Loading></Loading> : null}
@@ -163,6 +163,7 @@ export default function Profile() {
                 ) : null}
               </ImgBox>
               <div>
+                <span>프로필 변경하기 | </span>
                 <input
                   ref={profleImgInput}
                   type="file"
@@ -170,11 +171,14 @@ export default function Profile() {
                   accept="image/*"
                 />
                 <div>
-                  <p>닉네임 | {errors?.nickname ? (
-                <em>{errors?.nickname.message}</em>
-              ) : (
-                <strong> </strong>
-              )}</p>
+                  <p>
+                    닉네임 |{" "}
+                    {errors?.nickname ? (
+                      <em>{errors?.nickname.message}</em>
+                    ) : (
+                      <strong> </strong>
+                    )}
+                  </p>
                   <input
                     {...register("nickname", {
                       required: {
@@ -193,15 +197,18 @@ export default function Profile() {
                     type="text"
                     onInput={() => clearErrors()}
                     placeholder="닉네임"
-                    defaultValue={user?.nickname}
+                    // defaultValue={user?.nickname}
                   />
                 </div>
                 <div>
-                  <p>비밀번호 변경 | {errors?.password ? (
-              <em>{errors?.password.message}</em>
-            ) : (
-              <strong> </strong>
-            )}</p>
+                  <p>
+                    비밀번호 변경 |{" "}
+                    {errors?.password ? (
+                      <em>{errors?.password.message}</em>
+                    ) : (
+                      <strong> </strong>
+                    )}
+                  </p>
                   <input
                     {...register("password", {
                       required: {
@@ -220,16 +227,18 @@ export default function Profile() {
                     onInput={() => clearErrors()}
                     type="password"
                     placeholder="비밀번호"
-                    defaultValue={user?.password}
+                    // defaultValue={user?.password}
                   />
-                              
                 </div>
                 <div>
-                  <p>비밀번호 확인 | {errors?.checkPassword ? (
-              <em>{errors?.checkPassword.message}</em>
-            ) : (
-              <strong> </strong>
-            )}</p>
+                  <p>
+                    비밀번호 확인 |{" "}
+                    {errors?.checkPassword ? (
+                      <em>{errors?.checkPassword.message}</em>
+                    ) : (
+                      <strong> </strong>
+                    )}
+                  </p>
                   <input
                     {...register("checkPassword", {
                       required: {
@@ -241,11 +250,9 @@ export default function Profile() {
                     type="password"
                     placeholder="비밀번호"
                   />
-                              
                 </div>
               </div>
             </div>
-            
 
             <button>회원 정보 수정하기</button>
           </Form>
