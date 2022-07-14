@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
-import { ReactComponent as Mlogo } from "../images/M.svg";
+import { ReactComponent as Mlogo } from "../images/logo.svg";
 
 const ChatBotWrap = styled.div`
   position: fixed;
@@ -34,8 +34,8 @@ const ChatBox = styled.div`
   right: -10px;
   bottom: 0px;
   width: 350px;
-  height: 600px;
-  background-color: #fefff5;
+  height: 510px;
+  background-color: #fcfcf3;
   border-radius: 20px;
   color: #f9f9f9;
   padding: 15px 15px;
@@ -49,26 +49,26 @@ const ChatBox = styled.div`
       h2 {
         color: #333;
         font-weight: 700;
-        font-size: 24px;
+        font-size: 18px;
+        svg {
+          margin-left: 7px;
+          margin-right: 10px;
+        }
       }
       button {
         cursor: pointer;
         border: none;
         background: none;
-        color: #666;
+        color: #00bb4f;
         padding: 0 0 0 5px;
         svg {
           width: 25px;
           height: 25px;
         }
         :hover {
-          color: #333;
+          filter: brightness(0.9);
         }
       }
-    }
-    > p {
-      font-size: 16px;
-      color: rgba(0, 0, 0, 0.4);
     }
   }
   .chatBody {
@@ -81,180 +81,98 @@ const ChatBox = styled.div`
       margin: 10px 0 15px;
     }
   }
+  > p {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 15px 5px;
+    color: rgba(0, 0, 0, 0.4);
+  }
 `;
 const ChatBalloonWrap = styled.div`
-  height: 530px;
-  width: 270px;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-`;
-const ChatUl = styled.ul`
-  position: relative;
-  height: 485px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  padding: 2px 5px;
-  overflow-y: auto;
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 15px 0px;
-    padding: 0px 8px;
-  }
-  li:first-child div:nth-child(2) {
-    position: relative;
-    width: 80%;
-    text-align: justify;
-    word-break: break-all;
-    color: #000;
-    ::before {
-      content: "";
-      position: absolute;
-      left: -33px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-bottom: 10px solid transparent;
-      border-top: 10px solid transparent;
-      border-left: 20px solid transparent;
-      border-right: 20px solid #d9d9d9;
-    }
-  }
-  li:not(:first-child) {
-    flex-direction: row-reverse;
-    div:nth-child(2) {
-      position: relative;
-      width: 80%;
-      text-align: justify;
-      word-break: break-all;
-      color: #000;
-      ::before {
-        content: "";
-        position: absolute;
-        right: -33px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-bottom: 10px solid transparent;
-        border-top: 10px solid transparent;
-        border-right: 20px solid transparent;
-        border-left: 20px solid #d9d9d9;
-      }
-    }
-  }
-`;
-const Text = styled.div`
-  padding: 7px;
-  background-color: #d9d9d9;
-  font-size: 14px;
-  border-radius: 5px;
-`;
-const ThumNail = styled.div`
-  background-color: gray;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  line-height: 48px;
-  text-align: center;
-`;
-const Form = styled.form`
-  position: absolute;
-  left: 23px;
-  bottom: 20px;
-  display: flex;
-  width: 254px;
-  height: 32px;
+  width: 100%;
+  text-align: justify;
+  word-break: keep-all;
+  line-height: 1.2;
   margin-top: 10px;
-  border-radius: 20px;
-  overflow: hidden;
-  background-color: #fff;
-  input {
-    width: 85%;
-    outline: none;
-    border: none;
-    line-height: 18px;
-    padding: 7px;
+  h3 {
+    margin: 10px 0 15px;
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.85);
+  padding: 5px 5px 10px 5px;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 16px 1px;
   button {
-    position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 28px;
-    height: 28px;
+    width: 98%;
+    height: 45px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #f9f9f9;
+    margin-top: 5px;
+    border-radius: 15px;
+    background-color: #00bb4f;
     border: none;
-    border-radius: 50%;
-
-    text-align: right;
     cursor: pointer;
+    :hover {
+      filter: brightness(0.9);
+    }
   }
 `;
-
-function ChatBalloon() {
-  const { user } = useUser();
-  const nickName = user?.nickname;
-
-  const [inputText, setInputText] = useState("");
-  const lists = [
-    {
-      id: 1,
-      profile: "",
-      text: "더운 여름에 시원하게 볼 수 있는 공포영화 어떠세요?",
-    },
-  ];
-
-  const [chatList, setChatList] = useState(lists);
-  const [nextId, setNextId] = useState(2);
-  const userInput = (e) => {
-    e.preventDefault();
-    setInputText(e.target.value);
-  };
-  const onClick = (e) => {
-    e.preventDefault();
-    if (inputText.length > 0) {
-      const newChat = { id: nextId, profile: nickName, text: inputText };
-      chatList.push(newChat);
-      setChatList(chatList);
-      setNextId(nextId + 1);
-      setInputText("");
-    }
-  };
-
-  return (
-    <ChatBalloonWrap>
-      <ChatUl>
-        {chatList.map((list) => (
-          <li key={list.id}>
-            <ThumNail />
-            <Text>{list.text}</Text>
-          </li>
-        ))}
-      </ChatUl>
-      <Form>
-        <input
-          type="text"
-          placeholder="무엇이든 물어보세요."
-          onChange={userInput}
-          id={nextId}
-          value={inputText}
-          profile={"user"}
-        ></input>
-        <button onClick={onClick}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            fill="#1C8FFC"
-          >
-            <path d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z" />
-          </svg>
-        </button>
-      </Form>
-    </ChatBalloonWrap>
-  );
-}
-
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 30px;
+  padding: 15px;
+  cursor: pointer;
+  & > div:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.85);
+    border-radius: 50%;
+  }
+  &:hover {
+    background-color: #ececec;
+  }
+`;
+const MessageBox = styled.div`
+  width: 83%;
+  p:nth-child(1) {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  p:nth-child(2) {
+    font-size: 16px;
+    text-align: left;
+    line-height: 25px;
+  }
+`;
+const NotiBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
+const GreenDot = styled.span`
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #00bb4f;
+`;
+const Notice = styled.span`
+  font-size: 13px;
+  margin-left: 5px;
+`;
 export default function ChatBot() {
   const [showOn, setShowOn] = useState(false);
   const { user } = useUser();
@@ -303,9 +221,33 @@ export default function ChatBot() {
               </div>
             </div>
           </div>
-          <p>다양한 영화와 Tv Show 정보를 얻으실 수 있는 무비앱 입니다.</p>
+          <p>
+            다양한 영화와 Tv Show 정보를 제공하는
+            <br />
+            무비앱 입니다.
+          </p>
           <div className="chatBody">
-            <ChatBalloon />
+            <ChatBalloonWrap>
+              <FlexBox>
+                <div>
+                  <Mlogo width={15}></Mlogo>
+                </div>
+                <MessageBox>
+                  <p>MovieApp</p>
+                  <p>
+                    반갑습니다, 고객님 :) 다양한 영화와 Tv Show 정보를 제공하는
+                    무비앱 입니다. 원하시는 문의사항을 선택해주세요!
+                    <br />
+                    ...
+                  </p>
+                </MessageBox>
+              </FlexBox>
+              <button>새 문의하기</button>
+              <NotiBox>
+                <GreenDot />
+                <Notice>보통 수십 분 내 답변</Notice>
+              </NotiBox>
+            </ChatBalloonWrap>
           </div>
         </ChatBox>
       ) : null}
