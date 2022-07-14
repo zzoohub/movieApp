@@ -132,6 +132,7 @@ export default function Profile() {
     formState: { errors },
     setError,
     setValue,
+    reset,
   } = useForm();
   const onValid = (form) => {
     if (form.checkPassword !== form.password) {
