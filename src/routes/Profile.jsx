@@ -132,7 +132,6 @@ export default function Profile() {
     formState: { errors },
     setError,
     setValue,
-    reset,
   } = useForm();
   const onValid = (form) => {
     if (form.checkPassword !== form.password) {
@@ -152,9 +151,8 @@ export default function Profile() {
     setValue("nickname", existingUser.nickname);
     setValue("password", existingUser.password);
   };
-  useEffect(() => {
-    setValue("nickname", user?.nickname);
-  }, [user]);
+  setValue("nickname", user?.nickname);
+  setValue("password", user?.password);
 
   return (
     <>
@@ -182,6 +180,7 @@ export default function Profile() {
                 ) : null}
               </ImgBox>
               <div>
+                <span>프로필 변경하기 | </span>
                 <input
                   ref={profleImgInput}
                   type="file"
@@ -245,15 +244,16 @@ export default function Profile() {
                     onInput={() => clearErrors()}
                     type="password"
                     placeholder="비밀번호"
+                    // defaultValue={user?.password}
                   />
                 </div>
                 <div>
                   <p>
                     비밀번호 확인 |{" "}
-                    {errors?.notMatch ? (
-                      <em>{errors?.notMatch.message}</em>
+                    {errors?.checkPassword ? (
+                      <em>{errors?.checkPassword.message}</em>
                     ) : (
-                      <strong></strong>
+                      <strong> </strong>
                     )}
                   </p>
                   <input

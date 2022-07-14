@@ -112,7 +112,7 @@ export default function SearchedInfo() {
             {tab === "movie" ? (
               <Grid>
                 {movies?.map((movie) => (
-                  <Link key={movie.id} to={`/movie/${movie.id}`}>
+                  <Link key={movie.id} to={`/movies/${movie.id}`}>
                     <InfoBox
                       bgUrl={
                         movie.backdrop_path

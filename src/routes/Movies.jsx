@@ -3,17 +3,13 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import env from "react-dotenv";
 import styled from "styled-components";
-import {
-  getNowPlay,
-  getPopulaMovies,
-  getTopRatedMovies,
-  getUpcomingMovies,
-} from "../api";
+import { getTopRatedMovies, getUpcomingMovies } from "../api";
 import SlideAuto from "../components/AutoSlider";
 import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -78,7 +74,7 @@ const Slide = styled.div`
     ${(props) => (props.translate === "base" ? 10 : -props.translate)}vw
   );
   height: 100%;
-  transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.3s;
 `;
 const Box = styled.div`
   display: flex;
@@ -100,15 +96,23 @@ const Box = styled.div`
     width: 90%;
     pointer-events: ${(props) => (props.active ? "all" : "none")};
     height: ${(props) => (props.active ? "100%" : "65%")};
-    transition: all ease-in-out 0.5s;
-    filter: brightness(${(props) => (props.active ? "100%" : "30%")});
+    transition: all ease-in-out 0.3s;
+    filter: brightness(${(props) => (props.active ? "100%" : "35%")});
+    &.on {
+      pointer-events: all;
+      height: 100%;
+      transition: all ease-in-out 0.3s;
+      filter: brightness(100%);
+    }
   }
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border: 1px solid transparent;
     transition: all ease-in-out 0.2s;
+    box-shadow: 0px 60px 20px -20px rgba(0, 0, 0, 0.3);
     :hover {
       border: 1px solid #fff;
       border-style: outset;
@@ -142,16 +146,20 @@ const Title = styled.h3`
   color: #f9f9f9;
   margin: 15px 20px;
 `;
+const TopTitle = styled.h3`
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff3d3d;
+  margin: 20px 50px;
+  em {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #f9f9f9;
+  }
+`;
 
 export default function Movies() {
-  const { data: popula, isLoading: populaLoading } = useQuery(
-    ["movie", "popula"],
-    getPopulaMovies
-  );
-  // const { data: nowPlay, isLoading: nowPlayLoading } = useQuery(
-  //   ["movie", "nowPlay"],
-  //   getNowPlay
-  // );
+  const [popula, setPopula] = useState([]);
   const { data: upcoming, isLoading: upcomingLoading } = useQuery(
     ["movie", "upcoming"],
     getUpcomingMovies
@@ -160,19 +168,59 @@ export default function Movies() {
     ["movie", "toprated"],
     getTopRatedMovies
   );
+  const slideRef = useRef();
 
-  const slide = useRef();
-  const [index, setIndex] = useState(0);
+  async function arrange() {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${env.API_KEY}&language=ko`
+    ).then((res) => res.json());
+    const first = data?.results.slice(0, 1);
+    const last = data?.results.slice(-1);
+    await setPopula([...last, ...data.results, ...first]);
+    if (slideRef) {
+      slideRef.current.style.transition = "none";
+    }
+  }
+  useEffect(() => {
+    arrange();
+  }, []);
+
+  const [index, setIndex] = useState(1);
+
   const prevSlide = () => {
+    if (index === 1) {
+      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      slideRef.current.children[20].children[0].className = "on";
+      setIndex((prev) => prev - 1);
+      setTimeout(() => {
+        slideRef.current.style.transition = "none";
+        setIndex(20);
+        slideRef.current.children[20].children[0].className = "";
+      }, 300);
+      return;
+    }
+    slideRef.current.style = "transition: all easy-in-out 0.3s";
     setIndex((prev) => prev - 1);
   };
   const nextSlide = () => {
+    if (index === 20) {
+      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      slideRef.current.children[1].children[0].className = "on";
+      setIndex((prev) => prev + 1);
+      setTimeout(() => {
+        slideRef.current.style.transition = "none";
+        setIndex(1);
+        slideRef.current.children[1].children[0].className = "";
+      }, 300);
+      return;
+    }
+    slideRef.current.style = "transition: all easy-in-out 0.3s";
     setIndex((prev) => prev + 1);
   };
 
   return (
     <>
-      {populaLoading || upcomingLoading || topRatedLoading ? (
+      {upcomingLoading || topRatedLoading ? (
         <Loading></Loading>
       ) : (
         <Wrapper>
@@ -180,27 +228,22 @@ export default function Movies() {
             <BigTitle>Popula Movies</BigTitle>
             <Slider>
               <Slide
-                ref={slide}
-                slideWidth={popula?.results.length * 80}
+                ref={slideRef}
+                slideWidth={popula?.length * 80}
                 translate={index ? index * 80 - 10 : "base"}
               >
-                {popula?.results.map((result) => (
-                  <Box
-                    key={result.id}
-                    active={
-                      popula?.results.indexOf(result) === index ? true : false
-                    }
-                  >
-                    <Link to={`/movies/${result.id}`}>
+                {popula?.map((movie, i) => (
+                  <Box key={i} active={index === i ? true : false}>
+                    <Link to={`/movies/${movie.id}`}>
                       <img
                         src={
-                          result.backdrop_path
-                            ? makeImgPath(result.backdrop_path)
+                          movie.backdrop_path
+                            ? makeImgPath(movie.backdrop_path)
                             : ""
                         }
                       ></img>
                     </Link>
-                    <BoxDetail>{result.title}</BoxDetail>
+                    <BoxDetail>{movie.title}</BoxDetail>
                   </Box>
                 ))}
               </Slide>
@@ -222,7 +265,7 @@ export default function Movies() {
                   </svg>
                 </Prev>
               ) : null}
-              {index !== popula?.results.length - 1 ? (
+              {index !== popula?.length - 1 ? (
                 <Next onClick={nextSlide}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -243,11 +286,11 @@ export default function Movies() {
             </Slider>
           </Banner>
           <Upcoming>
-            <Title>개봉예정 영화</Title>
+            <Title>Upcoming</Title>
             <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
           </Upcoming>
           <NowPlay>
-            <Title>상영중인 영화</Title>
+            <Title>Now Playing</Title>
             <InfiniteSlide
               url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
               offset={5}
@@ -256,6 +299,9 @@ export default function Movies() {
             ></InfiniteSlide>
           </NowPlay>
           <TopRated>
+            <TopTitle>
+              TOP 20<em>Movies</em>
+            </TopTitle>
             <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
           </TopRated>
         </Wrapper>

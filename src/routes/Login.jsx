@@ -106,7 +106,6 @@ export default function Login() {
       navigate("/");
       window.location.reload();
     } else {
-      console.log(form, existingUser);
       setError("loginError", {
         type: "custom",
         message: "아이디 또는 패스워드가 일치하지 않습니다.",

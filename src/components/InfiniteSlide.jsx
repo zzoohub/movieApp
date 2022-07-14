@@ -38,7 +38,7 @@ const Slide = styled.div`
   display: flex;
   height: 200px;
   gap: ${(props) => props.gap}px;
-  padding: 0px 5px;
+  /* padding: 0px 5px; */
   transition: all ease 0.3s;
 `;
 const Box = styled.div`
@@ -65,10 +65,10 @@ const Box = styled.div`
   }
 `;
 const Prev = styled.button`
-  left: 5px;
+  left: 0px;
 `;
 const Next = styled.button`
-  right: 5px;
+  right: 0px;
 `;
 const Title = styled.h3`
   position: absolute;
@@ -120,8 +120,8 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
     if (count < 4) {
       slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev + 1);
-      console.log(count);
     } else {
+      slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev + 1);
       setTimeout(() => {
         slideRef.current.style.transition = `none`;
@@ -133,8 +133,8 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
     if (count > 1) {
       slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev - 1);
-      console.log(count);
     } else {
+      slideRef.current.style = "transition: all easy-in-out 0.3s";
       setCount((prev) => prev - 1);
       setTimeout(() => {
         slideRef.current.style.transition = `none`;
