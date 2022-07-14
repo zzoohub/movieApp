@@ -32,14 +32,14 @@ export default function Shoes() {
       <Footer>
         <div>
           <p>
-            <a href="#">서비스 이용약관</a> | <a href="#">개인정보 처리방침</a>{" "}
-            | <a href="#">회사 안내</a>
+            <span>서비스 이용약관</span> | <span>개인정보 처리방침</span> |{" "}
+            <span>회사 안내</span>
           </p>
           <p>
-            고객센터 | <a href="#">cs@movieapp.com</a>, 02-1234-5678
+            고객센터 | <span>cs@movieapp.com</span>, 02-1234-5678
           </p>
           <p>
-            광고 문의 | <a href="#">ad@movieapp.com</a>
+            광고 문의 | <span>ad@movieapp.com</span>
           </p>
           <p>
             제휴 및 대외 협력 |{" "}

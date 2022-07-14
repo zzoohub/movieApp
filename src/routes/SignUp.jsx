@@ -116,8 +116,8 @@ export default function SignUp() {
             type="text"
             placeholder="닉네임을 지어주세요."
           />
-          {errors?.ninkname ? (
-            <em>{errors.ninkname.message}</em>
+          {errors?.nickname ? (
+            <em>{errors.nickname.message}</em>
           ) : (
             <strong>닉네임은 아이디로 사용됩니다.</strong>
           )}
