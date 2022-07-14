@@ -113,6 +113,7 @@ const Box = styled.div`
       border: 1px solid #fff;
       border-style: outset;
     }
+    box-shadow: 0px 50px 20px -20px rgba(0, 0, 0, 0.5);
   }
 `;
 const BoxDetail = styled.h3`

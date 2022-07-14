@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Loading from "../components/Loading";
 import { useUser } from "../util/useUser";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -119,24 +121,41 @@ const ImgBox = styled.div`
 
 export default function Profile() {
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const { user } = useUser();
   const { profleImgInput } = useRef();
 
-  const [inputName, setInputName] = useState("");
-  const [inputPW, setInputPW] = useState("");
-  // console.log(inputPW, inputPW.length);
-  const [message, setMessage] = useState("");
   const {
     register,
     handleSubmit,
     clearErrors,
     formState: { errors },
     setError,
+    setValue,
+    reset,
   } = useForm();
   const onValid = (form) => {
-    console.log(form.checkPassword);
+    if (form.checkPassword !== form.password) {
+      setError("notMatch", {
+        type: "custom",
+        message: "비밀번호가 일치하지 않습니다.",
+      });
+      return;
+    }
+    const existingUser = user;
+    existingUser.nickname = form.nickname;
+    existingUser.password = form.password;
+    localStorage.setItem("loginUser", JSON.stringify(existingUser));
+
+    alert("프로필이 변경되었습니다.");
+    reset();
+    setValue("nickname", existingUser.nickname);
+    setValue("password", existingUser.password);
   };
+  useEffect(() => {
+    setValue("nickname", user?.nickname);
+  }, [user]);
+
   return (
     <>
       {loading ? <Loading></Loading> : null}
@@ -170,11 +189,14 @@ export default function Profile() {
                   accept="image/*"
                 />
                 <div>
-                  <p>닉네임 | {errors?.nickname ? (
-                <em>{errors?.nickname.message}</em>
-              ) : (
-                <strong> </strong>
-              )}</p>
+                  <p>
+                    닉네임 |{" "}
+                    {errors?.nickname ? (
+                      <em>{errors?.nickname.message}</em>
+                    ) : (
+                      <strong> </strong>
+                    )}
+                  </p>
                   <input
                     {...register("nickname", {
                       required: {
@@ -193,15 +215,18 @@ export default function Profile() {
                     type="text"
                     onInput={() => clearErrors()}
                     placeholder="닉네임"
-                    defaultValue={user?.nickname}
+                    // defaultValue={user?.nickname}
                   />
                 </div>
                 <div>
-                  <p>비밀번호 변경 | {errors?.password ? (
-              <em>{errors?.password.message}</em>
-            ) : (
-              <strong> </strong>
-            )}</p>
+                  <p>
+                    비밀번호 변경 |{" "}
+                    {errors?.password ? (
+                      <em>{errors?.password.message}</em>
+                    ) : (
+                      <strong> </strong>
+                    )}
+                  </p>
                   <input
                     {...register("password", {
                       required: {
@@ -220,16 +245,17 @@ export default function Profile() {
                     onInput={() => clearErrors()}
                     type="password"
                     placeholder="비밀번호"
-                    defaultValue={user?.password}
                   />
-                              
                 </div>
                 <div>
-                  <p>비밀번호 확인 | {errors?.checkPassword ? (
-              <em>{errors?.checkPassword.message}</em>
-            ) : (
-              <strong> </strong>
-            )}</p>
+                  <p>
+                    비밀번호 확인 |{" "}
+                    {errors?.notMatch ? (
+                      <em>{errors?.notMatch.message}</em>
+                    ) : (
+                      <strong></strong>
+                    )}
+                  </p>
                   <input
                     {...register("checkPassword", {
                       required: {
@@ -241,11 +267,9 @@ export default function Profile() {
                     type="password"
                     placeholder="비밀번호"
                   />
-                              
                 </div>
               </div>
             </div>
-            
 
             <button>회원 정보 수정하기</button>
           </Form>
