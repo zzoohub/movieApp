@@ -155,14 +155,34 @@ export default function Profile() {
     setValue("nickname", user?.nickname);
   }, [user]);
 
+  const [profileImg, setProfileImg] = useState(null); //유저가 등록한 프로필이 있으면 useUser를 사용하여 디폴트값으로 연결되는 코드로 연결예정
+  //https://taehoblog.netlify.app/react/previewimg/ 참고한 사이트
+  const onLoadFile = (e) => {
+    let reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onloadend = () => {
+      const profileImgUrl = reader.result;
+
+      if (profileImgUrl) {
+        setProfileImg(profileImgUrl);
+        //유저 정보에도 이미지값 변경 or 추가
+        //지금 상태에서는 페이지가 바뀌면 이미지 유지 안됨
+      }
+    };
+  };
+
   return (
     <>
       {loading ? <Loading></Loading> : null}
       <Wrapper>
         <Main>
           <h2>My Page</h2>
-          <ImgBox url={user?.img}>
-            {!user?.img ? (
+          <ImgBox url={profileImg}>
+            {!profileImg ? (
               <svg
                 className="w-6 h-6"
                 fill="#f9f9f9"
@@ -178,7 +198,12 @@ export default function Profile() {
             ) : null}
           </ImgBox>
           <ImgLabel htmlFor="userImg"></ImgLabel>
-          <ImgInput id="userImg" type="file" accept="image/*" />
+          <ImgInput
+            id="userImg"
+            type="file"
+            accept="image/*"
+            onChange={onLoadFile}
+          />
           <Form onSubmit={handleSubmit(onValid)}>
             <input
               onInput={() => {

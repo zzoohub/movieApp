@@ -162,8 +162,8 @@ const Notice = styled.span`
   margin-left: 5px;
 `;
 export default function ChatBot() {
-  const [showOn, setShowOn] = useState(false); //챗봇창 열고 닫기
   const { user } = useUser();
+  const [showOn, setShowOn] = useState(false); //챗봇창 열고 닫기
   const [onTime, setOnTime] = useState(false); //운영시간 모드
   const now = new Date(); //챗봇 열때 현재시각 갖고오기
   const nowTime = now.getHours() * 60 + now.getMinutes(); //현재시각 분으로 환산
@@ -171,7 +171,7 @@ export default function ChatBot() {
 
   const open = () => {
     setShowOn(!showOn);
-    console.log(nowDay, nowTime);
+    // console.log(nowDay, nowTime);
     if (nowDay === 0 || nowDay >= 6) {
       //월~금이 아닌경우 운영시간 false 후 종료
       return setOnTime(false);
