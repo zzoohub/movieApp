@@ -49,11 +49,17 @@ const Li = styled.li`
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 100px;
+  width: max-content;
   height: 50px;
   &:first-child {
     width: max-content;
     margin-right: 50px;
+  }
+  :not(:nth-of-type(1)) a {
+    margin: 0px 30px;
+    :hover {
+      color: #ff8181;
+    }
   }
   a {
     display: flex;
@@ -61,6 +67,7 @@ const Li = styled.li`
     align-items: center;
     width: 100%;
     height: 100%;
+    transition: all linear 0.2s;
     color: #f9f9f9;
     text-align: center;
     text-transform: uppercase;
@@ -71,78 +78,7 @@ const Li = styled.li`
     }
   }
 `;
-const TvSubMenu = styled.ul`
-  position: absolute;
-  left: 0px;
-  top: 45px;
-  display: none;
-  flex-direction: column;
-  width: max-content;
-  height: max-content;
-  background-color: #f9f9f9;
-  border: 1px solid gray;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all ease-in-out 0.2s;
-  padding: 5px 0px;
-  li {
-    text-align: center;
-    a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100px;
-      height: 30px;
-      font-size: 14px;
-      margin: 0px;
-      padding: 10px;
-      color: #333;
-      border-bottom: 1px solid #d9d9d9;
-      :hover {
-        font-weight: bold;
-      }
-      :last-child {
-        border: none;
-      }
-    }
-  }
-`;
-const MovieSubMenu = styled.ul`
-  position: absolute;
-  left: 0px;
-  top: 45px;
-  display: none;
-  flex-direction: column;
-  width: max-content;
-  height: max-content;
-  background-color: #f9f9f9;
-  border: 1px solid gray;
-  border-radius: 10px;
-  transition: all ease-in-out 0.2s;
-  overflow: hidden;
-  padding: 5px 0px;
-  li {
-    text-align: center;
-    a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100px;
-      height: 30px;
-      font-size: 14px;
-      margin: 0px;
-      padding: 10px;
-      color: #333;
-      border-bottom: 1px solid #d9d9d9;
-      :hover {
-        font-weight: bold;
-      }
-      :last-child {
-        border: none;
-      }
-    }
-  }
-`;
+
 const UserInfo = styled.div`
   position: relative;
   display: flex;
@@ -158,6 +94,10 @@ const UserInfo = styled.div`
   }
   a {
     color: #f9f9f9;
+    transition: all linear 0.2s;
+    :hover {
+      color: #ff8181;
+    }
   }
 `;
 const ProfileMenu = styled.ul`
