@@ -76,6 +76,9 @@ const ImgLabel = styled.label`
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  :hover {
+    filter: brightness(0.5);
+  }
 `;
 const ImgInput = styled.input`
   display: none;

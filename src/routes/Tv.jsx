@@ -8,6 +8,7 @@ import PopularTV from "../components/PopularTV";
 import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
+import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -42,9 +43,13 @@ const Banner = styled.section`
   h3 {
     font-size: 56px;
     margin-bottom: 10px;
-    & > *:hover {
-      box-sizing: content-box;
-      border-bottom: 2px solid #f9f9f9;
+  }
+  .moreBtn {
+    position: relative;
+    left: 180px;
+    top: -80px;
+    svg:hover {
+      transform: scale(1.1);
     }
   }
   span {
@@ -132,14 +137,13 @@ export default function Tv() {
         <Wrapper>
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-              <h3>
-                <Link to={`/tv/${bannerData?.id}`}>
-                  {bannerData?.original_name}
-                </Link>
-              </h3>
+              <h3>{bannerData?.original_name}</h3>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
+              <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
+                <MoreBtn width={20} fill={"#ff3d3d"} />
+              </Link>
             </Banner>
             <Title>Today Tv Shows</Title>
             <Grid>

@@ -23,6 +23,11 @@ export const getSimilarTvs = async (id) => {
     `${BASE_URL}/tv/${id}/similar?api_key=${env.API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+export const getLatestTvs = async (id) => {
+  return await fetch(
+    `${BASE_URL}/tv/latest?api_key=${env.API_KEY}&language=ko`
+  ).then((res) => res.json());
+};
 
 // getMovie
 export const getSimilarMovies = async (id) => {
