@@ -3,7 +3,7 @@ import { useUser } from "../util/useUser";
 import env from "react-dotenv";
 import { useEffect, useState } from "react";
 import { makeImgPath } from "../util/makeImgPath";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -110,7 +110,6 @@ const AltImg = styled.article`
 `;
 
 export default function Favorits() {
-  const navigate = useNavigate();
   const { user } = useUser();
   const [tab, setTab] = useState("tv");
   const [tvs, setTvs] = useState([]);
