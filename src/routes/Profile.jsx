@@ -27,21 +27,23 @@ const Main = styled.main`
   font-size: 16px;
   line-height: 40px;
   h2 {
-    font-size: 38px;
-    font-weight: bold;
+    font-size: 32px;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
   }
   .imgBtn {
     display: block;
-    margin: 10px auto 20px;
+    margin: 20px;
     font-size: 12px;
-    color: #000;
-    background-color: #fff;
+    color: #333;
+    background-color: #f9f9f9;
     line-height: 1;
-    padding: 10px 10px;
+    padding: 7px;
     cursor: pointer;
+    :active {
+      transform: scale(0.96);
+    }
   }
 `;
 
@@ -49,8 +51,8 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   margin: 0px auto;
   background-image: url(${(props) => props.url});
   background-position: center;
@@ -60,8 +62,8 @@ const ImgBox = styled.div`
     props.url === undefined ? "1px solid #d9d9d9" : null}; */
   svg {
     color: #d9d9d9;
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
   }
 `;
 const ImgLabel = styled.label`
@@ -69,8 +71,8 @@ const ImgLabel = styled.label`
   position: absolute;
   top: 140px;
   left: calc(50% - 75px);
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
@@ -124,9 +126,9 @@ const Form = styled.form`
 `;
 export default function Profile() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { user } = useUser();
-  const { profleImgInput } = useRef();
+  const [previewUrl, setPreviewUrl] = useState(user?.profileUrl);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -135,10 +137,11 @@ export default function Profile() {
     formState: { errors },
     setError,
     setValue,
-    reset,
   } = useForm();
+
   const onValid = (form) => {
     const existingUser = user;
+    let profileUrl = "";
     if (form.password !== form.checkpassword) {
       return setError("notMatch", {
         type: "custom",
@@ -147,43 +150,39 @@ export default function Profile() {
     }
     if (
       form.nickname === existingUser.nickname &&
-      form.password === existingUser.password
+      form.password === existingUser.password &&
+      previewUrl === existingUser.profileUrl
     ) {
       return setError("alreadyUse", {
         type: "custom",
         message: "변경된 내용이 없습니다.",
       });
     }
+
     existingUser.nickname = form.nickname;
     existingUser.password = form.password;
+    existingUser.profileUrl = previewUrl;
     localStorage.setItem("user", JSON.stringify(existingUser));
     localStorage.setItem("loginUser", JSON.stringify(existingUser));
-    console.log(existingUser);
     navigate("/");
   };
+
   useEffect(() => {
     setValue("nickname", user?.nickname);
   }, [user]);
 
-  const [profileImg, setProfileImg] = useState(null); //유저가 등록한 프로필이 있으면 useUser를 사용하여 디폴트값으로 연결되는 코드로 연결예정
-  //https://taehoblog.netlify.app/react/previewimg/ 참고한 사이트
   const onLoadFile = (e) => {
     let reader = new FileReader();
-
-    // console.log(e.target.files);
 
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }
 
     reader.onloadend = () => {
-      const profileImgUrl = reader.result;
-      console.log(reader.result);
+      const fileUrl = reader.result;
 
-      if (profileImgUrl) {
-        setProfileImg(profileImgUrl);
-        //유저 정보에도 이미지값 변경 or 추가
-        //지금 상태에서는 페이지가 바뀌면 이미지 유지 안됨
+      if (fileUrl) {
+        setPreviewUrl(fileUrl);
       }
     };
   };
@@ -193,10 +192,18 @@ export default function Profile() {
       {loading ? <Loading></Loading> : null}
       <Wrapper>
         <Main>
-          <h2>My Page</h2>
+          <h2>Profile</h2>
           <Form onSubmit={handleSubmit(onValid)}>
-            <ImgBox url={profileImg}>
-              {!profileImg ? (
+            <ImgBox
+              url={
+                previewUrl
+                  ? previewUrl
+                  : user?.profileUrl
+                  ? user?.profileUrl
+                  : null
+              }
+            >
+              {!user?.profileUrl && !previewUrl ? (
                 <svg
                   className="w-6 h-6"
                   fill="#f9f9f9"
@@ -216,15 +223,16 @@ export default function Profile() {
               id="userImg"
               type="file"
               accept="image/*"
-              onChange={onLoadFile}
+              onInput={onLoadFile}
+              {...register("profileImg")}
             />
             <span
               onClick={() => {
-                setProfileImg(null);
+                setPreviewUrl(null);
               }}
               className="imgBtn"
             >
-              기본 이미지로 변경
+              변경전으로
             </span>
             <input
               onInput={() => {

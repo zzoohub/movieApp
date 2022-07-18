@@ -92,6 +92,12 @@ const UserInfo = styled.div`
     height: 30px;
     cursor: pointer;
   }
+  img {
+    width: 35px;
+    object-fit: contain;
+    border-radius: 50%;
+    background-color: #f9f9f9;
+  }
   a {
     color: #f9f9f9;
     transition: all linear 0.2s;
@@ -275,18 +281,22 @@ export default function NavBar() {
         >
           {user ? (
             <>
-              <svg
-                className="w-6 h-6"
-                fill="#f9f9f9"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              {user?.profileUrl ? (
+                <img src={user?.profileUrl} />
+              ) : (
+                <svg
+                  className="w-6 h-6"
+                  fill="#f9f9f9"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}
               <ProfileMenu ref={profileMenu}>
                 <li onClick={() => navigate(`/profile`)}>Profile</li>
                 <li onClick={() => navigate(`/favorits`)}>Favorits</li>

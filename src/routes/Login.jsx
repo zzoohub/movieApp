@@ -105,9 +105,7 @@ export default function Login() {
       existingUser.nickname === form.nickname &&
       existingUser.password === form.password
     ) {
-      const user = form;
-      user.like = { tv: [], movie: [] };
-      localStorage.setItem("loginUser", JSON.stringify(user));
+      localStorage.setItem("loginUser", JSON.stringify(existingUser));
       navigate("/");
       window.location.reload();
     } else {

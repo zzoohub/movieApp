@@ -88,7 +88,10 @@ export default function SignUp() {
   } = useForm();
 
   const onValid = (form) => {
-    localStorage.setItem("user", JSON.stringify(form));
+    const user = form;
+    user.like = { tv: [], movie: [] };
+    user.profileUrl = "";
+    localStorage.setItem("user", JSON.stringify(user));
     navigate("/login");
   };
   const { user } = useUser();
