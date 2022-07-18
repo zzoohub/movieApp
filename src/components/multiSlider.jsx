@@ -131,7 +131,10 @@ export default function SlideMulti({ offset, data }) {
                       }
                       alt=""
                     />
-                    <h4>{data[offset * indexes + index]?.title}</h4>
+                    <h4>
+                      {data[offset * indexes + index]?.title &&
+                        data[offset * indexes + index]?.name}
+                    </h4>
                     <span>{data[offset * indexes + index]?.vote_average}</span>
                     <em>RANK {offset * indexes + index + 1}</em>
                   </Item>
