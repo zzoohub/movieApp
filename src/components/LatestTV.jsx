@@ -28,10 +28,14 @@ export default function LatestTV() {
     getLatestTvs
   );
   useEffect(() => {
-    const post = latest?.results;
-    setPosts(post);
-    console.log(latest?.results);
+    fetch(
+      `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
+    )
+      .then((res) => res.json())
+      .then((data) => setPosts(data.results));
+    console.log(posts);
   }, []);
+
   return (
     <Wrapper>
       <Title>Latest TV</Title>
