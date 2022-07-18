@@ -3,13 +3,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getTvAiringToday } from "../api";
 import InfoBox from "../components/InfoBox";
-import OnTheAiringTV from "../components/OnTheAiringTV";
 import PopularTV from "../components/PopularTV";
-import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
 import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
-import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -140,12 +137,6 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
-  const [mp4, setMp4] = useState();
-  useEffect(() => {
-    fetch(`https://dogs-api.nomadcoders.workers.dev`)
-      .then((res) => res.json())
-      .then((json) => setMp4(json));
-  }, []);
 
   return (
     <>
@@ -162,7 +153,6 @@ export default function Tv() {
               <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
                 <MoreBtn width={20} fill={"#ff3d3d"} />
               </Link>
-              <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
             </Banner>
             <Title>Today Tv Shows</Title>
             <Grid>
@@ -181,9 +171,7 @@ export default function Tv() {
                 </Link>
               ))}
             </Grid>
-            <OnTheAiringTV />
             <PopularTV />
-            <LatestTV />
           </Main>
         </Wrapper>
       )}

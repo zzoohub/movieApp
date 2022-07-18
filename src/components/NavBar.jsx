@@ -86,7 +86,7 @@ const UserInfo = styled.div`
   width: 50px;
   height: 50px;
   align-items: center;
-  margin-right: 30px;
+  /* margin-right: 30px; */
   cursor: pointer;
   svg {
     width: 30px;
