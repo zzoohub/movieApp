@@ -11,6 +11,7 @@ import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-
 const Wrapper = styled.div`
   height: max-content;
   width: 100%;
+  background-color: #111c26;
 `;
 const Main = styled.main`
   max-width: 1920px;
@@ -25,30 +26,29 @@ const Title = styled.h2`
 const Banner = styled.section`
   display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: flex-end;
   flex-direction: column;
   padding: 50px;
   width: 100%;
   height: 85vh;
-  background-image: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.7)
-    ),
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), #111c26),
     url(${(props) => props.bannerImg});
   background-position: center;
   background-size: cover;
   color: #f9f9f9;
-  h3 {
-    font-size: 56px;
-    margin-bottom: 10px;
-  }
-  .moreBtn {
-    position: relative;
-    left: 180px;
-    top: -80px;
-    svg:hover {
-      transform: scale(1.1);
+  div {
+    display: flex;
+    align-items: center;
+    h3 {
+      font-size: 56px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .moreBtn {
+      margin-left: 30px;
+      svg:hover {
+        transform: scale(1.05);
+      }
     }
   }
   span {
@@ -85,51 +85,6 @@ const Grid = styled.div`
   height: max-content;
   padding: 15px;
 `;
-const TvItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 220px;
-  overflow: hidden;
-  background-color: #222;
-  border-radius: 10px;
-  border-style: outset;
-  border: 3px solid transparent;
-  transition: all ease-in-out 0.1s;
-  :hover {
-    transform: scale(1.02);
-    border: 3px solid #d9d9d9;
-  }
-`;
-const TvItemImg = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(${(props) => props.bgImg});
-  background-size: cover;
-  background-position: center center;
-  height: 200px;
-  border-bottom: ${(props) =>
-    props.bgImg === "border" ? "1px solid gray" : "none"};
-  svg {
-    width: 70px;
-    height: 70px;
-    color: gray;
-  }
-`;
-const SubInfo = styled.div`
-  padding: 7px;
-  h3 {
-    font-weight: 600;
-    color: #d9d9d9;
-  }
-`;
-const Flex = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 7px;
-  font-size: 12px;
-  color: #d9d9d9;
-`;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
@@ -148,13 +103,15 @@ export default function Tv() {
         <Wrapper>
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-              <h3>{bannerData?.original_name}</h3>
+              <div>
+                <h3>{bannerData?.original_name}</h3>
+                <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
+                  <MoreBtn width={40} fill={"#ff3d3d"} />
+                </Link>
+              </div>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
-              <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
-                <MoreBtn width={20} fill={"#ff3d3d"} />
-              </Link>
             </Banner>
             <Title>Today Tv Shows</Title>
             <Grid>
