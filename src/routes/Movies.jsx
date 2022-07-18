@@ -176,7 +176,7 @@ export default function Movies() {
 
   async function arrange() {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${env.API_KEY}&language=ko`
+      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
     ).then((res) => res.json());
     const first = data?.results.slice(0, 1);
     const last = data?.results.slice(-1);
@@ -298,7 +298,7 @@ export default function Movies() {
           <Upcoming>
             <Title>Upcoming</Title>
             <InfiniteSlide
-              url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${env.API_KEY}&language=ko`}
+              url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}
               gap={10}
               type="movie"
@@ -307,7 +307,7 @@ export default function Movies() {
           <NowPlay>
             <Title>Now Playing</Title>
             <InfiniteSlide
-              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
+              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}
               gap={10}
               type="movie"

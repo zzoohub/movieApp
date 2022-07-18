@@ -119,7 +119,7 @@ export default function Favorits() {
     if (user?.like?.tv) {
       for (const tv of user?.like?.tv) {
         fetch(
-          `https://api.themoviedb.org/3/tv/${tv}?api_key=${env.API_KEY}&language=ko`
+          `https://api.themoviedb.org/3/tv/${tv}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
         )
           .then((res) => res.json())
           .then((json) => setTvs((old) => [...old, json]));
@@ -130,7 +130,7 @@ export default function Favorits() {
     if (user?.like?.movie) {
       for (const movie of user?.like?.movie) {
         fetch(
-          `https://api.themoviedb.org/3/movie/${movie}?api_key=${env.API_KEY}&language=ko`
+          `https://api.themoviedb.org/3/movie/${movie}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
         )
           .then((res) => res.json())
           .then((json) => setMovies((old) => [...old, json]));

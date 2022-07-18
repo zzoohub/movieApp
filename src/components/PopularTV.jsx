@@ -140,7 +140,7 @@ export default function PopularTV() {
     <Wrapper>
       <Title>Popular TV</Title>
       <InfiniteSlide
-        url={`https://api.themoviedb.org/3/tv/popular?api_key=${env.API_KEY}&language=ko`}
+        url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
         offset={5}
         gap={10}
       ></InfiniteSlide>
