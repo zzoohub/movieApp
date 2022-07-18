@@ -69,8 +69,8 @@ const ImgBox = styled.div`
 const ImgLabel = styled.label`
   display: block;
   position: absolute;
-  top: 140px;
-  left: calc(50% - 75px);
+  top: 120px;
+  left: calc(50% - 85px);
   width: 170px;
   height: 170px;
   border-radius: 50%;
