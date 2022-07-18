@@ -24,7 +24,7 @@ export const getSimilarTvs = async (id) => {
 };
 export const getLatestTvs = async (id) => {
   return await fetch(
-    `${BASE_URL}/tv/latest?api_key=${env.API_KEY}&language=ko`
+    `${BASE_URL}/tv/latest?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
 

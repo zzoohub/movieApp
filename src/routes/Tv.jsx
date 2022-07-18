@@ -9,6 +9,7 @@ import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
 import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
+import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   height: max-content;
