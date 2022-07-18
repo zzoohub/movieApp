@@ -22,17 +22,16 @@ const Title = styled.h3`
 `;
 
 export default function LatestTV() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState({});
   const { data: latest, isLoading: latestLoading } = useQuery(
     ["tv", "latest"],
     getLatestTvs
   );
-
   useEffect(() => {
-    setPosts(latest);
+    const post = latest?.results;
+    setPosts(post);
+    console.log(latest?.results);
   }, []);
-
-  // console.log(latest);
   return (
     <Wrapper>
       <Title>Latest TV</Title>
