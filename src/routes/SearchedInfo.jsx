@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import env from "react-dotenv";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import InfoBox from "../components/InfoBox";
@@ -70,7 +69,7 @@ export default function SearchedInfo() {
   useEffect(() => {
     fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${
-        env.API_KEY
+        process.env.REACT_APP_API_KEY
       }&language=ko&query=${keyword}&page=${page ? page : "1"}`
     )
       .then((res) => res.json())

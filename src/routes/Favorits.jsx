@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
-import env from "react-dotenv";
 import { useEffect, useState } from "react";
 import { makeImgPath } from "../util/makeImgPath";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;

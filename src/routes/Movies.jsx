@@ -1,10 +1,8 @@
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import env from "react-dotenv";
 import styled from "styled-components";
 import { getTopRatedMovies, getUpcomingMovies } from "../api";
-import SlideAuto from "../components/AutoSlider";
 import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
