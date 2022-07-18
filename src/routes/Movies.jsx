@@ -72,7 +72,7 @@ const Slide = styled.div`
     ${(props) => (props.translate === "base" ? 10 : -props.translate)}vw
   );
   height: 100%;
-  transition: all ease-in-out 0.3s;
+  transition: ${(props) => props.transition};
 `;
 const Box = styled.div`
   display: flex;
@@ -109,7 +109,7 @@ const Box = styled.div`
     height: 100%;
     object-fit: cover;
     border: 1px solid transparent;
-    transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.3s;
     box-shadow: 0px 60px 20px -20px rgba(0, 0, 0, 0.3);
     :hover {
       border: 1px solid #fff;
@@ -128,7 +128,7 @@ const BoxDetail = styled.h3`
   color: #f9f9f9;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px 20px;
-  transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.3s;
 `;
 const Upcoming = styled.section`
   width: 100%;
@@ -171,6 +171,7 @@ export default function Movies() {
     getTopRatedMovies
   );
   const slideRef = useRef();
+  const [transition, setTransition] = useState(false);
 
   async function arrange() {
     const data = await fetch(
@@ -179,9 +180,6 @@ export default function Movies() {
     const first = data?.results.slice(0, 1);
     const last = data?.results.slice(-1);
     await setPopula([...last, ...data.results, ...first]);
-    if (slideRef) {
-      slideRef.current.style.transition = "none";
-    }
   }
   useEffect(() => {
     arrange();
@@ -191,32 +189,32 @@ export default function Movies() {
 
   const prevSlide = () => {
     if (index === 1) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      setTransition(true);
       slideRef.current.children[20].children[0].className = "on";
       setIndex((prev) => prev - 1);
       setTimeout(() => {
-        slideRef.current.style.transition = "none";
+        setTransition(false);
         setIndex(20);
         slideRef.current.children[20].children[0].className = "";
       }, 300);
       return;
     }
-    slideRef.current.style = "transition: all easy-in-out 0.3s";
+    setTransition(true);
     setIndex((prev) => prev - 1);
   };
   const nextSlide = () => {
     if (index === 20) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      setTransition(true);
       slideRef.current.children[1].children[0].className = "on";
       setIndex((prev) => prev + 1);
       setTimeout(() => {
-        slideRef.current.style.transition = "none";
+        setTransition(false);
         setIndex(1);
         slideRef.current.children[1].children[0].className = "";
       }, 300);
       return;
     }
-    slideRef.current.style = "transition: all easy-in-out 0.3s";
+    setTransition(true);
     setIndex((prev) => prev + 1);
   };
 
@@ -233,6 +231,7 @@ export default function Movies() {
                 ref={slideRef}
                 slideWidth={popula?.length * 80}
                 translate={index ? index * 80 - 10 : "base"}
+                transition={transition ? "all ease-in-out 0.3s" : "none"}
               >
                 {popula?.map((movie, i) => (
                   <Box key={i} active={index === i ? true : false}>
