@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getTvAiringToday } from "../api";
+import { getTvAiringToday, getTopRatedTvs } from "../api";
 import SlideMulti from "../components/multiSlider";
 import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
@@ -85,7 +85,10 @@ const TopTitle = styled.h3`
 `;
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
-  // const { data, isLoading } = useQuery(["tv", "topRatedT"], getTopRatedTvs);
+  const { topRateData, topRateisLoading } = useQuery(
+    ["tv", "topRatedTv"],
+    getTopRatedTvs
+  );
   const bannerData = data?.results.find(
     (result) => result.backdrop_path && result.overview
   );
@@ -111,13 +114,13 @@ export default function Tv() {
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
             </Banner>
-            {/* <TopRated>
+            <TopRated>
               <TopTitle>
-                TOP 20<em>Movies</em>
+                TOP 20<em>TV</em>
               </TopTitle>
-              <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
+              <SlideMulti offset={5} data={topRateData?.results}></SlideMulti>
             </TopRated>
-            <PopularTV /> */}
+            <PopularTV />
           </Main>
         </Wrapper>
       )}
