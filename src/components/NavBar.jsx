@@ -83,10 +83,11 @@ const UserInfo = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 50px;
   height: 50px;
   align-items: center;
   margin-right: 30px;
+  cursor: pointer;
   svg {
     width: 30px;
     height: 30px;
@@ -94,7 +95,8 @@ const UserInfo = styled.div`
   }
   img {
     width: 35px;
-    object-fit: contain;
+    height: 35px;
+    object-fit: cover;
     border-radius: 50%;
     background-color: #f9f9f9;
   }
@@ -108,7 +110,7 @@ const UserInfo = styled.div`
 `;
 const ProfileMenu = styled.ul`
   position: absolute;
-  top: 45px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
   display: none;
@@ -125,7 +127,7 @@ const ProfileMenu = styled.ul`
     border-top: 1px solid #333;
     background-color: #d9d9d9;
     :hover {
-      opacity: 0.8;
+      opacity: 0.9;
     }
     :first-child {
       border: none;
@@ -176,10 +178,10 @@ export default function NavBar() {
     (event) => {
       setCLientY(event.clientY);
       if (window.scrollY > 80) {
-        if (event.clientY > 70) {
-          setShowNav(false);
-        } else {
+        if (event.clientY < 70 || menuOver) {
           setShowNav(true);
+        } else {
+          setShowNav(false);
         }
       }
     },
@@ -197,10 +199,13 @@ export default function NavBar() {
     };
   }, [handleNavigation, handleMouseMove]);
 
+  const [menuOver, setMenuOver] = useState(false);
   const mouseOver = () => {
+    setMenuOver(true);
     profileMenu.current.style.display = "flex";
   };
   const mouseLeave = () => {
+    setMenuOver(false);
     profileMenu.current.style.display = "none";
   };
 

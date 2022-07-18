@@ -242,10 +242,12 @@ export default function TvDetail() {
       const removed = loginUser.like.tv.filter((value) => value !== id);
       loginUser.like.tv = removed;
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
+      localStorage.setItem("user", JSON.stringify(loginUser));
       setIsLiked(false);
     } else {
       loginUser.like.tv = [...loginUser.like.tv, id];
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
+      localStorage.setItem("user", JSON.stringify(loginUser));
       setIsLiked(true);
     }
   };
