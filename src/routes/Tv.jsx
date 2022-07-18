@@ -133,7 +133,9 @@ const Flex = styled.div`
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
-  const bannerData = data?.results.find((result) => result.backdrop_path);
+  const bannerData = data?.results.find(
+    (result) => result.backdrop_path && result.overview
+  );
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
