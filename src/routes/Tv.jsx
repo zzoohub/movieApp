@@ -70,6 +70,7 @@ const Banner = styled.section`
     height: 450px;
     background-color: #333;
     object-fit: cover;
+    border-radius: 10px;
   }
 `;
 const Grid = styled.div`

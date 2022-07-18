@@ -38,10 +38,11 @@ const DetailInfo = styled.section`
     position: absolute;
     top: 17%;
     left: 55%;
-    width: 500px;
-    height: 300px;
+    width: 580px;
+    height: 340px;
     background-color: #333;
     object-fit: cover;
+    border-radius: 7px;
   }
 `;
 const Title = styled.h2`
