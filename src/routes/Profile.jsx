@@ -33,6 +33,11 @@ const Main = styled.main`
     margin-bottom: 50px;
     text-align: center;
   }
+  .imgBtn {
+    display: block;
+    margin: 15px auto 0;
+    cursor: pointer;
+  }
 `;
 
 const ImgBox = styled.div`
@@ -76,7 +81,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px auto 0;
+  margin: 20px auto 0;
   color: #f9f9f9;
 
   input {
@@ -204,6 +209,14 @@ export default function Profile() {
             accept="image/*"
             onChange={onLoadFile}
           />
+          <button
+            onClick={() => {
+              setProfileImg(null);
+            }}
+            className="imgBtn"
+          >
+            기본 이미지
+          </button>
           <Form onSubmit={handleSubmit(onValid)}>
             <input
               onInput={() => {

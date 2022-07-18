@@ -95,7 +95,12 @@ export default function Login() {
   }, [user]);
   const onValid = (form) => {
     const existingUser = JSON.parse(localStorage.getItem("user"));
-    if (!existingUser) return;
+    if (!existingUser) {
+      setError("loginError", {
+        type: "custom",
+        message: "아이디 또는 패스워드가 일치하지 않습니다.",
+      });
+    }
     if (
       existingUser.nickname === form.nickname &&
       existingUser.password === form.password
