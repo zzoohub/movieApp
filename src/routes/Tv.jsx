@@ -42,6 +42,10 @@ const Banner = styled.section`
   h3 {
     font-size: 56px;
     margin-bottom: 10px;
+    & > *:hover {
+      box-sizing: content-box;
+      border-bottom: 2px solid #f9f9f9;
+    }
   }
   span {
     margin: 10px 0px;
@@ -128,7 +132,11 @@ export default function Tv() {
         <Wrapper>
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-              <h3>{bannerData?.original_name}</h3>
+              <h3>
+                <Link to={`/tv/${bannerData?.id}`}>
+                  {bannerData?.original_name}
+                </Link>
+              </h3>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
