@@ -109,7 +109,7 @@ const Box = styled.div`
     height: 100%;
     object-fit: cover;
     border: 1px solid transparent;
-    transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.2s;
     box-shadow: 0px 60px 20px -20px rgba(0, 0, 0, 0.3);
     :hover {
       border: 1px solid #fff;
@@ -128,7 +128,7 @@ const BoxDetail = styled.h3`
   color: #f9f9f9;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px 20px;
-  transition: all ease-in-out 0.3s;
+  transition: all ease-in-out 0.2s;
 `;
 const Upcoming = styled.section`
   width: 100%;
@@ -189,31 +189,37 @@ export default function Movies() {
 
   const prevSlide = () => {
     if (index === 1) {
+      // slideRef.current.style = "transition: all easy-in-out 0.3s";
       setTransition(true);
       slideRef.current.children[20].children[0].className = "on";
       setIndex((prev) => prev - 1);
       setTimeout(() => {
+        // slideRef.current.style.transition = "none";
         setTransition(false);
         setIndex(20);
         slideRef.current.children[20].children[0].className = "";
       }, 300);
       return;
     }
+    // slideRef.current.style = "transition: all easy-in-out 0.3s";
     setTransition(true);
     setIndex((prev) => prev - 1);
   };
   const nextSlide = () => {
     if (index === 20) {
+      // slideRef.current.style = "transition: all easy-in-out 0.3s";
       setTransition(true);
       slideRef.current.children[1].children[0].className = "on";
       setIndex((prev) => prev + 1);
       setTimeout(() => {
+        // slideRef.current.style.transition = "none";
         setTransition(false);
         setIndex(1);
         slideRef.current.children[1].children[0].className = "";
       }, 300);
       return;
     }
+    // slideRef.current.style = "transition: all easy-in-out 0.3s";
     setTransition(true);
     setIndex((prev) => prev + 1);
   };
@@ -248,42 +254,38 @@ export default function Movies() {
                   </Box>
                 ))}
               </Slide>
-              {index ? (
-                <Prev onClick={prevSlide}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </Prev>
-              ) : null}
-              {index !== popula?.length - 1 ? (
-                <Next onClick={nextSlide}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Next>
-              ) : null}
+              <Prev onClick={prevSlide}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </Prev>
+              <Next onClick={nextSlide}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Next>
             </Slider>
           </Banner>
           <TopRated>
