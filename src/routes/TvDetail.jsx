@@ -281,7 +281,7 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <Title>{data?.name}</Title>
                   <MoreDetail>
-                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    <video src={mp4 ? mp4.url : ""} controls></video>
                     <BaseInfo>
                       <Period>
                         {data.first_air_date} ~ {data.last_air_date}{" "}

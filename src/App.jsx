@@ -11,11 +11,13 @@ import Login from "./routes/Login";
 import MovieDetail from "./routes/MovieDetail";
 import Profile from "./routes/Profile";
 import Favorits, { FavoritMovie, FavoritTv } from "./routes/Favorits";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <NavBar />
         <Routes>
           <Route path="/login" element={<Login />}></Route>
