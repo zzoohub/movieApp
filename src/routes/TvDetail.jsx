@@ -163,10 +163,11 @@ const Overview = styled.p`
   margin-top: 15px;
 `;
 const SimilarTitle = styled.h2`
-  font-size: 22px;
+  font-size: 20px;
   color: #ff3d3d;
   font-weight: bold;
   margin-top: 100px;
+  margin-left: 20px;
 `;
 const SimilarTvsWrap = styled.div`
   width: 100%;
@@ -178,7 +179,7 @@ const SimilarTvs = styled.div`
   gap: 15px;
   width: max-content;
   padding: 0px 10px;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 const SimilarTv = styled.div`
   position: relative;
@@ -284,7 +285,7 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <Title>{data?.name}</Title>
                   <MoreDetail>
-                    <video src={mp4 ? mp4.url : ""} controls></video>
+                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
                     <BaseInfo>
                       <Period>
                         {data.first_air_date} ~ {data.last_air_date}{" "}

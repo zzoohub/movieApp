@@ -162,10 +162,11 @@ const Overview = styled.p`
   margin-top: 15px;
 `;
 const SimilarTitle = styled.h2`
-  font-size: 22px;
+  font-size: 20px;
   color: #ff3d3d;
   font-weight: bold;
   margin-top: 100px;
+  margin-left: 20px;
 `;
 const SimilarMoviesWrap = styled.div`
   width: 100%;
@@ -177,7 +178,7 @@ const SimilarMovies = styled.div`
   gap: 15px;
   width: max-content;
   padding: 0px 10px;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 const SimilarMovie = styled.div`
   position: relative;

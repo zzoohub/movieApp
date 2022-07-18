@@ -8,6 +8,7 @@ import PopularTV from "../components/PopularTV";
 import LatestTV from "../components/LatestTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
+import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -25,6 +26,7 @@ const Title = styled.h2`
 `;
 const Banner = styled.section`
   display: flex;
+  position: relative;
   justify-content: center;
   flex-direction: column;
   padding: 50px;
@@ -59,6 +61,15 @@ const Banner = styled.section`
     font-weight: 500;
     line-height: 1.7;
     width: 50%;
+  }
+  video {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    width: 750px;
+    height: 450px;
+    background-color: #333;
+    object-fit: cover;
   }
 `;
 const Grid = styled.div`
@@ -123,6 +134,12 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
+  const [mp4, setMp4] = useState();
+  useEffect(() => {
+    fetch(`https://dogs-api.nomadcoders.workers.dev`)
+      .then((res) => res.json())
+      .then((json) => setMp4(json));
+  }, []);
 
   return (
     <>
@@ -140,6 +157,7 @@ export default function Tv() {
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
+              <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
             </Banner>
             <Title>Today Tv Shows</Title>
             <Grid>
