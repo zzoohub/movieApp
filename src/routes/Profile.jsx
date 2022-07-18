@@ -165,12 +165,15 @@ export default function Profile() {
   const onLoadFile = (e) => {
     let reader = new FileReader();
 
+    // console.log(e.target.files);
+
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }
 
     reader.onloadend = () => {
       const profileImgUrl = reader.result;
+      console.log(reader.result);
 
       if (profileImgUrl) {
         setProfileImg(profileImgUrl);
