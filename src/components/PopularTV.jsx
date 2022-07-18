@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
-import env from "react-dotenv";
 import InfiniteSlide from "./InfiniteSlide";
 
 const Wrapper = styled.div`
@@ -140,7 +139,7 @@ export default function PopularTV() {
     <Wrapper>
       <Title>Popular TV</Title>
       <InfiniteSlide
-        url={`https://api.themoviedb.org/3/tv/popular?api_key=${env.API_KEY}&language=ko`}
+        url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
         offset={5}
         gap={10}
       ></InfiniteSlide>

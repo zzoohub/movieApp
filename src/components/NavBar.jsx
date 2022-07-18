@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useMatch, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
 
@@ -144,6 +144,7 @@ export default function NavBar() {
   const [showNav, setShowNav] = useState(true);
   const profileMenu = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     if (window.confirm("로그아웃을 하시겠습니까?")) {
@@ -304,7 +305,14 @@ export default function NavBar() {
               )}
               <ProfileMenu ref={profileMenu}>
                 <li onClick={() => navigate(`/profile`)}>Profile</li>
-                <li onClick={() => navigate(`/favorits`)}>Favorits</li>
+                <li
+                  onClick={() => {
+                    if (location.pathname === "/favorits") return;
+                    navigate(`/favorits`);
+                  }}
+                >
+                  Favorits
+                </li>
                 <li onClick={logout}>Log out</li>
               </ProfileMenu>
             </>

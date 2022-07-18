@@ -1,6 +1,5 @@
 window.env = {
   "ALLUSERSPROFILE": "C:\\ProgramData",
-  "API_KEY": "e51171931820c845ce6637f3e578d769",
   "APPDATA": "C:\\Users\\user\\AppData\\Roaming",
   "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_6708_CVVNCLTJLZQJMGXW",
   "CLASSPATH": ".;C:\\Program Files (x86)\\QuickTime\\QTSystem\\QTJava.zip",
@@ -68,6 +67,7 @@ window.env = {
   "PSModulePath": "C:\\Users\\user\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
   "PUBLIC": "C:\\Users\\Public",
   "QTJAVA": "C:\\Program Files (x86)\\QuickTime\\QTSystem\\QTJava.zip",
+  "REACT_APP_API_KEY": "e51171931820c845ce6637f3e578d769",
   "SESSIONNAME": "Console",
   "SystemDrive": "C:",
   "SystemRoot": "C:\\WINDOWS",

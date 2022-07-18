@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
-import env from "react-dotenv";
 import { useEffect, useState } from "react";
 import { makeImgPath } from "../util/makeImgPath";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -110,7 +109,6 @@ const AltImg = styled.article`
 `;
 
 export default function Favorits() {
-  const navigate = useNavigate();
   const { user } = useUser();
   const [tab, setTab] = useState("tv");
   const [tvs, setTvs] = useState([]);
@@ -120,7 +118,7 @@ export default function Favorits() {
     if (user?.like?.tv) {
       for (const tv of user?.like?.tv) {
         fetch(
-          `https://api.themoviedb.org/3/tv/${tv}?api_key=${env.API_KEY}&language=ko`
+          `https://api.themoviedb.org/3/tv/${tv}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
         )
           .then((res) => res.json())
           .then((json) => setTvs((old) => [...old, json]));
@@ -131,7 +129,7 @@ export default function Favorits() {
     if (user?.like?.movie) {
       for (const movie of user?.like?.movie) {
         fetch(
-          `https://api.themoviedb.org/3/movie/${movie}?api_key=${env.API_KEY}&language=ko`
+          `https://api.themoviedb.org/3/movie/${movie}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
         )
           .then((res) => res.json())
           .then((json) => setMovies((old) => [...old, json]));

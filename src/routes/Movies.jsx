@@ -1,10 +1,8 @@
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import env from "react-dotenv";
 import styled from "styled-components";
 import { getTopRatedMovies, getUpcomingMovies } from "../api";
-import SlideAuto from "../components/AutoSlider";
 import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
@@ -58,10 +56,10 @@ const Slider = styled.div`
   }
 `;
 const Prev = styled.button`
-  left: 7%;
+  left: 8%;
 `;
 const Next = styled.button`
-  right: 6%;
+  right: 7%;
 `;
 
 const Slide = styled.div`
@@ -132,13 +130,17 @@ const BoxDetail = styled.h3`
   padding: 10px 20px;
   transition: all ease-in-out 0.2s;
 `;
-const NowPlay = styled.section`
+const Upcoming = styled.section`
   width: 100%;
   height: 250px;
+  margin-top: 30px;
 `;
-const Upcoming = styled(NowPlay)``;
-const TopRated = styled(NowPlay)`
-  height: 450px;
+const TopRated = styled(Upcoming)`
+  height: 300px;
+  margin-top: 30px;
+`;
+const NowPlay = styled(Upcoming)`
+  margin-bottom: 50px;
 `;
 const Title = styled.h3`
   font-size: 22px;
@@ -172,7 +174,7 @@ export default function Movies() {
 
   async function arrange() {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${env.API_KEY}&language=ko`
+      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
     ).then((res) => res.json());
     const first = data?.results.slice(0, 1);
     const last = data?.results.slice(-1);
@@ -285,25 +287,30 @@ export default function Movies() {
               ) : null}
             </Slider>
           </Banner>
-          <Upcoming>
-            <Title>Upcoming</Title>
-            <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
-          </Upcoming>
-          <NowPlay>
-            <Title>Now Playing</Title>
-            <InfiniteSlide
-              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
-              offset={5}
-              gap={10}
-              type="movie"
-            ></InfiniteSlide>
-          </NowPlay>
           <TopRated>
             <TopTitle>
               TOP 20<em>Movies</em>
             </TopTitle>
             <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
           </TopRated>
+          <Upcoming>
+            <Title>Upcoming</Title>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
+          </Upcoming>
+          <NowPlay>
+            <Title>Now Playing</Title>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
+          </NowPlay>
         </Wrapper>
       )}
     </>

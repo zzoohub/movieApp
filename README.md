@@ -18,6 +18,7 @@
 
 - api사이트 = https://developers.themoviedb.org/3
 - 강아지 랜덤 비디오 = https://dogs-api.nomadcoders.workers.dev
+- react-dotenv &&
 
 ### 주영석
 
