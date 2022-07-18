@@ -35,7 +35,12 @@ const Main = styled.main`
   }
   .imgBtn {
     display: block;
-    margin: 15px auto 0;
+    margin: 10px auto 20px;
+    font-size: 12px;
+    color: #000;
+    background-color: #fff;
+    line-height: 1;
+    padding: 10px 10px;
     cursor: pointer;
   }
 `;
@@ -46,7 +51,7 @@ const ImgBox = styled.div`
   align-items: center;
   width: 150px;
   height: 150px;
-  margin: 30px auto 0;
+  margin: 0px auto;
   background-image: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
@@ -186,38 +191,38 @@ export default function Profile() {
       <Wrapper>
         <Main>
           <h2>My Page</h2>
-          <ImgBox url={profileImg}>
-            {!profileImg ? (
-              <svg
-                className="w-6 h-6"
-                fill="#f9f9f9"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            ) : null}
-          </ImgBox>
-          <ImgLabel htmlFor="userImg"></ImgLabel>
-          <ImgInput
-            id="userImg"
-            type="file"
-            accept="image/*"
-            onChange={onLoadFile}
-          />
-          <button
-            onClick={() => {
-              setProfileImg(null);
-            }}
-            className="imgBtn"
-          >
-            기본 이미지
-          </button>
           <Form onSubmit={handleSubmit(onValid)}>
+            <ImgBox url={profileImg}>
+              {!profileImg ? (
+                <svg
+                  className="w-6 h-6"
+                  fill="#f9f9f9"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : null}
+            </ImgBox>
+            <ImgLabel htmlFor="userImg"></ImgLabel>
+            <ImgInput
+              id="userImg"
+              type="file"
+              accept="image/*"
+              onChange={onLoadFile}
+            />
+            <span
+              onClick={() => {
+                setProfileImg(null);
+              }}
+              className="imgBtn"
+            >
+              기본 이미지로 변경
+            </span>
             <input
               onInput={() => {
                 clearErrors();
