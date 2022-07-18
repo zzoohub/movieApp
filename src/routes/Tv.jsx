@@ -11,6 +11,7 @@ import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-
 const Wrapper = styled.div`
   height: max-content;
   width: 100%;
+  background-color: #111c26;
 `;
 const Main = styled.main`
   max-width: 1920px;
@@ -25,30 +26,29 @@ const Title = styled.h2`
 const Banner = styled.section`
   display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: flex-end;
   flex-direction: column;
   padding: 50px;
   width: 100%;
   height: 85vh;
-  background-image: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.7)
-    ),
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), #111c26),
     url(${(props) => props.bannerImg});
   background-position: center;
   background-size: cover;
   color: #f9f9f9;
-  h3 {
-    font-size: 56px;
-    margin-bottom: 10px;
-  }
-  .moreBtn {
-    position: relative;
-    left: 180px;
-    top: -80px;
-    svg:hover {
-      transform: scale(1.1);
+  div {
+    display: flex;
+    align-items: center;
+    h3 {
+      font-size: 56px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .moreBtn {
+      margin-left: 30px;
+      svg:hover {
+        transform: scale(1.05);
+      }
     }
   }
   span {
@@ -101,13 +101,15 @@ export default function Tv() {
         <Wrapper>
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-              <h3>{bannerData?.original_name}</h3>
+              <div>
+                <h3>{bannerData?.original_name}</h3>
+                <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
+                  <MoreBtn width={40} fill={"#ff3d3d"} />
+                </Link>
+              </div>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
-              <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
-                <MoreBtn width={20} fill={"#ff3d3d"} />
-              </Link>
             </Banner>
             {/* <TopRated>
               <TopTitle>
