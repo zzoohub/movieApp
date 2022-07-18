@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getTvAiringToday } from "../api";
-import InfoBox from "../components/InfoBox";
+import { getTvAiringToday, getTopRatedTvs } from "../api";
+import SlideMulti from "../components/multiSlider";
 import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
@@ -64,30 +64,31 @@ const Banner = styled.section`
     line-height: 1.7;
     width: 50%;
   }
-  video {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    width: 750px;
-    height: 450px;
-    background-color: #333;
-    object-fit: cover;
-    border-radius: 10px;
+`;
+const TopRated = styled.section`
+  width: 100%;
+  height: 250px;
+  margin-top: 30px;
+  height: 300px;
+  margin-top: 30px;
+`;
+const TopTitle = styled.h3`
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff3d3d;
+  margin: 20px 50px;
+  em {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #f9f9f9;
   }
 `;
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: auto;
-  gap: 20px;
-  width: 100%;
-  margin: auto;
-  height: max-content;
-  padding: 15px;
-`;
-
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
+  const { topRateData, topRateisLoading } = useQuery(
+    ["tv", "topRatedTv"],
+    getTopRatedTvs
+  );
   const bannerData = data?.results.find(
     (result) => result.backdrop_path && result.overview
   );
@@ -113,23 +114,12 @@ export default function Tv() {
               <span>평점 {bannerData.vote_average}</span>
               <p>{bannerData?.overview}</p>
             </Banner>
-            <Title>Today Tv Shows</Title>
-            <Grid>
-              {fitered.map((tv) => (
-                <Link to={`/tv/${tv.id}`} key={tv.id}>
-                  <InfoBox
-                    bgUrl={
-                      tv.backdrop_path
-                        ? makeImgPath(tv.backdrop_path, "w500")
-                        : null
-                    }
-                    name={tv.name}
-                    firstDate={tv.first_air_date}
-                    voteAverage={tv.vote_average}
-                  ></InfoBox>
-                </Link>
-              ))}
-            </Grid>
+            <TopRated>
+              <TopTitle>
+                TOP 20<em>TV</em>
+              </TopTitle>
+              <SlideMulti offset={5} data={topRateData?.results}></SlideMulti>
+            </TopRated>
             <PopularTV />
           </Main>
         </Wrapper>
