@@ -292,7 +292,11 @@ export default function Movies() {
             <TopTitle>
               TOP 20<em>Movies</em>
             </TopTitle>
-            <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
+            <SlideMulti
+              offset={5}
+              data={topRated?.results}
+              type="movie"
+            ></SlideMulti>
           </TopRated>
           <Upcoming>
             <Title>Upcoming</Title>

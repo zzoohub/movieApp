@@ -106,7 +106,7 @@ const Next = styled.button`
   right: 0px;
 `;
 
-export default function SlideMulti({ offset, data }) {
+export default function SlideMulti({ offset, data, type }) {
   const [page, setPage] = useState(0);
   return (
     <>
@@ -132,8 +132,9 @@ export default function SlideMulti({ offset, data }) {
                       alt=""
                     />
                     <h4>
-                      {data[offset * indexes + index]?.title &&
-                        data[offset * indexes + index]?.name}
+                      {type === "movie"
+                        ? data[offset * indexes + index]?.title
+                        : data[offset * indexes + index]?.name}
                     </h4>
                     <span>{data[offset * indexes + index]?.vote_average}</span>
                     <em>RANK {offset * indexes + index + 1}</em>
