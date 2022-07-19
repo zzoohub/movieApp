@@ -34,7 +34,8 @@ const DetailInfo = styled.section`
   margin-top: 100px;
   padding: 50px;
   color: #f9f9f9;
-  video {
+  video,
+  iframe {
     position: absolute;
     top: 20%;
     left: 55%;
@@ -234,7 +235,8 @@ export default function TvDetail() {
     isLoading: similarLoading,
     refetch: similarRefetch,
   } = useQuery(["movie", "similar"], () => getSimilarMovies(id));
-  const [mp4, setMp4] = useState();
+  const [mp4, setMp4] = useState("");
+  const [video, setVideo] = useState("");
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => {
@@ -271,6 +273,21 @@ export default function TvDetail() {
     } else {
       setIsLiked(false);
     }
+    fetch(`https://dogs-api.nomadcoders.workers.dev`)
+      .then((res) => res.json())
+      .then((json) => setMp4(json));
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.results[0]) {
+          setVideo(json.results[0].key);
+        } else {
+          setVideo("");
+        }
+      });
   }, [id]);
 
   return (
@@ -289,7 +306,15 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <Title>{data?.title}</Title>
                   <MoreDetail>
-                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    {video ? (
+                      <iframe
+                        allowFullScreen
+                        src={`https://www.youtube.com/embed/${video}?autoplay=1&mute=1`}
+                        frameBorder="0"
+                        autoPlay
+                      ></iframe>
+                    ) : // <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    null}
                     <BaseInfo>
                       <Period>
                         {data.release_date} 개봉 &nbsp;&nbsp;&nbsp;총{" "}
