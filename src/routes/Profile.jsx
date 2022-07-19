@@ -171,6 +171,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    setValue("profileImg", user?.profileUrl);
     setValue("nickname", user?.nickname);
     setValue("password", user?.password);
     setValue("checkpassword", user?.password);

@@ -5,10 +5,8 @@ const TvItem = styled.div`
   flex-direction: column;
   height: 220px;
   overflow: hidden;
-  background-color: #222;
-  border-radius: 10px;
+  background-color: #10243a;
   border-style: outset;
-  border: 3px solid transparent;
   transition: all ease-in-out 0.1s;
   :hover {
     transform: scale(1.02);
