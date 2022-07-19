@@ -148,7 +148,10 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
       {nowPlay ? (
         <Slide ref={slideRef} scale={scale} gap={gap}>
           {nowPlay.map((item, index) => (
-            <Link to={`/movies/${item.id}`} key={index}>
+            <Link
+              to={type === "movie" ? `/movies/${item.id}` : `/tv/${item.id}`}
+              key={index}
+            >
               <Box
                 bgUrl={
                   item.backdrop_path
