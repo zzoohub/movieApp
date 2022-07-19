@@ -8,9 +8,8 @@ const TvItem = styled.div`
   background-color: #071626;
   border-style: outset;
   transition: all ease-in-out 0.2s;
-  box-shadow: 0px 15px 12px -5px rgba(0, 0, 0, 0.4);
   :hover {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 `;
 const TvItemImg = styled.div`
