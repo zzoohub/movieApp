@@ -7,6 +7,7 @@ import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
 import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
+import InfiniteSlide from "../components/InfiniteSlide";
 
 const Wrapper = styled.div`
   height: max-content;
@@ -18,10 +19,10 @@ const Main = styled.main`
   margin: 0 auto;
 `;
 const Title = styled.h2`
-  color: #ff3d3d;
-  font-weight: bold;
   font-size: 22px;
-  margin: 30px 0px 0px 20px;
+  font-weight: bold;
+  color: #f9f9f9;
+  margin: 15px 20px;
 `;
 const Banner = styled.section`
   display: flex;
@@ -86,6 +87,8 @@ const TopTitle = styled.h3`
     color: #f9f9f9;
   }
 `;
+const OnTheAir = styled.section``;
+
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
   const { data: topRateData, isLoading: topRateisLoading } = useQuery(
@@ -98,7 +101,7 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
-  console.log(topRateData);
+  // console.log(topRateData);
   return (
     <>
       {isLoading ? (
@@ -132,6 +135,14 @@ export default function Tv() {
               ></SlideMulti>
             </TopRated>
             <PopularTV />
+            <OnTheAir>
+              <Title>On The Air</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </OnTheAir>
           </Main>
         </Wrapper>
       )}
