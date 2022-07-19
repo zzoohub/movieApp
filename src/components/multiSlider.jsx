@@ -119,7 +119,11 @@ export default function SlideMulti({ offset, data, type }) {
             <MultiSet key={indexes} className={page === indexes ? "on" : ""}>
               {[...Array(offset)].map((item, index) => (
                 <Link
-                  to={`/movies/${data[offset * indexes + index]?.id}`}
+                  to={
+                    type === "movie"
+                      ? `/movies/${data[offset * indexes + index]?.id}`
+                      : `/tv/${data[offset * indexes + index]?.id}`
+                  }
                   key={index}
                 >
                   <Item

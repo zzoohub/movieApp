@@ -172,6 +172,7 @@ export default function Profile() {
 
   useEffect(() => {
     setValue("nickname", user?.nickname);
+    setValue("password", user?.password);
   }, [user]);
 
   const onLoadFile = (e) => {
@@ -288,7 +289,10 @@ export default function Profile() {
                 clearErrors();
               }}
               {...register("checkpassword", {
-                required: { value: true, message: "비밀번호를 입력해주세요." },
+                required: {
+                  value: true,
+                  message: "비밀번호 확인란을 입력해주세요.",
+                },
                 minLength: {
                   value: 6,
                   message: "비밀번호는 최소 6글자입니다.",
@@ -301,8 +305,8 @@ export default function Profile() {
               type="password"
               placeholder="비밀번호 확인"
             />
-            {errors?.notMatch ? (
-              <em>{errors.notMatch.message}</em>
+            {errors?.checkpassword ? (
+              <em>{errors.checkpassword.message}</em>
             ) : (
               <strong>변경할 비밀번호를 한번 더 입력해주세요.</strong>
             )}

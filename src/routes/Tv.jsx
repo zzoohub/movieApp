@@ -115,7 +115,11 @@ export default function Tv() {
               </div>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
-              <p>{bannerData?.overview}</p>
+              <p>
+                {bannerData?.overview.length > 200
+                  ? bannerData?.overview.slice(0, 200) + "..."
+                  : bannerData?.overview}
+              </p>
             </Banner>
             <TopRated>
               <TopTitle>

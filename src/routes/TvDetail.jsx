@@ -49,6 +49,8 @@ const Title = styled.h2`
   font-size: 64px;
   font-weight: bold;
   margin-bottom: 30px;
+  max-width: 50%;
+  line-height: 1.2;
 `;
 const Ban = styled.div`
   position: absolute;
