@@ -38,14 +38,17 @@ const Banner = styled.section`
   color: #f9f9f9;
   div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     h3 {
       font-size: 56px;
       font-weight: bold;
       margin-bottom: 10px;
+      max-width: 70%;
+      line-height: 1.3;
     }
     .moreBtn {
-      margin-left: 30px;
+      margin-left: 20px;
+      margin-top: 10px;
       svg:hover {
         transform: scale(1.05);
       }
@@ -105,9 +108,9 @@ export default function Tv() {
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
               <div>
-                <h3>{bannerData?.original_name}</h3>
+                <h3>{bannerData?.name}</h3>
                 <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
-                  <MoreBtn width={40} fill={"#ff3d3d"} />
+                  <MoreBtn width={50} fill={"#ff3d3d"} />
                 </Link>
               </div>
               <span>첫방송 {bannerData.first_air_date}</span>
