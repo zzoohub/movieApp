@@ -36,7 +36,7 @@ const DetailInfo = styled.section`
   color: #f9f9f9;
   video {
     position: absolute;
-    top: 17%;
+    top: 20%;
     left: 55%;
     width: 500px;
     height: 300px;
@@ -49,7 +49,7 @@ const Title = styled.h2`
   font-size: 64px;
   font-weight: bold;
   margin-bottom: 30px;
-  max-width: 50%;
+  max-width: 55%;
   line-height: 1.2;
 `;
 const Ban = styled.div`
@@ -197,8 +197,7 @@ const SimilarTv = styled.div`
   transition: all ease-in-out 0.2s;
   overflow: hidden;
   :hover {
-    transform: scale(1.03);
-    border: 3px solid #ff3d3d;
+    border: 2px solid #ff3d3d;
   }
   :hover h3 {
     bottom: 0px;
