@@ -154,7 +154,7 @@ export default function Profile() {
     if (
       form.nickname === existingUser.nickname &&
       form.password === existingUser.password &&
-      previewUrl === existingUser.profileUrl
+      !previewUrl
     ) {
       return setError("alreadyUse", {
         type: "custom",
@@ -178,6 +178,7 @@ export default function Profile() {
   }, [user]);
 
   const onLoadFile = (e) => {
+    clearErrors();
     let reader = new FileReader();
 
     if (e.target.files[0]) {
