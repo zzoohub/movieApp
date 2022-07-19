@@ -24,9 +24,10 @@ export const getSimilarTvs = async (id) => {
 
 export const getTopRatedTvs = async () => {
   return await fetch(
-    `${BASE_URL}/tv//top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
+    `${BASE_URL}/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
+
 
 // getMovie
 export const getSimilarMovies = async (id) => {

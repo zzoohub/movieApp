@@ -85,8 +85,8 @@ const TopTitle = styled.h3`
 `;
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
-  const { topRateData, topRateisLoading } = useQuery(
-    ["tv", "topRatedTv"],
+  const { data: topRateData, isLoading: topRateisLoading } = useQuery(
+    ["tv", "topRated"],
     getTopRatedTvs
   );
   const bannerData = data?.results.find(
@@ -95,7 +95,7 @@ export default function Tv() {
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
-
+  console.log(topRateData);
   return (
     <>
       {isLoading ? (
@@ -118,7 +118,11 @@ export default function Tv() {
               <TopTitle>
                 TOP 20<em>TV</em>
               </TopTitle>
-              <SlideMulti offset={5} data={topRateData?.results}></SlideMulti>
+              <SlideMulti
+                offset={5}
+                data={topRateData?.results}
+                type="tv"
+              ></SlideMulti>
             </TopRated>
             <PopularTV />
           </Main>
