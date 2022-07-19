@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getTvAiringToday, getTopRatedTvs } from "../api";
 import SlideMulti from "../components/multiSlider";
-import PopularTV from "../components/PopularTV";
+// import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
 import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
@@ -71,8 +71,6 @@ const Banner = styled.section`
 `;
 const TopRated = styled.section`
   width: 100%;
-  height: 250px;
-  margin-top: 30px;
   height: 300px;
   margin-top: 30px;
 `;
@@ -87,7 +85,14 @@ const TopTitle = styled.h3`
     color: #f9f9f9;
   }
 `;
-const OnTheAir = styled.section``;
+const PopularTV = styled.section`
+  width: 100%;
+  height: 250px;
+  margin-top: 30px;
+`;
+const OnTheAir = styled(PopularTV)`
+  margin-bottom: 50px;
+`;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
@@ -134,7 +139,14 @@ export default function Tv() {
                 type="tv"
               ></SlideMulti>
             </TopRated>
-            <PopularTV />
+            <PopularTV>
+              <Title>Popular TV</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </PopularTV>
             <OnTheAir>
               <Title>On The Air</Title>
               <InfiniteSlide
