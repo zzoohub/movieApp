@@ -235,7 +235,6 @@ export default function TvDetail() {
     isLoading: similarLoading,
     refetch: similarRefetch,
   } = useQuery(["movie", "similar"], () => getSimilarMovies(id));
-  const [mp4, setMp4] = useState("");
   const [video, setVideo] = useState("");
   const [isLiked, setIsLiked] = useState(false);
 
@@ -263,9 +262,6 @@ export default function TvDetail() {
     refetch();
     similarRefetch();
     setIsLiked(false);
-    fetch(`https://dogs-api.nomadcoders.workers.dev`)
-      .then((res) => res.json())
-      .then((json) => setMp4(json));
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
     const aleadyLiked = loginUser?.like?.movie?.find((value) => value === id);
     if (aleadyLiked) {
@@ -273,9 +269,6 @@ export default function TvDetail() {
     } else {
       setIsLiked(false);
     }
-    fetch(`https://dogs-api.nomadcoders.workers.dev`)
-      .then((res) => res.json())
-      .then((json) => setMp4(json));
     fetch(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     )
@@ -313,8 +306,7 @@ export default function TvDetail() {
                         frameBorder="0"
                         autoPlay
                       ></iframe>
-                    ) : // <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
-                    null}
+                    ) : null}
                     <BaseInfo>
                       <Period>
                         {data.release_date} 개봉 &nbsp;&nbsp;&nbsp;총{" "}

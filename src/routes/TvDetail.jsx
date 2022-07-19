@@ -234,7 +234,6 @@ export default function TvDetail() {
     isLoading: similarLoading,
     refetch: similarRefetch,
   } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
-  const [mp4, setMp4] = useState("");
   const [video, setVideo] = useState("");
   const [isLiked, setIsLiked] = useState(false);
 
@@ -269,9 +268,6 @@ export default function TvDetail() {
     } else {
       setIsLiked(false);
     }
-    fetch(`https://dogs-api.nomadcoders.workers.dev`)
-      .then((res) => res.json())
-      .then((json) => setMp4(json));
     fetch(
       `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     )
@@ -310,8 +306,7 @@ export default function TvDetail() {
                         frameBorder="0"
                         autoPlay
                       ></iframe>
-                    ) : // <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
-                    null}
+                    ) : null}
                     <BaseInfo>
                       <Period>
                         {data.first_air_date} ~ {data.last_air_date}{" "}
