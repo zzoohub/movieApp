@@ -30,15 +30,17 @@ const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 40px;
-  margin: 0 5px;
-  border-radius: 5px;
-  background-color: ${(props) => (props.tabMatch ? "#ff3d3d" : "#d9d9d9")};
-  color: #333;
+  width: 250px;
+  height: 45px;
+  margin: 0 7px;
+  transition: all ease-in-out 0.1s;
+  box-shadow: 0px 10px 12px -5px rgba(0, 0, 0, 0.3);
+  background-color: ${(props) => (props.tabMatch ? "#021020" : "#c2d8f1")};
+  color: ${(props) => (props.tabMatch ? "#f9f9f9" : "#333")};
   border: none;
+  transform: scale(${(props) => (props.tabMatch ? "1.05" : "0.95")});
   font-size: 18px;
-  font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};
+  /* font-weight: ${(props) => (props.tabMatch ? "bold" : "500")}; */
   cursor: pointer;
   :hover {
     filter: brightness(0.9);

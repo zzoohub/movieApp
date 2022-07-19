@@ -5,7 +5,8 @@
 1. max-width 1920px
 2. white = #f9f9f9
 3. point = #ff3d3d
-4. bgColor = #2c3e50
+4. point2 = #071626
+5. bgColor = #2c3e50
 
 ## 깃 클론 후
 
