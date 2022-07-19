@@ -34,6 +34,7 @@ const DetailInfo = styled.section`
   margin-top: 100px;
   padding: 50px;
   color: #f9f9f9;
+  iframe,
   video {
     position: absolute;
     top: 20%;
@@ -234,6 +235,7 @@ export default function TvDetail() {
     refetch: similarRefetch,
   } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
   const [mp4, setMp4] = useState();
+  const [video, setVideo] = useState();
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => {
@@ -263,6 +265,13 @@ export default function TvDetail() {
     fetch(`https://dogs-api.nomadcoders.workers.dev`)
       .then((res) => res.json())
       .then((json) => setMp4(json));
+
+    fetch(
+      `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
+    )
+      .then((res) => res.json())
+      .then((json) => setVideo(json.results[0].key));
+
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
     const aleadyLiked = loginUser?.like?.tv?.find((value) => value === id);
     if (aleadyLiked) {
@@ -272,6 +281,7 @@ export default function TvDetail() {
     }
   }, [id]);
 
+  // console.log(id, video, !video);
   return (
     <>
       {isLoading || similarLoading ? (
@@ -288,7 +298,16 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <Title>{data?.name}</Title>
                   <MoreDetail>
-                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    {/* <video src={mp4 ? mp4.url : ""} autoPlay controls></video> */}
+                    {video ? (
+                      <iframe
+                        allowFullScreen
+                        src={`https://www.youtube.com/embed/${video}?autoplay=1&mute=1`}
+                        frameBorder="0"
+                      ></iframe>
+                    ) : (
+                      <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    )}
                     <BaseInfo>
                       <Period>
                         {data.first_air_date} ~ {data.last_air_date}{" "}
