@@ -41,6 +41,7 @@ const Banner = styled.section`
     display: flex;
     align-items: flex-start;
     h3 {
+      word-break: keep-all;
       font-size: 56px;
       font-weight: bold;
       margin-bottom: 10px;
@@ -93,6 +94,7 @@ const PopularTV = styled.section`
 const OnTheAir = styled(PopularTV)`
   margin-bottom: 50px;
 `;
+const Trending = styled(PopularTV)``;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
@@ -139,6 +141,14 @@ export default function Tv() {
                 type="tv"
               ></SlideMulti>
             </TopRated>
+            <Trending>
+              <Title>Weekly Trending</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </Trending>
             <PopularTV>
               <Title>Popular TV</Title>
               <InfiniteSlide

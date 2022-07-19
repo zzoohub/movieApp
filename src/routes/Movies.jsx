@@ -159,6 +159,7 @@ const TopTitle = styled.h3`
     color: #f9f9f9;
   }
 `;
+const Trending = styled(Upcoming)``;
 
 export default function Movies() {
   const [popula, setPopula] = useState([]);
@@ -231,7 +232,7 @@ export default function Movies() {
       ) : (
         <Wrapper>
           <Banner>
-            <BigTitle>Popula Movies</BigTitle>
+            <BigTitle>Popular Movies</BigTitle>
             <Slider>
               <Slide
                 ref={slideRef}
@@ -298,6 +299,15 @@ export default function Movies() {
               type="movie"
             ></SlideMulti>
           </TopRated>
+          <Trending>
+            <Title>Weekly Trending</Title>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
+          </Trending>
           <Upcoming>
             <Title>Upcoming</Title>
             <InfiniteSlide
