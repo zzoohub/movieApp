@@ -5,11 +5,14 @@ const TvItem = styled.div`
   flex-direction: column;
   height: 220px;
   overflow: hidden;
-  background-color: #071626;
+  background-color: #222;
+  border-radius: 10px;
   border-style: outset;
-  transition: all ease-in-out 0.2s;
+  border: 3px solid transparent;
+  transition: all ease-in-out 0.1s;
   :hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
+    border: 3px solid #fff;
   }
 `;
 const TvItemImg = styled.div`
@@ -19,7 +22,7 @@ const TvItemImg = styled.div`
   background-image: url(${(props) => props.bgImg});
   background-size: cover;
   background-position: center center;
-  height: 180px;
+  height: 200px;
   border-bottom: ${(props) =>
     props.bgImg === "border" ? "1px solid gray" : "none"};
   svg {
@@ -29,7 +32,7 @@ const TvItemImg = styled.div`
   }
 `;
 const SubInfo = styled.div`
-  padding: 10px 8px;
+  padding: 7px;
   h3 {
     font-weight: 600;
     color: #d9d9d9;
