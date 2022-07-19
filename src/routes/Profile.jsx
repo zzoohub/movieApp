@@ -173,6 +173,7 @@ export default function Profile() {
   useEffect(() => {
     setValue("nickname", user?.nickname);
     setValue("password", user?.password);
+    setValue("checkpassword", user?.password);
   }, [user]);
 
   const onLoadFile = (e) => {
