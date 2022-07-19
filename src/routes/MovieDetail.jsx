@@ -36,7 +36,7 @@ const DetailInfo = styled.section`
   color: #f9f9f9;
   video {
     position: absolute;
-    top: 17%;
+    top: 20%;
     left: 55%;
     width: 580px;
     height: 340px;
@@ -50,6 +50,8 @@ const Title = styled.h2`
   font-size: 64px;
   font-weight: bold;
   margin-bottom: 30px;
+  max-width: 55%;
+  line-height: 1.2;
 `;
 const Ban = styled.div`
   position: absolute;
