@@ -197,8 +197,7 @@ const SimilarTv = styled.div`
   transition: all ease-in-out 0.2s;
   overflow: hidden;
   :hover {
-    transform: scale(1.03);
-    border: 3px solid #ff3d3d;
+    border: 2px solid #ff3d3d;
   }
   :hover h3 {
     bottom: 0px;

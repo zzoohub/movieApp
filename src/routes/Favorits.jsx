@@ -7,16 +7,17 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 90%;
-  max-width: 1920px;
+  width: 80%;
+  max-width: 1280px;
   margin-top: 180px;
   min-height: 100vh;
+  margin: 200px auto 0px auto;
   gap: 20px;
   h2 {
     position: absolute;
-    left: 320px;
+    left: 24%;
     top: -50px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 600;
     color: #ff3d3d;
   }
