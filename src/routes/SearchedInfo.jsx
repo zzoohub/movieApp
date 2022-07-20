@@ -35,7 +35,7 @@ const Tab = styled.button`
   margin: 0 5px;
   border-radius: 5px;
   background-color: ${(props) => (props.tabMatch ? "#ff3d3d" : "#d9d9d9")};
-  color: #333;
+  color: ${(props) => (props.tabMatch ? "#111" : "#333")};
   border: none;
   font-size: 18px;
   font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};

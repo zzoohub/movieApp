@@ -46,7 +46,7 @@ export const getNowPlay = async () => {
 };
 export const getGenres = async () => {
   return await fetch(
-    `${BASE_URL}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-ko`
+    `${BASE_URL}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
 export const getLatestMovies = async () => {

@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useMatch,
-  useNavigate,
-} from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getGenres, getMovieGenres, getTvGenres } from "../api";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
@@ -89,11 +83,12 @@ const Tag = styled.span`
   display: block;
   padding: 10px 15px;
   border-radius: 100px;
-  border: 1px solid ${(props) => (props.isOn ? "#ff3d3d" : "#f9f9f9")};
-  color: #f9f9f9;
+  border: 1px solid ${(props) => (props.isOn ? "#ff3d3d" : "#d9d9d9")};
+  color: ${(props) => (props.isOn ? "#111" : "#d9d9d9")};
   background-color: ${(props) => (props.isOn ? "#ff3d3d" : "transparent")};
+  font-weight: ${(props) => (props.isOn ? "bold" : "500")};
   :hover {
-    background-color: #f9f9f9;
+    background-color: #d9d9d9;
     color: #000;
   }
 `;
