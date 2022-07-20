@@ -5,7 +5,8 @@
 1. max-width 1920px
 2. white = #f9f9f9
 3. point = #ff3d3d
-4. bgColor = #2c3e50
+4. point2 = #071626
+5. bgColor = #2c3e50
 
 ## 깃 클론 후
 
@@ -18,6 +19,7 @@
 
 - api사이트 = https://developers.themoviedb.org/3
 - 강아지 랜덤 비디오 = https://dogs-api.nomadcoders.workers.dev
+- react-dotenv &&
 
 ### 주영석
 

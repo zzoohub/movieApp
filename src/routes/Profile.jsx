@@ -27,11 +27,23 @@ const Main = styled.main`
   font-size: 16px;
   line-height: 40px;
   h2 {
-    font-size: 38px;
-    font-weight: bold;
+    font-size: 32px;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
+  }
+  .imgBtn {
+    display: block;
+    margin: 20px;
+    font-size: 12px;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1;
+    padding: 7px;
+    cursor: pointer;
+    :active {
+      transform: scale(0.96);
+    }
   }
 `;
 
@@ -39,9 +51,9 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
-  height: 150px;
-  margin: 30px auto 0;
+  width: 170px;
+  height: 170px;
+  margin: 0px auto;
   background-image: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
@@ -50,20 +62,23 @@ const ImgBox = styled.div`
     props.url === undefined ? "1px solid #d9d9d9" : null}; */
   svg {
     color: #d9d9d9;
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
   }
 `;
 const ImgLabel = styled.label`
   display: block;
   position: absolute;
-  top: 140px;
-  left: calc(50% - 75px);
-  width: 150px;
-  height: 150px;
+  top: 120px;
+  left: calc(50% - 85px);
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  :hover {
+    filter: brightness(0.5);
+  }
 `;
 const ImgInput = styled.input`
   display: none;
@@ -76,7 +91,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px auto 0;
+  margin: 20px auto 0;
   color: #f9f9f9;
 
   input {
@@ -114,9 +129,9 @@ const Form = styled.form`
 `;
 export default function Profile() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { user } = useUser();
-  const { profleImgInput } = useRef();
+  const [previewUrl, setPreviewUrl] = useState(user?.profileUrl);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -125,10 +140,11 @@ export default function Profile() {
     formState: { errors },
     setError,
     setValue,
-    reset,
   } = useForm();
+
   const onValid = (form) => {
     const existingUser = user;
+    let profileUrl = "";
     if (form.password !== form.checkpassword) {
       return setError("notMatch", {
         type: "custom",
@@ -137,27 +153,32 @@ export default function Profile() {
     }
     if (
       form.nickname === existingUser.nickname &&
-      form.password === existingUser.password
+      form.password === existingUser.password &&
+      !previewUrl
     ) {
       return setError("alreadyUse", {
         type: "custom",
         message: "변경된 내용이 없습니다.",
       });
     }
+
     existingUser.nickname = form.nickname;
     existingUser.password = form.password;
+    existingUser.profileUrl = previewUrl;
     localStorage.setItem("user", JSON.stringify(existingUser));
     localStorage.setItem("loginUser", JSON.stringify(existingUser));
-    console.log(existingUser);
     navigate("/");
   };
+
   useEffect(() => {
+    setValue("profileImg", user?.profileUrl);
     setValue("nickname", user?.nickname);
+    setValue("password", user?.password);
+    setValue("checkpassword", user?.password);
   }, [user]);
 
-  const [profileImg, setProfileImg] = useState(null); //유저가 등록한 프로필이 있으면 useUser를 사용하여 디폴트값으로 연결되는 코드로 연결예정
-  //https://taehoblog.netlify.app/react/previewimg/ 참고한 사이트
   const onLoadFile = (e) => {
+    clearErrors();
     let reader = new FileReader();
 
     if (e.target.files[0]) {
@@ -165,12 +186,10 @@ export default function Profile() {
     }
 
     reader.onloadend = () => {
-      const profileImgUrl = reader.result;
+      const fileUrl = reader.result;
 
-      if (profileImgUrl) {
-        setProfileImg(profileImgUrl);
-        //유저 정보에도 이미지값 변경 or 추가
-        //지금 상태에서는 페이지가 바뀌면 이미지 유지 안됨
+      if (fileUrl) {
+        setPreviewUrl(fileUrl);
       }
     };
   };
@@ -180,31 +199,48 @@ export default function Profile() {
       {loading ? <Loading></Loading> : null}
       <Wrapper>
         <Main>
-          <h2>My Page</h2>
-          <ImgBox url={profileImg}>
-            {!profileImg ? (
-              <svg
-                className="w-6 h-6"
-                fill="#f9f9f9"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            ) : null}
-          </ImgBox>
-          <ImgLabel htmlFor="userImg"></ImgLabel>
-          <ImgInput
-            id="userImg"
-            type="file"
-            accept="image/*"
-            onChange={onLoadFile}
-          />
+          <h2>Profile</h2>
           <Form onSubmit={handleSubmit(onValid)}>
+            <ImgBox
+              url={
+                previewUrl
+                  ? previewUrl
+                  : user?.profileUrl
+                  ? user?.profileUrl
+                  : null
+              }
+            >
+              {!user?.profileUrl && !previewUrl ? (
+                <svg
+                  className="w-6 h-6"
+                  fill="#f9f9f9"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : null}
+            </ImgBox>
+            <ImgLabel htmlFor="userImg"></ImgLabel>
+            <ImgInput
+              id="userImg"
+              type="file"
+              accept="image/*"
+              onInput={onLoadFile}
+              {...register("profileImg")}
+            />
+            <span
+              onClick={() => {
+                setPreviewUrl(null);
+              }}
+              className="imgBtn"
+            >
+              변경전으로
+            </span>
             <input
               onInput={() => {
                 clearErrors();
@@ -256,7 +292,10 @@ export default function Profile() {
                 clearErrors();
               }}
               {...register("checkpassword", {
-                required: { value: true, message: "비밀번호를 입력해주세요." },
+                required: {
+                  value: true,
+                  message: "비밀번호 확인란을 입력해주세요.",
+                },
                 minLength: {
                   value: 6,
                   message: "비밀번호는 최소 6글자입니다.",
@@ -269,8 +308,8 @@ export default function Profile() {
               type="password"
               placeholder="비밀번호 확인"
             />
-            {errors?.notMatch ? (
-              <em>{errors.notMatch.message}</em>
+            {errors?.checkpassword ? (
+              <em>{errors.checkpassword.message}</em>
             ) : (
               <strong>변경할 비밀번호를 한번 더 입력해주세요.</strong>
             )}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import env from "react-dotenv";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import InfoBox from "../components/InfoBox";
@@ -9,7 +8,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 50px;
   color: #f9f9f9;
   em {
     margin-right: 10px;
@@ -17,7 +16,7 @@ const Title = styled.div`
     font-size: 30px;
   }
   span {
-    font-size: 24px;
+    font-size: 22px;
     margin-top: 2px;
   }
 `;
@@ -51,7 +50,7 @@ const Grid = styled.div`
   grid-template-rows: auto;
   gap: 20px;
   width: 100%;
-  margin: 0px auto;
+  margin: 20px auto;
   height: max-content;
   padding: 15px;
 `;
@@ -70,7 +69,7 @@ export default function SearchedInfo() {
   useEffect(() => {
     fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${
-        env.API_KEY
+        process.env.REACT_APP_API_KEY
       }&language=ko&query=${keyword}&page=${page ? page : "1"}`
     )
       .then((res) => res.json())

@@ -11,11 +11,15 @@ import Login from "./routes/Login";
 import MovieDetail from "./routes/MovieDetail";
 import Profile from "./routes/Profile";
 import Favorits, { FavoritMovie, FavoritTv } from "./routes/Favorits";
+import ScrollToTop from "./components/ScrollToTop";
+import SearchedInfo from "./routes/SearchedInfo";
+import GenreInfo from "./routes/GenreInfo";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <NavBar />
         <Routes>
           <Route path="/login" element={<Login />}></Route>
@@ -26,7 +30,10 @@ function App() {
           <Route path="/movies/:id" element={<MovieDetail />}></Route>
           <Route path="/profile" element={<Profile />} />
           <Route path="/favorits" element={<Favorits />}></Route>
-          <Route path="/*" exact element={<Home />}></Route>
+          <Route path="/*" exact element={<Home />}>
+            <Route path={`search`} element={<SearchedInfo />}></Route>
+            <Route path={`genre`} element={<GenreInfo />}></Route>
+          </Route>
         </Routes>
         <ChatBot />
         <Shoes />

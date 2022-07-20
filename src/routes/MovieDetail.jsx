@@ -34,14 +34,16 @@ const DetailInfo = styled.section`
   margin-top: 100px;
   padding: 50px;
   color: #f9f9f9;
-  video {
+  video,
+  iframe {
     position: absolute;
-    top: 17%;
+    top: 20%;
     left: 55%;
-    width: 500px;
-    height: 300px;
+    width: 580px;
+    height: 340px;
     background-color: #333;
     object-fit: cover;
+    border-radius: 7px;
   }
 `;
 const Title = styled.h2`
@@ -49,6 +51,8 @@ const Title = styled.h2`
   font-size: 64px;
   font-weight: bold;
   margin-bottom: 30px;
+  max-width: 50%;
+  line-height: 1.2;
 `;
 const Ban = styled.div`
   position: absolute;
@@ -131,13 +135,14 @@ const Rating = styled.div`
   }
 `;
 const LikeBtn = styled.em`
+  position: relative;
   display: flex;
   align-items: center;
-  background-color: gold;
+  background-color: ${(props) => (props.color === "gold" ? "gold" : "#333")};
   padding: 7px 10px;
   border-radius: 5px;
   margin-left: 30px;
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   cursor: pointer;
   :active {
     transform: scale(0.96);
@@ -146,7 +151,9 @@ const LikeBtn = styled.em`
     background-color: #ecc800;
   }
   span {
-    color: #333;
+    position: relative;
+    top: 1px;
+    color: ${(props) => (props.color === "gold" ? "#333" : " #f9f9f9")};
     font-weight: bold;
     font-size: 16px;
   }
@@ -162,10 +169,11 @@ const Overview = styled.p`
   margin-top: 15px;
 `;
 const SimilarTitle = styled.h2`
-  font-size: 22px;
+  font-size: 20px;
   color: #ff3d3d;
   font-weight: bold;
   margin-top: 100px;
+  margin-left: 20px;
 `;
 const SimilarMoviesWrap = styled.div`
   width: 100%;
@@ -177,7 +185,7 @@ const SimilarMovies = styled.div`
   gap: 15px;
   width: max-content;
   padding: 0px 10px;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 const SimilarMovie = styled.div`
   position: relative;
@@ -191,8 +199,7 @@ const SimilarMovie = styled.div`
   transition: all ease-in-out 0.2s;
   overflow: hidden;
   :hover {
-    transform: scale(1.03);
-    border: 3px solid #ff3d3d;
+    border: 2px solid #ff3d3d;
   }
   :hover h3 {
     bottom: 0px;
@@ -228,7 +235,7 @@ export default function TvDetail() {
     isLoading: similarLoading,
     refetch: similarRefetch,
   } = useQuery(["movie", "similar"], () => getSimilarMovies(id));
-  const [mp4, setMp4] = useState();
+  const [video, setVideo] = useState("");
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => {
@@ -241,10 +248,12 @@ export default function TvDetail() {
       const removed = loginUser.like.movie.filter((value) => value !== id);
       loginUser.like.movie = removed;
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
+      localStorage.setItem("user", JSON.stringify(loginUser));
       setIsLiked(false);
     } else {
       loginUser.like.movie = [...loginUser.like.movie, id];
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
+      localStorage.setItem("user", JSON.stringify(loginUser));
       setIsLiked(true);
     }
   };
@@ -253,9 +262,6 @@ export default function TvDetail() {
     refetch();
     similarRefetch();
     setIsLiked(false);
-    fetch(`https://dogs-api.nomadcoders.workers.dev`)
-      .then((res) => res.json())
-      .then((json) => setMp4(json));
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
     const aleadyLiked = loginUser?.like?.movie?.find((value) => value === id);
     if (aleadyLiked) {
@@ -263,6 +269,18 @@ export default function TvDetail() {
     } else {
       setIsLiked(false);
     }
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.results[0]) {
+          setVideo(json.results[0].key);
+        } else {
+          setVideo("");
+        }
+      });
   }, [id]);
 
   return (
@@ -281,7 +299,14 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <Title>{data?.title}</Title>
                   <MoreDetail>
-                    <video src={mp4 ? mp4.url : ""} autoPlay controls></video>
+                    {video ? (
+                      <iframe
+                        allowFullScreen
+                        src={`https://www.youtube.com/embed/${video}?autoplay=1&mute=1`}
+                        frameBorder="0"
+                        autoPlay
+                      ></iframe>
+                    ) : null}
                     <BaseInfo>
                       <Period>
                         {data.release_date} 개봉 &nbsp;&nbsp;&nbsp;총{" "}
@@ -307,13 +332,16 @@ export default function TvDetail() {
                             </svg>
                           ) : null
                         )}
-                        <LikeBtn onClick={toggleLike}>
-                          <span>{isLiked ? "Unlike" : "Like"}</span>
+                        <LikeBtn
+                          onClick={toggleLike}
+                          color={isLiked ? "gold" : "gray"}
+                        >
+                          <span>Like</span>
                           {!isLiked ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 512 512"
-                              fill="#ff3d3d"
+                              fill="#f9f9f9"
                             >
                               <path d="M128 447.1V223.1c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64C113.7 479.1 128 465.6 128 447.1zM512 224.1c0-26.5-21.48-47.98-48-47.98h-146.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6L178 186.6C166.2 196.1 160.2 210 160.1 224c-.0234 .0234 0 0 0 0L160 384c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.4805-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z" />
                             </svg>
@@ -323,7 +351,7 @@ export default function TvDetail() {
                               viewBox="0 0 512 512"
                               fill="#ff3d3d"
                             >
-                              <path d="M96 32.04H32c-17.67 0-32 14.32-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V64.03C128 46.36 113.7 32.04 96 32.04zM467.3 240.2C475.1 231.7 480 220.4 480 207.9c0-23.47-16.87-42.92-39.14-47.09C445.3 153.6 448 145.1 448 135.1c0-21.32-14-39.18-33.25-45.43C415.5 87.12 416 83.61 416 79.98C416 53.47 394.5 32 368 32h-58.69c-34.61 0-68.28 11.22-95.97 31.98L179.2 89.57C167.1 98.63 160 112.9 160 127.1l.1074 160c0 0-.0234-.0234 0 0c.0703 13.99 6.123 27.94 17.91 37.36l16.3 13.03C276.2 403.9 239.4 480 302.5 480c30.96 0 49.47-24.52 49.47-48.11c0-15.15-11.76-58.12-34.52-96.02H464c26.52 0 48-21.47 48-47.98C512 262.5 492.2 241.9 467.3 240.2z" />
+                              <path d="M128 447.1V223.1c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64C113.7 479.1 128 465.6 128 447.1zM512 224.1c0-26.5-21.48-47.98-48-47.98h-146.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6L178 186.6C166.2 196.1 160.2 210 160.1 224c-.0234 .0234 0 0 0 0L160 384c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.4805-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z" />
                             </svg>
                           )}
                         </LikeBtn>

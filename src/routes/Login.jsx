@@ -95,14 +95,17 @@ export default function Login() {
   }, [user]);
   const onValid = (form) => {
     const existingUser = JSON.parse(localStorage.getItem("user"));
-    if (!existingUser) return;
+    if (!existingUser) {
+      setError("loginError", {
+        type: "custom",
+        message: "아이디 또는 패스워드가 일치하지 않습니다.",
+      });
+    }
     if (
       existingUser.nickname === form.nickname &&
       existingUser.password === form.password
     ) {
-      const user = form;
-      user.like = { tv: [], movie: [] };
-      localStorage.setItem("loginUser", JSON.stringify(user));
+      localStorage.setItem("loginUser", JSON.stringify(existingUser));
       navigate("/");
       window.location.reload();
     } else {

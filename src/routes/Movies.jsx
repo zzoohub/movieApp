@@ -1,10 +1,8 @@
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import env from "react-dotenv";
 import styled from "styled-components";
 import { getTopRatedMovies, getUpcomingMovies } from "../api";
-import SlideAuto from "../components/AutoSlider";
 import InfiniteSlide from "../components/InfiniteSlide";
 import SlideMulti from "../components/multiSlider";
 import { makeImgPath } from "../util/makeImgPath";
@@ -58,10 +56,10 @@ const Slider = styled.div`
   }
 `;
 const Prev = styled.button`
-  left: 7%;
+  left: 8%;
 `;
 const Next = styled.button`
-  right: 6%;
+  right: 7%;
 `;
 
 const Slide = styled.div`
@@ -74,7 +72,7 @@ const Slide = styled.div`
     ${(props) => (props.translate === "base" ? 10 : -props.translate)}vw
   );
   height: 100%;
-  transition: all ease-in-out 0.3s;
+  transition: ${(props) => props.transition};
 `;
 const Box = styled.div`
   display: flex;
@@ -132,13 +130,17 @@ const BoxDetail = styled.h3`
   padding: 10px 20px;
   transition: all ease-in-out 0.2s;
 `;
-const NowPlay = styled.section`
+const Upcoming = styled.section`
   width: 100%;
   height: 250px;
+  margin-top: 30px;
 `;
-const Upcoming = styled(NowPlay)``;
-const TopRated = styled(NowPlay)`
-  height: 450px;
+const TopRated = styled(Upcoming)`
+  height: 300px;
+  margin-top: 30px;
+`;
+const NowPlay = styled(Upcoming)`
+  margin-bottom: 50px;
 `;
 const Title = styled.h3`
   font-size: 22px;
@@ -157,6 +159,7 @@ const TopTitle = styled.h3`
     color: #f9f9f9;
   }
 `;
+const Trending = styled(Upcoming)``;
 
 export default function Movies() {
   const [popula, setPopula] = useState([]);
@@ -169,17 +172,15 @@ export default function Movies() {
     getTopRatedMovies
   );
   const slideRef = useRef();
+  const [transition, setTransition] = useState(false);
 
   async function arrange() {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${env.API_KEY}&language=ko`
+      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
     ).then((res) => res.json());
     const first = data?.results.slice(0, 1);
     const last = data?.results.slice(-1);
     await setPopula([...last, ...data.results, ...first]);
-    if (slideRef) {
-      slideRef.current.style.transition = "none";
-    }
   }
   useEffect(() => {
     arrange();
@@ -189,32 +190,38 @@ export default function Movies() {
 
   const prevSlide = () => {
     if (index === 1) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      // slideRef.current.style = "transition: all easy-in-out 0.3s";
+      setTransition(true);
       slideRef.current.children[20].children[0].className = "on";
       setIndex((prev) => prev - 1);
       setTimeout(() => {
-        slideRef.current.style.transition = "none";
+        // slideRef.current.style.transition = "none";
+        setTransition(false);
         setIndex(20);
         slideRef.current.children[20].children[0].className = "";
       }, 300);
       return;
     }
-    slideRef.current.style = "transition: all easy-in-out 0.3s";
+    // slideRef.current.style = "transition: all easy-in-out 0.3s";
+    setTransition(true);
     setIndex((prev) => prev - 1);
   };
   const nextSlide = () => {
     if (index === 20) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
+      // slideRef.current.style = "transition: all easy-in-out 0.3s";
+      setTransition(true);
       slideRef.current.children[1].children[0].className = "on";
       setIndex((prev) => prev + 1);
       setTimeout(() => {
-        slideRef.current.style.transition = "none";
+        // slideRef.current.style.transition = "none";
+        setTransition(false);
         setIndex(1);
         slideRef.current.children[1].children[0].className = "";
       }, 300);
       return;
     }
-    slideRef.current.style = "transition: all easy-in-out 0.3s";
+    // slideRef.current.style = "transition: all easy-in-out 0.3s";
+    setTransition(true);
     setIndex((prev) => prev + 1);
   };
 
@@ -225,12 +232,13 @@ export default function Movies() {
       ) : (
         <Wrapper>
           <Banner>
-            <BigTitle>Popula Movies</BigTitle>
+            <BigTitle>Popular Movies</BigTitle>
             <Slider>
               <Slide
                 ref={slideRef}
                 slideWidth={popula?.length * 80}
                 translate={index ? index * 80 - 10 : "base"}
+                transition={transition ? "all ease-in-out 0.3s" : "none"}
               >
                 {popula?.map((movie, i) => (
                   <Box key={i} active={index === i ? true : false}>
@@ -247,63 +255,77 @@ export default function Movies() {
                   </Box>
                 ))}
               </Slide>
-              {index ? (
-                <Prev onClick={prevSlide}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </Prev>
-              ) : null}
-              {index !== popula?.length - 1 ? (
-                <Next onClick={nextSlide}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Next>
-              ) : null}
+              <Prev onClick={prevSlide}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </Prev>
+              <Next onClick={nextSlide}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Next>
             </Slider>
           </Banner>
+          <TopRated>
+            <TopTitle>
+              TOP 20<em>Movies</em>
+            </TopTitle>
+            <SlideMulti
+              offset={5}
+              data={topRated?.results}
+              type="movie"
+            ></SlideMulti>
+          </TopRated>
+          <Trending>
+            <Title>Weekly Trending</Title>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
+          </Trending>
           <Upcoming>
             <Title>Upcoming</Title>
-            <SlideAuto data={upcoming?.results} reversed={false}></SlideAuto>
+            <InfiniteSlide
+              url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+              offset={5}
+              gap={10}
+              type="movie"
+            ></InfiniteSlide>
           </Upcoming>
           <NowPlay>
             <Title>Now Playing</Title>
             <InfiniteSlide
-              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${env.API_KEY}&language=ko`}
+              url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}
               gap={10}
               type="movie"
             ></InfiniteSlide>
           </NowPlay>
-          <TopRated>
-            <TopTitle>
-              TOP 20<em>Movies</em>
-            </TopTitle>
-            <SlideMulti offset={5} data={topRated?.results}></SlideMulti>
-          </TopRated>
         </Wrapper>
       )}
     </>

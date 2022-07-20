@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import SearchedInfo from "./SearchedInfo";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { getMovieGenres, getTvGenres } from "../api";
+import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,7 +27,7 @@ const SearchForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 35%;
   height: max-content;
   margin: 0 auto;
   input {
@@ -66,12 +67,34 @@ const SearchForm = styled.form`
     }
   }
 `;
+const Genres = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  gap: 10px;
+  a {
+    padding: 10px 15px;
+    border-radius: 100px;
+    border: 1px solid #f9f9f9;
+    color: #f9f9f9;
+    :hover {
+      background-color: #f9f9f9;
+      color: #000;
+    }
+  }
+`;
 const Media = styled.section`
   width: 100%;
 `;
 
-export default function Home({ isLogin }) {
+export default function Home() {
   const navigate = useNavigate();
+  const { data: genres } = useQuery("keywords", getTvGenres);
+  // const { data: movieGenres } = useQuery("keywords", getMovieGenres);
 
   const onValid = (form) => {
     form.preventDefault();
@@ -106,10 +129,15 @@ export default function Home({ isLogin }) {
             </svg>
           </button>
         </SearchForm>
+        <Genres>
+          {genres?.genres.map((genre) => (
+            <Link to={`/genre?id=${genre.id}`} key={genre.id}>
+              {genre.name}
+            </Link>
+          ))}
+        </Genres>
         <Media>
-          <Routes>
-            <Route path={`/search`} element={<SearchedInfo />}></Route>
-          </Routes>
+          <Outlet></Outlet>
         </Media>
       </Main>
     </Wrapper>

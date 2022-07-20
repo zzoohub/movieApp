@@ -1,47 +1,60 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getTvAiringToday } from "../api";
-import InfoBox from "../components/InfoBox";
-import OnTheAiringTV from "../components/OnTheAiringTV";
-import PopularTV from "../components/PopularTV";
-import LatestTV from "../components/LatestTV";
+import { getTvAiringToday, getTopRatedTvs } from "../api";
+import SlideMulti from "../components/multiSlider";
+// import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
+import { ReactComponent as MoreBtn } from "../images/more_btn.svg";
+import InfiniteSlide from "../components/InfiniteSlide";
 
 const Wrapper = styled.div`
   height: max-content;
   width: 100%;
+  background-color: #111c26;
 `;
 const Main = styled.main`
   max-width: 1920px;
   margin: 0 auto;
 `;
 const Title = styled.h2`
-  color: #ff3d3d;
-  font-weight: bold;
   font-size: 22px;
-  margin: 30px 0px 0px 20px;
+  font-weight: bold;
+  color: #f9f9f9;
+  margin: 15px 20px;
 `;
 const Banner = styled.section`
   display: flex;
-  justify-content: center;
+  position: relative;
+  justify-content: flex-end;
   flex-direction: column;
   padding: 50px;
   width: 100%;
   height: 85vh;
-  background-image: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.7)
-    ),
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), #111c26),
     url(${(props) => props.bannerImg});
   background-position: center;
   background-size: cover;
   color: #f9f9f9;
-  h3 {
-    font-size: 56px;
-    margin-bottom: 10px;
+  div {
+    display: flex;
+    align-items: flex-start;
+    h3 {
+      word-break: keep-all;
+      font-size: 56px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      max-width: 70%;
+      line-height: 1.3;
+    }
+    .moreBtn {
+      margin-left: 20px;
+      margin-top: 10px;
+      svg:hover {
+        transform: scale(1.05);
+      }
+    }
   }
   span {
     margin: 10px 0px;
@@ -57,69 +70,45 @@ const Banner = styled.section`
     width: 50%;
   }
 `;
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: auto;
-  gap: 20px;
+const TopRated = styled.section`
   width: 100%;
-  margin: auto;
-  height: max-content;
-  padding: 15px;
+  height: 300px;
+  margin-top: 30px;
 `;
-const TvItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 220px;
-  overflow: hidden;
-  background-color: #222;
-  border-radius: 10px;
-  border-style: outset;
-  border: 3px solid transparent;
-  transition: all ease-in-out 0.1s;
-  :hover {
-    transform: scale(1.02);
-    border: 3px solid #d9d9d9;
+const TopTitle = styled.h3`
+  font-size: 28px;
+  font-weight: bold;
+  color: gold;
+  margin: 20px 50px;
+  em {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #f9f9f9;
   }
 `;
-const TvItemImg = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(${(props) => props.bgImg});
-  background-size: cover;
-  background-position: center center;
-  height: 200px;
-  border-bottom: ${(props) =>
-    props.bgImg === "border" ? "1px solid gray" : "none"};
-  svg {
-    width: 70px;
-    height: 70px;
-    color: gray;
-  }
+const PopularTV = styled.section`
+  width: 100%;
+  height: 250px;
+  margin-top: 30px;
 `;
-const SubInfo = styled.div`
-  padding: 7px;
-  h3 {
-    font-weight: 600;
-    color: #d9d9d9;
-  }
+const OnTheAir = styled(PopularTV)`
+  margin-bottom: 50px;
 `;
-const Flex = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 7px;
-  font-size: 12px;
-  color: #d9d9d9;
-`;
+const Trending = styled(PopularTV)``;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
-  const bannerData = data?.results.find((result) => result.backdrop_path);
+  const { data: topRateData, isLoading: topRateisLoading } = useQuery(
+    ["tv", "topRated"],
+    getTopRatedTvs
+  );
+  const bannerData = data?.results.find(
+    (result) => result.backdrop_path && result.overview
+  );
   const fitered = data?.results.filter(
     (result) => result.backdrop_path !== bannerData.backdrop_path
   );
-
+  // console.log(topRateData);
   return (
     <>
       {isLoading ? (
@@ -128,31 +117,54 @@ export default function Tv() {
         <Wrapper>
           <Main>
             <Banner bannerImg={makeImgPath(bannerData?.backdrop_path)}>
-              <h3>{bannerData?.original_name}</h3>
+              <div>
+                <h3>{bannerData?.name}</h3>
+                <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
+                  <MoreBtn width={50} fill={"#ff3d3d"} />
+                </Link>
+              </div>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
-              <p>{bannerData?.overview}</p>
+              <p>
+                {bannerData?.overview.length > 200
+                  ? bannerData?.overview.slice(0, 200) + "..."
+                  : bannerData?.overview}
+              </p>
             </Banner>
-            <Title>Today Tv Shows</Title>
-            <Grid>
-              {fitered.map((tv) => (
-                <Link to={`/tv/${tv.id}`} key={tv.id}>
-                  <InfoBox
-                    bgUrl={
-                      tv.backdrop_path
-                        ? makeImgPath(tv.backdrop_path, "w500")
-                        : null
-                    }
-                    name={tv.name}
-                    firstDate={tv.first_air_date}
-                    voteAverage={tv.vote_average}
-                  ></InfoBox>
-                </Link>
-              ))}
-            </Grid>
-            <OnTheAiringTV />
-            <PopularTV />
-            <LatestTV />
+            <TopRated>
+              <TopTitle>
+                TOP 20<em>TV</em>
+              </TopTitle>
+              <SlideMulti
+                offset={5}
+                data={topRateData?.results}
+                type="tv"
+              ></SlideMulti>
+            </TopRated>
+            <Trending>
+              <Title>Weekly Trending</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </Trending>
+            <PopularTV>
+              <Title>Popular TV</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </PopularTV>
+            <OnTheAir>
+              <Title>On The Air</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </OnTheAir>
           </Main>
         </Wrapper>
       )}

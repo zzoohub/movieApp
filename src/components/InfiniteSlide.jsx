@@ -6,13 +6,13 @@ import { makeImgPath } from "../util/makeImgPath";
 const Slider = styled.div`
   max-width: 1920px;
   width: 100%;
-  height: 200px;
+  height: 250px;
   button {
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 220px;
     width: 50px;
     z-index: 3;
     border: none;
@@ -36,7 +36,7 @@ const Slide = styled.div`
   transform: scale(${(props) => props.scale});
   position: absolute;
   display: flex;
-  height: 200px;
+  height: 220px;
   gap: ${(props) => props.gap}px;
   /* padding: 0px 5px; */
   transition: all ease 0.3s;
@@ -148,7 +148,10 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
       {nowPlay ? (
         <Slide ref={slideRef} scale={scale} gap={gap}>
           {nowPlay.map((item, index) => (
-            <Link to={`/movies/${item.id}`} key={index}>
+            <Link
+              to={type === "movie" ? `/movies/${item.id}` : `/tv/${item.id}`}
+              key={index}
+            >
               <Box
                 bgUrl={
                   item.backdrop_path

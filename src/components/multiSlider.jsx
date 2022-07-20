@@ -53,22 +53,16 @@ const MultiSet = styled.div`
 `;
 const Item = styled.div`
   position: relative;
-  background-color: #333;
+  background-image: url(${(props) => props.bgUrl});
+  background-position: center;
+  background-size: cover;
   height: 100%;
-  border: 1px solid transparent;
   transition: all ease-in-out 0.2s;
+  border: 1px solid #f9f9f9;
+  border-style: outset;
   overflow: hidden;
   :hover {
     border: 1px solid #ff3d3d;
-  }
-  :hover img {
-    transform: scale(1.05);
-  }
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    transition: all ease-in-out 0.2s;
   }
   h4 {
     color: #f9f9f9;
@@ -98,6 +92,15 @@ const Item = styled.div`
     font-size: 14px;
     background-color: #222;
   }
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #d9d9d9;
+    width: 50px;
+    height: 50px;
+  }
 `;
 const Prev = styled.button`
   left: 0px;
@@ -106,7 +109,7 @@ const Next = styled.button`
   right: 0px;
 `;
 
-export default function SlideMulti({ offset, data }) {
+export default function SlideMulti({ offset, data, type }) {
   const [page, setPage] = useState(0);
   return (
     <>
@@ -116,24 +119,46 @@ export default function SlideMulti({ offset, data }) {
             <MultiSet key={indexes} className={page === indexes ? "on" : ""}>
               {[...Array(offset)].map((item, index) => (
                 <Link
-                  to={`/movies/${data[offset * indexes + index]?.id}`}
+                  to={
+                    type === "movie"
+                      ? `/movies/${data[offset * indexes + index]?.id}`
+                      : `/tv/${data[offset * indexes + index]?.id}`
+                  }
                   key={index}
                 >
-                  <Item>
-                    <img
-                      src={
-                        data[offset * indexes + index]?.backdrop_path
-                          ? makeImgPath(
-                              data[offset * indexes + index]?.backdrop_path,
-                              "w500"
-                            )
-                          : null
-                      }
-                      alt=""
-                    />
-                    <h4>{data[offset * indexes + index]?.title}</h4>
+                  <Item
+                    bgUrl={
+                      data[offset * indexes + index]?.backdrop_path
+                        ? makeImgPath(
+                            data[offset * indexes + index]?.backdrop_path,
+                            "w500"
+                          )
+                        : "no"
+                    }
+                  >
+                    <h4>
+                      {type === "movie"
+                        ? data[offset * indexes + index]?.title
+                        : data[offset * indexes + index]?.name}
+                    </h4>
                     <span>{data[offset * indexes + index]?.vote_average}</span>
                     <em>RANK {offset * indexes + index + 1}</em>
+                    {data[offset * indexes + index]?.backdrop_path ? null : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                    )}
                   </Item>
                 </Link>
               ))}
