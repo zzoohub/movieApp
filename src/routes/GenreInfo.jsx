@@ -67,14 +67,16 @@ export default function GenreInfo() {
   const [tab, setTab] = useState("tv");
 
   useEffect(() => {
+    const data = [];
     const fetchData = async () => {
-      for (const i of [1, 2, 3]) {
+      for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
         await fetch(
           `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko&page=${i}`
         )
           .then((res) => res.json())
-          .then((json) => setAllData((old) => [...old, ...json.results]));
+          .then((json) => data.push(...json.results));
       }
+      setAllData(data);
     };
     fetchData();
   }, []);
@@ -85,7 +87,7 @@ export default function GenreInfo() {
     const set = async () => {
       await setFiltered([
         ...new Set(
-          allData.filter((content) => content?.genre_ids?.includes(+keyword))
+          allData?.filter((content) => content?.genre_ids?.includes(+keyword))
         ),
       ]);
     };
@@ -99,10 +101,6 @@ export default function GenreInfo() {
 
   return (
     <>
-      <Title>
-        <em>"{keyword}"</em>
-        <span>검색 결과</span>
-      </Title>
       <Tabs>
         <Tab
           onClick={() => setTab("tv")}
@@ -120,37 +118,50 @@ export default function GenreInfo() {
       <Contents>
         {tab === "movie" ? (
           <Grid>
-            {movies?.map((movie, index) => (
-              <Link key={index} to={`/movies/${movie.id}`}>
-                <InfoBox
-                  bgUrl={
-                    movie.backdrop_path
-                      ? makeImgPath(movie.backdrop_path, "w500")
-                      : null
-                  }
-                  name={movie.title}
-                  voteAverage={movie.vote_average}
-                  firstDate={movie.release_date}
-                ></InfoBox>
-              </Link>
-            ))}
+            {movies.length > 0 ? (
+              <>
+                {movies?.map((movie, index) => (
+                  <Link key={index} to={`/movies/${movie.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        movie.backdrop_path
+                          ? makeImgPath(movie.backdrop_path, "w500")
+                          : null
+                      }
+                      name={movie.title}
+                      voteAverage={movie.vote_average}
+                      firstDate={movie.release_date}
+                    ></InfoBox>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <span>sorry empty</span>
+            )}
           </Grid>
         ) : (
           <Grid>
-            {tvs?.map((tv, index) => (
-              <Link key={index} to={`/tv/${tv.id}`}>
-                <InfoBox
-                  bgUrl={
-                    tv.backdrop_path
-                      ? makeImgPath(tv.backdrop_path, "w500")
-                      : null
-                  }
-                  name={tv.name}
-                  voteAverage={tv.vote_average}
-                  firstDate={tv.first_air_date}
-                ></InfoBox>
-              </Link>
-            ))}
+            {tvs.length > 0 ? (
+              <>
+                {" "}
+                {tvs?.map((tv, index) => (
+                  <Link key={index} to={`/tv/${tv.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        tv.backdrop_path
+                          ? makeImgPath(tv.backdrop_path, "w500")
+                          : null
+                      }
+                      name={tv.name}
+                      voteAverage={tv.vote_average}
+                      firstDate={tv.first_air_date}
+                    ></InfoBox>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <span>sorry empty</span>
+            )}
           </Grid>
         )}
       </Contents>

@@ -32,16 +32,6 @@ export const getTopRatedTvs = async () => {
     `${BASE_URL}/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
-export const getTvGenres = async () => {
-  return await fetch(
-    `${BASE_URL}/genre/tv/list?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
-  ).then((res) => res.json());
-};
-export const getTvRecommendations = async () => {
-  return await fetch(
-    `${BASE_URL}/genre/tv/list?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
-  ).then((res) => res.json());
-};
 
 // getMovie
 export const getSimilarMovies = async (id) => {
@@ -54,9 +44,9 @@ export const getNowPlay = async () => {
     `${BASE_URL}/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
-export const getMovieGenres = async () => {
+export const getGenres = async () => {
   return await fetch(
-    `${BASE_URL}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    `${BASE_URL}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-ko`
   ).then((res) => res.json());
 };
 export const getLatestMovies = async () => {
@@ -84,7 +74,6 @@ export const getMovieDetail = async (id) => {
     `${BASE_URL}/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
   ).then((res) => res.json());
 };
-
 
 export const getTrending = async (page) => {
   return await fetch(

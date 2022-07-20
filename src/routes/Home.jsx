@@ -1,8 +1,16 @@
 import styled from "styled-components";
 import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { getMovieGenres, getTvGenres } from "../api";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useMatch,
+  useNavigate,
+} from "react-router-dom";
+import { getGenres, getMovieGenres, getTvGenres } from "../api";
 import { useQuery } from "react-query";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -76,15 +84,17 @@ const Genres = styled.div`
   margin: 0 auto;
   margin-top: 20px;
   gap: 10px;
-  a {
-    padding: 10px 15px;
-    border-radius: 100px;
-    border: 1px solid #f9f9f9;
-    color: #f9f9f9;
-    :hover {
-      background-color: #f9f9f9;
-      color: #000;
-    }
+`;
+const Tag = styled.span`
+  display: block;
+  padding: 10px 15px;
+  border-radius: 100px;
+  border: 1px solid ${(props) => (props.isOn ? "#ff3d3d" : "#f9f9f9")};
+  color: #f9f9f9;
+  background-color: ${(props) => (props.isOn ? "#ff3d3d" : "transparent")};
+  :hover {
+    background-color: #f9f9f9;
+    color: #000;
   }
 `;
 const Media = styled.section`
@@ -93,7 +103,10 @@ const Media = styled.section`
 
 export default function Home() {
   const navigate = useNavigate();
-  const { data: genres } = useQuery("keywords", getTvGenres);
+  const location = useLocation();
+  const [genreId, setGenreId] = useState();
+  const { data: genres } = useQuery("keywords", getGenres);
+
   // const { data: movieGenres } = useQuery("keywords", getMovieGenres);
 
   const onValid = (form) => {
@@ -103,6 +116,11 @@ export default function Home() {
     form.target[0].value = "";
     navigate(`/search?keyword=${userInput}`);
   };
+
+  useEffect(() => {
+    setGenreId(new URLSearchParams(location.search).get("id"));
+    console.log(location);
+  }, [location]);
 
   return (
     <Wrapper>
@@ -130,9 +148,11 @@ export default function Home() {
           </button>
         </SearchForm>
         <Genres>
-          {genres?.genres.map((genre) => (
+          {genres?.genres?.map((genre) => (
             <Link to={`/genre?id=${genre.id}`} key={genre.id}>
-              {genre.name}
+              <Tag isOn={genre.id + "" === genreId ? true : false}>
+                {genre.name}
+              </Tag>
             </Link>
           ))}
         </Genres>
