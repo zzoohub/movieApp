@@ -6,7 +6,7 @@ import SlideMulti from "../components/multiSlider";
 // import PopularTV from "../components/PopularTV";
 import { makeImgPath } from "../util/makeImgPath";
 import Loading from "../components/Loading";
-import { ReactComponent as MoreBtn } from "../images/arrow-up-right-from-square-solid.svg";
+import { ReactComponent as MoreBtn } from "../images/more_btn.svg";
 import InfiniteSlide from "../components/InfiniteSlide";
 
 const Wrapper = styled.div`
@@ -78,7 +78,7 @@ const TopRated = styled.section`
 const TopTitle = styled.h3`
   font-size: 28px;
   font-weight: bold;
-  color: #ff3d3d;
+  color: gold;
   margin: 20px 50px;
   em {
     font-size: 24px;
