@@ -84,6 +84,9 @@ const ChatHeader = styled.div`
       filter: brightness(0.9);
     }
   }
+  .miniBtn:hover {
+    color: #35628b;
+  }
 `;
 const ChatBalloonWrap = styled.div`
   display: flex;
@@ -193,7 +196,7 @@ export default function ChatBot() {
               <Mlogo width={16} height={16} /> MovieApp
             </h2>
             <div>
-              <button>
+              <button className="miniBtn">
                 <svg
                   className="w-6 h-6"
                   fill="currentColor"
@@ -207,7 +210,7 @@ export default function ChatBot() {
                   />
                 </svg>
               </button>
-              <button onClick={() => setShowOn(!showOn)}>
+              <button onClick={() => setShowOn(!showOn)} className="miniBtn">
                 <svg
                   className="w-6 h-6"
                   fill="currentColor"
