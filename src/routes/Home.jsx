@@ -60,7 +60,7 @@ const SearchForm = styled.form`
     &:hover svg {
       width: 40px;
       height: 40px;
-      color: aqua;
+      color: #ff3d3d;
     }
     svg {
       transition: all ease-in-out 0.2s;
