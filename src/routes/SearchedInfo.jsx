@@ -11,12 +11,18 @@ const Title = styled.div`
   margin-top: 50px;
   color: #f9f9f9;
   em {
-    margin-right: 10px;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 34px;
+    color: gold;
+  }
+  strong {
+    font-size: 34px;
+    :last-of-type {
+      margin-right: 10px;
+    }
   }
   span {
-    font-size: 22px;
+    font-size: 26px;
     margin-top: 2px;
   }
 `;
@@ -50,7 +56,7 @@ const Grid = styled.div`
   grid-template-rows: auto;
   gap: 20px;
   width: 100%;
-  margin: 20px auto;
+  margin: 5px auto;
   height: max-content;
   padding: 15px;
 `;
@@ -61,7 +67,7 @@ export default function SearchedInfo() {
   const [searchedData, setSearchedData] = useState(undefined);
   const [tvs, setTvs] = useState(undefined);
   const [movies, setMovies] = useState(undefined);
-  const [tab, setTab] = useState("tv");
+  const [tab, setTab] = useState("movie");
   const [page, setPage] = useState(undefined);
   const location = useLocation();
   let keyword = new URLSearchParams(location.search).get("keyword");
@@ -90,7 +96,9 @@ export default function SearchedInfo() {
       {searchedData ? (
         <>
           <Title>
-            <em>"{keyword}"</em>
+            <strong>"</strong>
+            <em>{keyword}</em>
+            <strong>"</strong>
             <span>검색 결과</span>
           </Title>
           <Tabs>

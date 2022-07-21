@@ -17,11 +17,13 @@ const ChatBotBtn = styled.button`
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #fff;
   border: none;
+  font-weight: bold;
+  font-size: 16px;
   box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
   cursor: pointer;
   :hover {
@@ -72,7 +74,7 @@ const ChatHeader = styled.div`
     cursor: pointer;
     border: none;
     background: none;
-    color: #00bb4f;
+    color: #2c3e50;
     padding: 0 0 0 5px;
     svg {
       width: 25px;
@@ -103,7 +105,7 @@ const ChatBalloonWrap = styled.div`
     color: #f9f9f9;
     margin-top: 5px;
     border-radius: 15px;
-    background-color: #00bb4f;
+    background-color: #2c3e50;
     border: none;
     cursor: pointer;
     :hover {
@@ -183,7 +185,7 @@ export default function ChatBot() {
   };
   return (
     <ChatBotWrap>
-      {user ? <ChatBotBtn onClick={open}>ChatBot</ChatBotBtn> : null}
+      {user ? <ChatBotBtn onClick={open}>Chat</ChatBotBtn> : null}
       {showOn ? (
         <ChatBox>
           <ChatHeader>
