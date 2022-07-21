@@ -88,7 +88,7 @@ export default function GenreInfo() {
   useEffect(() => {
     const data = [];
     const fetchData = async () => {
-      for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+      for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
         await fetch(
           `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko&page=${i}`
         )
