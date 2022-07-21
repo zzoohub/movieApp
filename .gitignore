@@ -11,8 +11,7 @@
 # production
 /build
 /public
-/public/env.js
-/public
+
 
 # misc
 .DS_Store
