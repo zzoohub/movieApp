@@ -141,13 +141,11 @@ const LikeBtn = styled.em`
   padding: 7px 10px;
   border-radius: 5px;
   margin-left: 30px;
-  /* border: 1px solid gold; */
   cursor: pointer;
   :active {
     transform: scale(0.96);
   }
   :hover {
-    /* background-color: #ecc800; */
     transform: scale(1.1);
   }
   span {
@@ -173,7 +171,6 @@ const SimilarTitle = styled.h2`
   color: #f9f9f9;
   font-weight: bold;
   margin-top: 100px;
-  /* margin-left: 20px; */
 `;
 const SimilarMoviesWrap = styled.div`
   width: 100%;
@@ -184,7 +181,6 @@ const SimilarMovies = styled.div`
   display: flex;
   gap: 15px;
   width: max-content;
-  /* padding: 0px 10px; */
   margin-top: 15px;
 `;
 const SimilarMovie = styled.div`
@@ -274,7 +270,6 @@ export default function TvDetail() {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         if (json.results[0]) {
           setVideo(json.results[0].key);
         } else {
