@@ -23,7 +23,6 @@ const Main = styled.main`
   margin: 0 auto;
   min-height: 700px;
   height: max-content;
-  /* border: 1px solid #fff; */
   font-size: 16px;
   line-height: 40px;
   h2 {
@@ -58,8 +57,6 @@ const ImgBox = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 50%;
-  /* border: ${(props) =>
-    props.url === undefined ? "1px solid #d9d9d9" : null}; */
   svg {
     color: #d9d9d9;
     width: 170px;
@@ -161,10 +158,15 @@ export default function Profile() {
         message: "변경된 내용이 없습니다.",
       });
     }
+    if (!previewUrl) {
+      profileUrl = user?.profileUrl;
+    } else {
+      profileUrl = previewUrl;
+    }
 
     existingUser.nickname = form.nickname;
     existingUser.password = form.password;
-    existingUser.profileUrl = previewUrl;
+    existingUser.profileUrl = profileUrl;
     localStorage.setItem("user", JSON.stringify(existingUser));
     localStorage.setItem("loginUser", JSON.stringify(existingUser));
     navigate("/");
