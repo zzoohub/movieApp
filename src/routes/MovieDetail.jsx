@@ -138,7 +138,7 @@ const LikeBtn = styled.em`
   position: relative;
   display: flex;
   align-items: center;
-  background-color: ${(props) => (props.color === "gold" ? "gold" : "#333")};
+  background-color: ${(props) => (props.color === "gold" ? "#333" : "#333")};
   padding: 7px 10px;
   border-radius: 5px;
   margin-left: 30px;
@@ -148,12 +148,13 @@ const LikeBtn = styled.em`
     transform: scale(0.96);
   }
   :hover {
-    background-color: #ecc800;
+    /* background-color: #ecc800; */
+    transform: scale(1.1);
   }
   span {
     position: relative;
     top: 1px;
-    color: ${(props) => (props.color === "gold" ? "#333" : " #f9f9f9")};
+    color: ${(props) => (props.color === "gold" ? "#f9f9f9" : "#f9f9f9")};
     font-weight: bold;
     font-size: 16px;
   }
@@ -170,10 +171,10 @@ const Overview = styled.p`
 `;
 const SimilarTitle = styled.h2`
   font-size: 20px;
-  color: #ff3d3d;
+  color: #f9f9f9;
   font-weight: bold;
   margin-top: 100px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
 `;
 const SimilarMoviesWrap = styled.div`
   width: 100%;
@@ -184,7 +185,7 @@ const SimilarMovies = styled.div`
   display: flex;
   gap: 15px;
   width: max-content;
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
   margin-top: 15px;
 `;
 const SimilarMovie = styled.div`

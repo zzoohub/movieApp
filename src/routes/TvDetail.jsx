@@ -170,10 +170,10 @@ const Overview = styled.p`
 `;
 const SimilarTitle = styled.h2`
   font-size: 20px;
-  color: #ff3d3d;
+  color: #f9f9f9;
   font-weight: bold;
   margin-top: 100px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
 `;
 const SimilarTvsWrap = styled.div`
   width: 100%;
@@ -184,7 +184,7 @@ const SimilarTvs = styled.div`
   display: flex;
   gap: 15px;
   width: max-content;
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
   margin-top: 15px;
 `;
 const SimilarTv = styled.div`
