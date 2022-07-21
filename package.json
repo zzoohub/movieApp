@@ -42,8 +42,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://zzoodev.github.io/movieApp",
   "devDependencies": {
     "gh-pages": "^4.0.0"
-  }
+  },
+  "homepage": "https://zzoodev.github.io/movieApp"
 }

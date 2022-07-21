@@ -95,16 +95,16 @@ export default function SearchedInfo() {
           </Title>
           <Tabs>
             <Tab
-              onClick={() => setTab("tv")}
-              tabMatch={tab === "tv" ? true : false}
-            >
-              TV
-            </Tab>
-            <Tab
               onClick={() => setTab("movie")}
               tabMatch={tab === "movie" ? true : false}
             >
               Movie
+            </Tab>
+            <Tab
+              onClick={() => setTab("tv")}
+              tabMatch={tab === "tv" ? true : false}
+            >
+              TV
             </Tab>
           </Tabs>
           <Contents>

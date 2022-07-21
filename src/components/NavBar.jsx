@@ -259,13 +259,13 @@ export default function NavBar() {
             </Link>
           </Li>
           <Li>
-            <Link to="/tv" className={tvMatch ? "on" : ""}>
-              Tv
+            <Link to="/movies" className={movieMatch ? "on" : ""}>
+              Movie
             </Link>
           </Li>
           <Li>
-            <Link to="/movies" className={movieMatch ? "on" : ""}>
-              Movie
+            <Link to="/tv" className={tvMatch ? "on" : ""}>
+              Tv
             </Link>
           </Li>
         </Nav>
