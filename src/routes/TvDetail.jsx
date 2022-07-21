@@ -34,13 +34,12 @@ const DetailInfo = styled.section`
   margin-top: 100px;
   padding: 50px;
   color: #f9f9f9;
-  iframe,
-  video {
+  iframe {
     position: absolute;
-    top: 20%;
-    left: 55%;
-    width: 500px;
-    height: 300px;
+    top: 12%;
+    left: 60%;
+    width: 580px;
+    height: 340px;
     background-color: #333;
     object-fit: cover;
   }
@@ -52,6 +51,7 @@ const Title = styled.h2`
   margin-bottom: 30px;
   max-width: 50%;
   line-height: 1.2;
+  word-break: keep-all;
 `;
 const Ban = styled.div`
   position: absolute;
@@ -395,9 +395,9 @@ export default function TvDetail() {
                         </>
                       ) : null}
                       <Overview>
-                        {data.overview.length < 150
+                        {data.overview.length < 250
                           ? data.overview
-                          : data.overview.slice(0, 150) + "..."}
+                          : data.overview.slice(0, 250) + "..."}
                       </Overview>
                     </BaseInfo>
                     <SimilarTitle>비슷한 TV쇼</SimilarTitle>

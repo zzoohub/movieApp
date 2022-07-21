@@ -151,7 +151,7 @@ const Title = styled.h3`
 const TopTitle = styled.h3`
   font-size: 28px;
   font-weight: bold;
-  color: #ff3d3d;
+  color: gold;
   margin: 20px 50px;
   em {
     font-size: 24px;
