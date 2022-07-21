@@ -69,7 +69,6 @@ const NotFound = styled.div`
     width: 25px;
     height: 25px;
     margin-right: 10px;
-    margin-top: 2px;
   }
   span {
     font-size: 22px;
