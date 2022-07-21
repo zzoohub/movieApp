@@ -102,6 +102,10 @@ export default function Home() {
   const [genreId, setGenreId] = useState();
   const { data: genres } = useQuery("keywords", getGenres);
 
+  const shutdown = () => {
+    window.open("about:blank", "_parent").parent.close();
+  };
+
   // const { data: movieGenres } = useQuery("keywords", getMovieGenres);
 
   const onValid = (form) => {
@@ -120,7 +124,7 @@ export default function Home() {
   return (
     <Wrapper>
       <Main>
-        <h2>
+        <h2 onClick={shutdown}>
           안녕하세요 무비앱v1 입니다.
           <br />
           다양한 영화와 Tv Show 정보를 얻으실 수 있습니다.
