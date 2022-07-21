@@ -121,7 +121,7 @@ export default function Home() {
     <Wrapper>
       <Main>
         <h2>
-          안녕하세요 무비앱입니다.
+          안녕하세요 무비앱v1 입니다.
           <br />
           다양한 영화와 Tv Show 정보를 얻으실 수 있습니다.
         </h2>
