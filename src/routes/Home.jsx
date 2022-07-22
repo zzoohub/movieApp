@@ -112,7 +112,7 @@ export default function Home() {
 
   useEffect(() => {
     setGenreId(new URLSearchParams(location.search).get("id"));
-    console.log(location);
+    // console.log(location);
   }, [location]);
 
   return (
