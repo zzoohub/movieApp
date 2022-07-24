@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useRef , useCallback} from "react";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
 import { ReactComponent as Mlogo } from "../images/logo.svg";
 import { ReactComponent as Send } from "../images/paper-plane-solid.svg";
+import { useEffect } from "react";
 
 const ChatBotWrap = styled.div`
   position: fixed;
@@ -288,7 +289,7 @@ const ChatInput = styled.input`
 export default function ChatBot() {
   const { user } = useUser();
   const [showOn, setShowOn] = useState(false); //챗봇창 열고 닫기
-  const [chatOn, setChatOn] = useState(false);
+  const [chatOn, setChatOn] = useState(true);
   const [onTime, setOnTime] = useState(false); //운영시간 모드
   const now = new Date(); //챗봇 열때 현재시각 갖고오기
   const nowTime = now.getHours() * 60 + now.getMinutes(); //현재시각 분으로 환산
@@ -311,6 +312,8 @@ export default function ChatBot() {
   const lists = [];
   const [chatList, setChatList] = useState(lists);
   const [id, setId] = useState("2");
+  const [scrollHeight, setScrollHeight] = useState("")
+  const scrollRef = useRef();
 
   const userInput = (e) => {
     e.preventDefault();
@@ -324,8 +327,19 @@ export default function ChatBot() {
       setChatList(chatList);
       setInputText("");
       setId(id + 1);
+      setScrollHeight(scrollRef.current.scrollHeight);
+
     }
   };
+  const scrollToBottom = () =>  {
+    if(scrollRef.current){
+      scrollRef.current.scrollTop = scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [scrollHeight, chatOn])
 
   return (
     <ChatBotWrap>
@@ -465,7 +479,7 @@ export default function ChatBot() {
                 </div>
               </ChatHeader>
               <ChatBalloonWrap_2>
-                <ChatUl>
+                <ChatUl ref={scrollRef}>
                   <li key={id}>
                     <FlexBox_2>
                       <div>
@@ -489,7 +503,7 @@ export default function ChatBot() {
                           ) : (
                             <svg
                               className="w-6 h-6"
-                              fill="#f9f9f9"
+                              fill="#333"
                               viewBox="0 0 20 20"
                               xmlns="http://www.w3.org/2000/svg"
                             >
