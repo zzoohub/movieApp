@@ -5,7 +5,7 @@ const TvItem = styled.div`
   flex-direction: column;
   height: 220px;
   overflow: hidden;
-  background-color: #222;
+  background-color: #111;
   border-radius: 10px;
   border-style: outset;
   border: 3px solid transparent;

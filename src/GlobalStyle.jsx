@@ -33,7 +33,7 @@ footer, header, hgroup, menu, nav, section {
 body {
   font-family: 'Roboto', sans-serif;
 	line-height: 1;
-	background-color: #2c3e50;
+	background-color: #191B24;
 	max-width: 100vw;
 	overflow-x: hidden;
 }

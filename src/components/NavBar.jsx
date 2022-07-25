@@ -16,7 +16,7 @@ const HeaderWrap = styled.div`
     z-index: -10;
   }
   :hover {
-    background-color: #10243a;
+    background-color: #111;
   }
 `;
 const Header = styled.header`
