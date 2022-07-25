@@ -1,9 +1,8 @@
-import { useState, useRef , useCallback} from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
 import { ReactComponent as Mlogo } from "../images/logo.svg";
 import { ReactComponent as Send } from "../images/paper-plane-solid.svg";
-import { useEffect } from "react";
 
 const ChatBotWrap = styled.div`
   position: fixed;
@@ -241,6 +240,11 @@ const ChatUl = styled.ul`
   /* border: 1px solid red; */
   overflow-y: scroll;
   padding-bottom: 10px;
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
   li {
     display: flex;
     img {
@@ -312,7 +316,7 @@ export default function ChatBot() {
   const lists = [];
   const [chatList, setChatList] = useState(lists);
   const [id, setId] = useState("2");
-  const [scrollHeight, setScrollHeight] = useState("")
+  const [scrollHeight, setScrollHeight] = useState("");
   const scrollRef = useRef();
 
   const userInput = (e) => {
@@ -328,18 +332,17 @@ export default function ChatBot() {
       setInputText("");
       setId(id + 1);
       setScrollHeight(scrollRef.current.scrollHeight);
-
     }
   };
-  const scrollToBottom = () =>  {
-    if(scrollRef.current){
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollHeight;
     }
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [scrollHeight, chatOn])
+  }, [scrollHeight, chatOn]);
 
   return (
     <ChatBotWrap>
@@ -409,7 +412,9 @@ export default function ChatBot() {
                 </FlexBox>
                 <button
                   onClick={() => {
-                    setChatOn(!chatOn);
+                    if (onTime) {
+                      setChatOn(!chatOn);
+                    }
                   }}
                 >
                   새 문의하기
