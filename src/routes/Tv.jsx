@@ -95,6 +95,7 @@ const OnTheAir = styled(PopularTV)`
   margin-bottom: 50px;
 `;
 const Trending = styled(PopularTV)``;
+const AiringToday = styled(PopularTV)``;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
@@ -165,6 +166,14 @@ export default function Tv() {
                 gap={10}
               ></InfiniteSlide>
             </OnTheAir>
+            <AiringToday>
+              <Title>Airing Today</Title>
+              <InfiniteSlide
+                url={`https://api.themoviedb.org/3/tv/airing_today?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
+                offset={5}
+                gap={10}
+              ></InfiniteSlide>
+            </AiringToday>
           </Main>
         </Wrapper>
       )}
