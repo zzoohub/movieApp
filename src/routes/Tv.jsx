@@ -91,11 +91,11 @@ const PopularTV = styled.section`
   height: 250px;
   margin-top: 30px;
 `;
-const OnTheAir = styled(PopularTV)`
+const Trending = styled(PopularTV)``;
+const OnTheAir = styled(PopularTV)``;
+const AiringToday = styled(PopularTV)`
   margin-bottom: 50px;
 `;
-const Trending = styled(PopularTV)``;
-const AiringToday = styled(PopularTV)``;
 
 export default function Tv() {
   const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
