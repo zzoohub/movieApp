@@ -4,7 +4,7 @@ import styled from "styled-components";
 const FooterWrap = styled.div`
   width: 100%;
   /* height: 200px; */
-  background-color: #1c1d1f;
+  background-color: #111;
   color: #a5a5a7;
   line-height: 1.4;
 `;

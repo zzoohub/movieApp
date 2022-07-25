@@ -33,7 +33,7 @@ const Btn = styled.button`
   width: 100%;
   height: 50px;
   background-color: ${(props) =>
-    props.active === true ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.2)"};
+    props.active === true ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.3)"};
   color: ${(props) => (props.active ? "#f9f9f9" : "gray")};
   border: none;
   cursor: pointer;
@@ -52,7 +52,7 @@ const Bar = styled.div`
   display: flex;
   width: 100%;
   height: 70px;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 2px;
   overflow: hidden;
   color: #f9f9f9;
@@ -61,7 +61,7 @@ const Bar = styled.div`
   transition: all ease 0.2s;
   :hover {
     transform: scale(1.02);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
   }
   img {
     height: 100%;
