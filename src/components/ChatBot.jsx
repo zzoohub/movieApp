@@ -485,7 +485,7 @@ export default function ChatBot() {
               </ChatHeader>
               <ChatBalloonWrap_2>
                 <ChatUl ref={scrollRef}>
-                  <li key={id}>
+                  <li>
                     <FlexBox_2>
                       <div>
                         <Mlogo width={15} height={15}></Mlogo>
@@ -499,8 +499,8 @@ export default function ChatBot() {
                       </MessageBox_2>
                     </FlexBox_2>
                   </li>
-                  {chatList.map((list) => (
-                    <li key={list.id}>
+                  {chatList.map((list, index) => (
+                    <li key={index}>
                       <FlexBox_3>
                         <div>
                           {user?.profileUrl ? (
