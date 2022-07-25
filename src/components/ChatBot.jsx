@@ -194,7 +194,7 @@ const MessageBox_2 = styled(MessageBox)`
     line-height: 1.5;
     padding: 5px 10px 5px 7px;
     margin-top: 5px;
-    background-color: #ececec;
+    background-color: #f7f7f7;
     border-radius: 15px;
     border-top-left-radius: 0;
   }
@@ -208,15 +208,13 @@ const MessageBox_3 = styled(MessageBox_2)`
     padding: 5px 10px 5px 7px;
     margin-top: 10px;
     margin-right: 5px;
-    background-color: #ececec;
-    border-radius: 15px;
-    border-top-left-radius: 0;
+    background-color: #f7f7f7;
     border-radius: 15px;
     border-top-right-radius: 0;
+    word-break: normal;
   }
 `;
 
-const Time = styled.span``;
 const NotiBox = styled.div`
   display: flex;
   justify-content: center;
@@ -236,10 +234,10 @@ const Notice = styled.span`
   margin-left: 5px;
 `;
 const ChatUl = styled.ul`
-  height: calc(100% - 40px);
+  height: calc(100% - 55px);
+  width: 100%;
   /* border: 1px solid red; */
   overflow-y: scroll;
-  padding-bottom: 10px;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
@@ -258,23 +256,25 @@ const ChatUl = styled.ul`
 `;
 const ChatInputBox = styled.form`
   position: absolute;
-  bottom: 0px;
+  bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   /* border: 1px solid red; */
-  width: 100%;
-  height: 40px;
-  padding: 5px 2px;
+  width: calc(100% - 20px);
+  height: 35px;
+  padding: 3px 5px;
   background-color: #ececec;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 50px;
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 16px 1px;
 
   .sendBtn {
-    width: 15%;
+    width: 10%;
     height: 100%;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     svg {
       fill: #f6f6f6;
       height: 60%;
@@ -282,7 +282,7 @@ const ChatInputBox = styled.form`
   }
 `;
 const ChatInput = styled.input`
-  width: 84%;
+  width: 89%;
   height: 100%;
   font-size: 14px;
   background-color: #ececec;
