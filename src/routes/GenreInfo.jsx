@@ -125,13 +125,13 @@ export default function GenreInfo() {
           onClick={() => setTab("movie")}
           tabMatch={tab === "movie" ? true : false}
         >
-          Movie
+          영화
         </Tab>
         <Tab
           onClick={() => setTab("tv")}
           tabMatch={tab === "tv" ? true : false}
         >
-          TV
+          TV쇼
         </Tab>
       </Tabs>
       <Contents>

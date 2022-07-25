@@ -134,7 +134,7 @@ export default function Tv() {
             </Banner>
             <TopRated>
               <TopTitle>
-                TOP 20<em>TV</em>
+                TOP 20<em>TV쇼</em>
               </TopTitle>
               <SlideMulti
                 offset={5}
@@ -143,7 +143,7 @@ export default function Tv() {
               ></SlideMulti>
             </TopRated>
             <Trending>
-              <Title>Weekly Trending</Title>
+              <Title>주간 트렌드</Title>
               <InfiniteSlide
                 url={`https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
                 offset={5}
@@ -151,7 +151,7 @@ export default function Tv() {
               ></InfiniteSlide>
             </Trending>
             <PopularTV>
-              <Title>Popular TV</Title>
+              <Title>인기 TV쇼</Title>
               <InfiniteSlide
                 url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
                 offset={5}
@@ -159,7 +159,7 @@ export default function Tv() {
               ></InfiniteSlide>
             </PopularTV>
             <OnTheAir>
-              <Title>On The Air</Title>
+              <Title>방영중인 TV쇼</Title>
               <InfiniteSlide
                 url={`https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
                 offset={5}
@@ -167,7 +167,7 @@ export default function Tv() {
               ></InfiniteSlide>
             </OnTheAir>
             <AiringToday>
-              <Title>Airing Today</Title>
+              <Title>오늘의 TV쇼</Title>
               <InfiniteSlide
                 url={`https://api.themoviedb.org/3/tv/airing_today?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
                 offset={5}
