@@ -143,8 +143,8 @@ const ProfileMenu = styled.ul`
 export default function NavBar() {
   const homeMatch = useMatch("/");
   const searchMatch = useMatch("/search");
-  const tvMatch = useMatch("/tv");
-  const movieMatch = useMatch("/movies");
+  const tvMatch = useMatch("/tv/*");
+  const movieMatch = useMatch("/movies/*");
   const genreMatch = useMatch("/genre");
   const { user } = useUser();
   const [showNav, setShowNav] = useState(true);
