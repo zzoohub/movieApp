@@ -3,19 +3,22 @@ import styled from "styled-components";
 const TvItem = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   height: 200px;
   background-image: url(${(props) => props.bgImg});
   background-size: cover;
   background-position: center center;
-  border-style: outset;
+  border: ${(props) =>
+    props.bgUrl === "border" ? "1px solid #d9d9d9" : "none"};
   transition: all ease-in-out 0.2s;
   :hover {
     transform: scale(1.03);
   }
   svg {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     color: gray;
   }
 `;
