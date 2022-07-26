@@ -18,12 +18,6 @@ const Main = styled.main`
   max-width: 1920px;
   margin: 0 auto;
 `;
-const Title = styled.h2`
-  font-size: 22px;
-  font-weight: bold;
-  color: #f9f9f9;
-  margin: 15px 20px;
-`;
 const Banner = styled.section`
   display: flex;
   position: relative;
@@ -75,13 +69,20 @@ const TopRated = styled.section`
   height: 300px;
   margin-top: 30px;
 `;
+const Title = styled.h3`
+  font-size: 16px;
+  font-weight: bold;
+  color: #f9f9f9;
+  margin: 15px 20px;
+`;
 const TopTitle = styled.h3`
-  font-size: 28px;
+  font-size: 16px;
   font-weight: bold;
   color: gold;
   margin: 20px 50px;
+  margin-top: 90px;
   em {
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 10px;
     color: #f9f9f9;
   }
