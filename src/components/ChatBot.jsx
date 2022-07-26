@@ -211,7 +211,7 @@ const MessageBox_3 = styled(MessageBox_2)`
     background-color: #f7f7f7;
     border-radius: 15px;
     border-top-right-radius: 0;
-    word-break: normal;
+    word-break: break-all;
   }
 `;
 
