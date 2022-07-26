@@ -27,6 +27,7 @@ const Main = styled.main`
   line-height: 40px;
   h2 {
     font-size: 32px;
+    font-weight: 600;
     margin-top: 50px;
     margin-bottom: 30px;
     text-align: center;

@@ -6,47 +6,57 @@ import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
-  display: flex;
+  /* display: flex; */
   width: 80%;
   max-width: 1280px;
-  margin-top: 180px;
   min-height: 100vh;
-  margin: 200px auto 0px auto;
-  gap: 20px;
+  margin: 120px auto 0px auto;
+  color: #f9f9f9;
   h2 {
-    position: absolute;
-    left: 24%;
-    top: -50px;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 600;
-    color: #ff3d3d;
+    margin-top: 150px;
+    margin-bottom: 30px;
   }
 `;
-const Aside = styled.aside`
+
+const Tabs = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 20%;
-  height: 500px;
-  max-width: 300px;
-`;
-const Btn = styled.button`
+  justify-content: start;
+  align-items: center;
   width: 100%;
-  height: 50px;
-  background-color: ${(props) =>
-    props.active === true ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.3)"};
-  color: ${(props) => (props.active ? "#f9f9f9" : "gray")};
-  border: none;
-  cursor: pointer;
+  margin: 50px auto 20px;
+  border-bottom: 1px solid #94979e;
 `;
+const Tab = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 35px;
+  margin-right: 30px;
+  /* border-radius: 5px; */
+  background: none;
+  color: ${(props) => (props.tabMatch ? "#fff" : "#94979E")};
+  border: none;
+  border-bottom: ${(props) => (props.tabMatch ? "3px solid #ff3d3d" : "none")};
+  font-size: 18px;
+  font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};
+  cursor: pointer;
+  :hover {
+    filter: brightness(0.9);
+  }
+`;
+
 const Main = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 80%;
-  max-width: 1000px;
-  height: 600px;
-  overflow-y: auto;
-  padding: 0px 20px;
+  width: 100%;
+  /* max-width: 1000px; */
+  /* height: 600px; */
+  /* padding: 0px 20px; */
+  padding-bottom: 100px;
 `;
 const Bar = styled.div`
   display: flex;
@@ -145,18 +155,21 @@ export default function Favorits() {
 
   return (
     <Wrapper>
-      <h2>Liked {tab === "tv" ? "Program" : "Movies"}</h2>
-      <Aside>
-        <Btn active={tab === "tv" ? true : false} onClick={() => setTab("tv")}>
-          Tv
-        </Btn>
-        <Btn
-          active={tab === "movie" ? true : false}
+      <h2>찜한 목록</h2>
+      <Tabs>
+        <Tab
           onClick={() => setTab("movie")}
+          tabMatch={tab === "movie" ? true : false}
         >
-          Movie
-        </Btn>
-      </Aside>
+          영화
+        </Tab>
+        <Tab
+          onClick={() => setTab("tv")}
+          tabMatch={tab === "tv" ? true : false}
+        >
+          TV쇼
+        </Tab>
+      </Tabs>
       <Main>
         {tab === "tv" ? (
           <Flex>
@@ -193,7 +206,7 @@ export default function Favorits() {
                 </Link>
               ))
             ) : (
-              <Alarm>There are no favorite Tv program.</Alarm>
+              <Alarm>찜한 TV쇼가 없습니다.</Alarm>
             )}
           </Flex>
         ) : (
@@ -219,7 +232,7 @@ export default function Favorits() {
                 </Link>
               ))
             ) : (
-              <Alarm>There are no favorite movies.</Alarm>
+              <Alarm>찜한 영화가 없습니다.</Alarm>
             )}
           </Flex>
         )}
