@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   right: 0px;
   padding: 0px 30px;
   color: #f9f9f9;
-  h2 {
+  h3 {
     font-size: 22px;
     font-weight: 600;
     margin: 150px 0 30px 15px;
@@ -106,7 +106,7 @@ export default function Favorits() {
 
   return (
     <Wrapper>
-      <h2>찜한 목록</h2>
+      <h3>찜한 목록</h3>
       <Tabs>
         <Tab
           onClick={() => setTab("movie")}

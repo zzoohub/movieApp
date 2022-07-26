@@ -7,7 +7,7 @@ import { makeImgPath } from "../util/makeImgPath";
 const Title = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   margin-top: 50px;
   color: #f9f9f9;
   em {

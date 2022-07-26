@@ -354,7 +354,7 @@ export default function TvDetail() {
                     ) : null}
                     <BaseInfo>
                       <Period>
-                        {data.release_date} 개봉 &nbsp;&nbsp;&nbsp;총{" "}
+                        {data.release_date} 개봉 &nbsp;|&nbsp;&nbsp;총{" "}
                         {data.runtime}분
                       </Period>
                       <Genre>
@@ -363,7 +363,9 @@ export default function TvDetail() {
                         ))}
                       </Genre>
                       <Rating>
-                        <span>평점:&nbsp;&nbsp;{data.vote_average}</span>
+                        <span>
+                          평점:&nbsp;&nbsp;{Math.round(data.vote_average) / 2}
+                        </span>
                         {/* {[1, 2, 3, 4, 5].map((index) =>
                           Math.round(data.vote_average) / 2 >= index ? (
                             <svg
