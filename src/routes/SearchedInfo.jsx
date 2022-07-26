@@ -21,8 +21,9 @@ const Title = styled.div`
     }
   }
   span {
-    font-size: 26px;
+    font-size: 22px;
     margin-top: 2px;
+    font-weight: 100;
   }
 `;
 const Tabs = styled.div`
@@ -37,16 +38,15 @@ const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70px;
+  width: 100px;
   height: 35px;
-  margin-right: 30px;
-  /* border-radius: 5px; */
   background: none;
   color: ${(props) => (props.tabMatch ? "#fff" : "#94979E")};
   border: none;
-  border-bottom: ${(props) => (props.tabMatch ? "3px solid #ff3d3d" : "none")};
+  border-bottom: ${(props) => (props.tabMatch ? "2px solid #ff3d3d" : "none")};
   font-size: 18px;
-  font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};
+  font-weight: ${(props) => (props.tabMatch ? "500" : "300")};
+  transition: all linear 0.2s;
   cursor: pointer;
   :hover {
     filter: brightness(0.9);
@@ -54,13 +54,15 @@ const Tab = styled.button`
 `;
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   grid-template-rows: auto;
-  gap: 20px;
+  gap: 40px;
+  row-gap: 60px;
   width: 100%;
   margin: 5px auto;
   height: max-content;
   padding: 15px;
+  margin-bottom: 50px;
 `;
 
 const Contents = styled.div``;
@@ -102,13 +104,24 @@ export default function SearchedInfo() {
             <em>{keyword}</em>
             <strong>"</strong>
             <span>
-              검색 결과가{" "}
+              검색 결과가&nbsp;
+              <em>
+                {tab === "movie"
+                  ? movies?.length > 0
+                    ? `${movies?.length}`
+                    : ""
+                  : tvs?.length > 0
+                  ? `${tvs?.length}`
+                  : ""}
+              </em>
+            </span>
+            <span>
               {tab === "movie"
                 ? movies?.length > 0
-                  ? `${movies?.length}개 있습니다.`
+                  ? `개 있습니다.`
                   : "없습니다."
                 : tvs?.length > 0
-                ? `${tvs?.length}개 있습니다.`
+                ? `개 있습니다.`
                 : "없습니다."}
             </span>
           </Title>
