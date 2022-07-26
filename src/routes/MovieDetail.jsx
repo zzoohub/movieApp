@@ -277,7 +277,6 @@ export default function TvDetail() {
         }
       });
   }, [id]);
-
   return (
     <>
       {isLoading || similarLoading ? (

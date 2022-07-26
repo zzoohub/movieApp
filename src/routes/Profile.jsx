@@ -201,7 +201,7 @@ export default function Profile() {
       {loading ? <Loading></Loading> : null}
       <Wrapper>
         <Main>
-          <h2>Profile</h2>
+          <h2>회원 정보</h2>
           <Form onSubmit={handleSubmit(onValid)}>
             <ImgBox
               url={

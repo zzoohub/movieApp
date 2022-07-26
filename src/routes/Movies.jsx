@@ -232,7 +232,7 @@ export default function Movies() {
       ) : (
         <Wrapper>
           <Banner>
-            <BigTitle>Popular Movies</BigTitle>
+            <BigTitle>인기 영화</BigTitle>
             <Slider>
               <Slide
                 ref={slideRef}
@@ -291,7 +291,7 @@ export default function Movies() {
           </Banner>
           <TopRated>
             <TopTitle>
-              TOP 20<em>Movies</em>
+              TOP 20<em>영화</em>
             </TopTitle>
             <SlideMulti
               offset={5}
@@ -300,7 +300,7 @@ export default function Movies() {
             ></SlideMulti>
           </TopRated>
           <Trending>
-            <Title>Weekly Trending</Title>
+            <Title>주간 트렌드</Title>
             <InfiniteSlide
               url={`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}
@@ -309,7 +309,7 @@ export default function Movies() {
             ></InfiniteSlide>
           </Trending>
           <Upcoming>
-            <Title>Upcoming</Title>
+            <Title>개봉 예정작</Title>
             <InfiniteSlide
               url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}
@@ -318,7 +318,7 @@ export default function Movies() {
             ></InfiniteSlide>
           </Upcoming>
           <NowPlay>
-            <Title>Now Playing</Title>
+            <Title>현재 상영중</Title>
             <InfiniteSlide
               url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=ko`}
               offset={5}

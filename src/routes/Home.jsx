@@ -121,7 +121,7 @@ export default function Home() {
         <h2>
           안녕하세요 무비앱입니다.
           <br />
-          영화와 Tv Show 정보를 얻으실 수 있습니다.
+          영화와 TV Show 정보를 얻으실 수 있습니다.
         </h2>
         <SearchForm onSubmit={onValid}>
           <input type="text" />
