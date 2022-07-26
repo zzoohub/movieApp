@@ -6,13 +6,12 @@ import { Link } from "react-router-dom";
 import InfoBox from "../components/InfoBox";
 
 const Wrapper = styled.div`
-  position: relative;
-  /* display: flex; */
-  width: 100%;
-  /* max-width: 1280px; */
+  max-width: 1920px;
   min-height: 100vh;
-  padding: 0 30px;
-  margin: 120px auto 0px auto;
+  margin: 0 auto;
+  left: 0px;
+  right: 0px;
+  padding: 0px 30px;
   color: #f9f9f9;
   h2 {
     font-size: 22px;
@@ -63,7 +62,6 @@ const Grid = styled.div`
   margin: 5px auto;
   height: max-content;
   padding: 15px;
-  margin-bottom: 50px;
 `;
 
 const Alarm = styled.span`
