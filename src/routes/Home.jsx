@@ -35,7 +35,7 @@ const SearchForm = styled.form`
   input {
     min-width: 300px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
     height: 50px;
     outline: none;
     border-radius: 100px;
