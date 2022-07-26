@@ -42,6 +42,9 @@ const SearchForm = styled.form`
     padding-left: 3%;
     padding-right: 15%;
     font-size: 18px;
+    &::placeholder {
+      color: #c9cacf;
+    }
   }
   button {
     position: absolute;
@@ -124,7 +127,7 @@ export default function Home() {
           영화와 TV Show 정보를 얻으실 수 있습니다.
         </h2>
         <SearchForm onSubmit={onValid}>
-          <input type="text" />
+          <input type="text" placeholder="검색어를 입력해주세요." />
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
