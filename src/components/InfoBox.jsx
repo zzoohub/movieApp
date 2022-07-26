@@ -10,8 +10,8 @@ const TvItem = styled.div`
   background-image: url(${(props) => props.bgImg});
   background-size: cover;
   background-position: center center;
-  border: ${(props) =>
-    props.bgUrl === "border" ? "1px solid #d9d9d9" : "none"};
+  background-color: ${(props) => (props.bgUrl ? "#666" : "none")};
+  border: ${(props) => (props.bgUrl ? "1px solid #d9d9d9" : "none")};
   transition: all ease-in-out 0.2s;
   :hover {
     transform: scale(1.03);
@@ -39,7 +39,7 @@ const Title = styled.h2`
 
 export default function InfoBox({ bgUrl, name, firstDate, voteAverage }) {
   return (
-    <TvItem bgImg={bgUrl ? bgUrl : "border"}>
+    <TvItem bgImg={bgUrl ? bgUrl : false}>
       {bgUrl ? null : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
