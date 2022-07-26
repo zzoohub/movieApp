@@ -40,7 +40,7 @@ const Nav = styled.ul`
   position: relative;
   width: 70%;
   svg {
-    width: 150px;
+    width: 100px;
     transition: all ease-in-out 0.2s;
   }
 `;
@@ -51,23 +51,9 @@ const Li = styled.li`
   position: relative;
   width: max-content;
   height: 50px;
-  &:first-child {
-    width: max-content;
-    margin-right: 50px;
-    font-size: 25px;
-    font-weight: bold;
-    a:hover {
-      color: #ff8181;
-    }
-  }
-  :not(:nth-of-type(1)) a {
-    margin: 0px 30px;
-    :hover {
-      color: #ff8181;
-    }
-  }
   a {
     display: flex;
+    font-size: 14px;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -75,12 +61,20 @@ const Li = styled.li`
     transition: all linear 0.2s;
     color: #f9f9f9;
     text-align: center;
+    margin: 0px 30px;
     /* text-transform: uppercase; */
+    :hover {
+      color: #ff8181;
+    }
     &.on {
       transition: all ease-in-out 0.2s;
       color: #ff3d3d;
       font-weight: bold;
     }
+  }
+  :first-of-type a {
+    font-size: 20px;
+    font-weight: bold;
   }
 `;
 

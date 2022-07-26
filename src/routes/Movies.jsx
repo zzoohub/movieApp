@@ -39,6 +39,7 @@ const PageNation = styled.div`
     border-radius: 100px;
     background-color: #d9d9d9;
     transition: all ease-in-out 0.2s;
+    cursor: pointer;
     &.on {
       width: 40px;
       background-color: #ff3d3d;
@@ -48,8 +49,8 @@ const PageNation = styled.div`
 const BigTitle = styled.h2`
   position: absolute;
   left: 15%;
-  top: 0%;
-  font-size: 28px;
+  top: 1%;
+  font-size: 22px;
   font-weight: bold;
   color: #f9f9f9;
 `;
@@ -314,7 +315,11 @@ export default function Movies() {
             </Slider>
             <PageNation>
               {[...Array(20)].map((box, i) => (
-                <div key={i} className={i + 1 === index ? "on" : ""}></div>
+                <div
+                  key={i}
+                  onClick={() => setIndex(i + 1)}
+                  className={i + 1 === index ? "on" : ""}
+                ></div>
               ))}
             </PageNation>
           </Banner>
