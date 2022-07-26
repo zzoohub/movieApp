@@ -101,11 +101,11 @@ export default function GenreInfo() {
       setAllData(data);
     };
     fetchData();
-  }, []);
+  }, [keyword]);
 
   useEffect(() => {
-    setMovies([]);
-    setTvs([]);
+    // setMovies([]);
+    // setTvs([]);
     const set = async () => {
       await setFiltered([
         ...new Set(
@@ -114,7 +114,7 @@ export default function GenreInfo() {
       ]);
     };
     set();
-  }, [keyword]);
+  }, [allData]);
 
   useEffect(() => {
     setTvs(filtered.filter((content) => content.media_type === "tv"));
