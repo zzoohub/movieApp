@@ -12,11 +12,10 @@ const Title = styled.div`
   color: #f9f9f9;
   em {
     font-weight: bold;
-    font-size: 34px;
-    color: gold;
+    font-size: 28px;
   }
   strong {
-    font-size: 34px;
+    font-size: 28px;
     :last-of-type {
       margin-right: 10px;
     }
@@ -28,21 +27,24 @@ const Title = styled.div`
 `;
 const Tabs = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  margin-top: 20px;
+  width: calc(100% - 30px);
+  margin: 20px auto;
+  border-bottom: 1px solid #94979e;
 `;
 const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 40px;
-  margin: 0 5px;
-  border-radius: 5px;
-  background-color: ${(props) => (props.tabMatch ? "#ff3d3d" : "#d9d9d9")};
-  color: ${(props) => (props.tabMatch ? "#111" : "#333")};
+  width: 70px;
+  height: 35px;
+  margin-right: 30px;
+  /* border-radius: 5px; */
+  background: none;
+  color: ${(props) => (props.tabMatch ? "#fff" : "#94979E")};
   border: none;
+  border-bottom: ${(props) => (props.tabMatch ? "3px solid #ff3d3d" : "none")};
   font-size: 18px;
   font-weight: ${(props) => (props.tabMatch ? "bold" : "500")};
   cursor: pointer;
@@ -99,7 +101,16 @@ export default function SearchedInfo() {
             <strong>"</strong>
             <em>{keyword}</em>
             <strong>"</strong>
-            <span>검색 결과</span>
+            <span>
+              검색 결과가{" "}
+              {tab === "movie"
+                ? movies?.length > 0
+                  ? `${movies?.length}개 있습니다.`
+                  : "없습니다."
+                : tvs?.length > 0
+                ? `${tvs?.length}개 있습니다.`
+                : "없습니다."}
+            </span>
           </Title>
           <Tabs>
             <Tab
