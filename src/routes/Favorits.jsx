@@ -3,20 +3,21 @@ import { useUser } from "../util/useUser";
 import { useEffect, useState } from "react";
 import { makeImgPath } from "../util/makeImgPath";
 import { Link } from "react-router-dom";
+import InfoBox from "../components/InfoBox";
 
 const Wrapper = styled.div`
   position: relative;
   /* display: flex; */
-  width: 80%;
-  max-width: 1280px;
+  width: 100%;
+  /* max-width: 1280px; */
   min-height: 100vh;
+  padding: 0 30px;
   margin: 120px auto 0px auto;
   color: #f9f9f9;
   h2 {
     font-size: 32px;
     font-weight: 600;
-    margin-top: 150px;
-    margin-bottom: 30px;
+    margin: 150px 0 30px 15px;
   }
 `;
 
@@ -24,7 +25,7 @@ const Tabs = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 30px);
   margin: 50px auto 20px;
   border-bottom: 1px solid #94979e;
 `;
@@ -50,9 +51,9 @@ const Tab = styled.button`
 
 const Main = styled.main`
   position: relative;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100%; */
   /* max-width: 1000px; */
   /* height: 600px; */
   /* padding: 0px 20px; */
@@ -98,11 +99,22 @@ const Bar = styled.div`
     }
   }
 `;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: auto;
+  gap: 20px;
+  width: 100%;
+  margin: 5px auto;
+  height: max-content;
+  padding: 15px;
+`;
+
 const Alarm = styled.span`
-  font-size: 14px;
+  font-size: 16px;
   color: #d9d9d9;
-  margin-left: 30px;
-  margin-top: 10px;
+  margin-left: 20px;
 `;
 const Flex = styled.div`
   display: flex;
@@ -121,7 +133,7 @@ const AltImg = styled.article`
 
 export default function Favorits() {
   const { user } = useUser();
-  const [tab, setTab] = useState("tv");
+  const [tab, setTab] = useState("movie");
   const [tvs, setTvs] = useState([]);
   const [movies, setMovies] = useState([]);
 
@@ -171,7 +183,7 @@ export default function Favorits() {
         </Tab>
       </Tabs>
       <Main>
-        {tab === "tv" ? (
+        {/* {tab === "tv" ? (
           <Flex>
             {tvs[0] ? (
               tvs?.map((tv, index) => (
@@ -235,6 +247,54 @@ export default function Favorits() {
               <Alarm>찜한 영화가 없습니다.</Alarm>
             )}
           </Flex>
+        )} */}
+        {tab === "movie" ? (
+          <Grid>
+            {movies[0] ? (
+              <>
+                {movies?.map((movie, index) => (
+                  <Link key={index} to={`/movies/${movie.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        movie.backdrop_path
+                          ? makeImgPath(movie.backdrop_path, "w500")
+                          : null
+                      }
+                      name={movie.title}
+                      voteAverage={movie.vote_average}
+                      firstDate={movie.release_date}
+                    ></InfoBox>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <Alarm>찜한 영화가 없습니다.</Alarm>
+            )}
+          </Grid>
+        ) : (
+          <Grid>
+            {tvs[0] ? (
+              <>
+                {" "}
+                {tvs?.map((tv, index) => (
+                  <Link key={index} to={`/tv/${tv.id}`}>
+                    <InfoBox
+                      bgUrl={
+                        tv.backdrop_path
+                          ? makeImgPath(tv.backdrop_path, "w500")
+                          : null
+                      }
+                      name={tv.name}
+                      voteAverage={tv.vote_average}
+                      firstDate={tv.first_air_date}
+                    ></InfoBox>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <Alarm>찜한 TV쇼가 없습니다.</Alarm>
+            )}
+          </Grid>
         )}
       </Main>
     </Wrapper>
