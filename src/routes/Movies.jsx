@@ -23,6 +23,28 @@ const Banner = styled.section`
   height: 650px;
   margin-top: 120px;
 `;
+const PageNation = styled.div`
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: -30px;
+  margin: 0 auto;
+  width: max-content;
+  display: flex;
+  z-index: 12;
+  div {
+    margin: 0 8px;
+    width: 13px;
+    height: 13px;
+    border-radius: 100px;
+    background-color: #d9d9d9;
+    transition: all ease-in-out 0.2s;
+    &.on {
+      width: 40px;
+      background-color: #ff3d3d;
+    }
+  }
+`;
 const BigTitle = styled.h2`
   position: absolute;
   left: 15%;
@@ -123,10 +145,10 @@ const BoxDetail = styled.h3`
   bottom: 5%;
   left: 5%;
   opacity: 0;
-  font-size: 44px;
+  font-size: 28px;
   font-weight: bold;
   color: #f9f9f9;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 10px 20px;
   transition: all ease-in-out 0.2s;
 `;
@@ -143,22 +165,24 @@ const NowPlay = styled(Upcoming)`
   margin-bottom: 50px;
 `;
 const Title = styled.h3`
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
   color: #f9f9f9;
   margin: 15px 20px;
 `;
 const TopTitle = styled.h3`
-  font-size: 28px;
+  font-size: 16px;
   font-weight: bold;
   color: gold;
   margin: 20px 50px;
+  margin-top: 90px;
   em {
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 10px;
     color: #f9f9f9;
   }
 `;
+
 const Trending = styled(Upcoming)``;
 
 export default function Movies() {
@@ -288,6 +312,11 @@ export default function Movies() {
                 </svg>
               </Next>
             </Slider>
+            <PageNation>
+              {[...Array(20)].map((box, i) => (
+                <div key={i} className={i + 1 === index ? "on" : ""}></div>
+              ))}
+            </PageNation>
           </Banner>
           <TopRated>
             <TopTitle>

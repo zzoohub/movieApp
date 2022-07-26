@@ -82,15 +82,31 @@ const Item = styled.div`
     right: 3%;
     font-weight: bold;
   }
-  em {
+  div {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     left: 5%;
     top: 5%;
-    color: gold;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 14px;
-    background-color: #222;
+    background-color: #111;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    em {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff3d3d;
+      margin-top: 5px;
+    }
+    span {
+      position: static;
+      background-color: transparent;
+      font-size: 6px !important;
+      margin-top: -3px;
+      color: #f9f9f9;
+    }
   }
   svg {
     position: absolute;
@@ -141,8 +157,11 @@ export default function SlideMulti({ offset, data, type }) {
                         ? data[offset * indexes + index]?.title
                         : data[offset * indexes + index]?.name}
                     </h4>
-                    <span>{data[offset * indexes + index]?.vote_average}</span>
-                    <em>RANK {offset * indexes + index + 1}</em>
+                    {/* <span>{data[offset * indexes + index]?.vote_average}</span> */}
+                    <div>
+                      <em>{offset * indexes + index + 1}</em>
+                      <span>Tir</span>
+                    </div>
                     {data[offset * indexes + index]?.backdrop_path ? null : (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
