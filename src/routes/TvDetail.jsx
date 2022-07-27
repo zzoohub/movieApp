@@ -172,6 +172,9 @@ const LikeBtn = styled.em`
       transform: scale(0.96);
     }
   }
+  svg:active {
+    transform: scale(0.96);
+  }
 `;
 const ShareBtn = styled(LikeBtn)`
   margin-left: 15px;

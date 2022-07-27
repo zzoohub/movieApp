@@ -48,8 +48,8 @@ const SearchForm = styled.form`
   }
   button {
     position: absolute;
-    right: 5px;
-    top: 34px;
+    right: 8px;
+    top: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
