@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
-import { ReactComponent as Mlogo } from "../images/logo.svg";
+import { ReactComponent as RedLogo } from "../images/logo.svg";
+import { ReactComponent as BlackLogo } from "../images/logo_black.svg";
 import { ReactComponent as Send } from "../images/paper-plane-solid.svg";
 
 const ChatBotWrap = styled.div`
@@ -15,6 +16,9 @@ const ChatBotWrap = styled.div`
 `;
 const ChatBotBtn = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   right: 0;
   bottom: 0;
   width: 60px;
@@ -30,6 +34,9 @@ const ChatBotBtn = styled.button`
     transform: scale(1.1);
     font-weight: bold;
     transition: all ease 0.1s;
+  }
+  svg {
+    margin-top: 5px;
   }
 `;
 const ChatBox = styled.div`
@@ -68,7 +75,6 @@ const ChatHeader = styled.div`
     font-weight: 700;
     font-size: 18px;
     svg {
-      width: 16px;
       margin-left: 7px;
       margin-right: 10px;
     }
@@ -346,14 +352,18 @@ export default function ChatBot() {
 
   return (
     <ChatBotWrap>
-      {user ? <ChatBotBtn onClick={open}>Chat</ChatBotBtn> : null}
+      {user ? (
+        <ChatBotBtn onClick={open}>
+          <RedLogo width={35} />
+        </ChatBotBtn>
+      ) : null}
       {showOn ? (
         <ChatBox>
           {chatOn ? (
             <>
               <ChatHeader>
                 <h2>
-                  <Mlogo width={16} height={16} /> Movie App
+                  <BlackLogo width={20} /> Movie App
                 </h2>
                 <div>
                   <button className="miniBtn">
@@ -398,7 +408,7 @@ export default function ChatBot() {
               <ChatBalloonWrap>
                 <FlexBox>
                   <div>
-                    <Mlogo width={15} height={15}></Mlogo>
+                    <BlackLogo width={18} />
                   </div>
                   <MessageBox>
                     <p>Movie App</p>
@@ -488,7 +498,7 @@ export default function ChatBot() {
                   <li>
                     <FlexBox_2>
                       <div>
-                        <Mlogo width={15} height={15}></Mlogo>
+                        <BlackLogo width={15} />
                       </div>
                       <MessageBox_2>
                         <p>Movie App</p>

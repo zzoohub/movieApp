@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { makeImgPath } from "../util/makeImgPath";
 import { Link } from "react-router-dom";
 import InfoBox from "../components/InfoBox";
+import NotFound from "../components/NotFound";
 
 const Wrapper = styled.div`
   max-width: 1920px;
@@ -62,12 +63,6 @@ const Grid = styled.div`
   margin: 5px auto;
   height: max-content;
   padding: 15px;
-`;
-
-const Alarm = styled.span`
-  font-size: 16px;
-  color: #d9d9d9;
-  margin-left: 20px;
 `;
 
 export default function Favorits() {
@@ -142,7 +137,7 @@ export default function Favorits() {
                 ))}
               </>
             ) : (
-              <Alarm>찜한 영화가 없습니다.</Alarm>
+              <NotFound text="찜한 영화가 없습니다." />
             )}
           </Grid>
         ) : (
@@ -166,7 +161,7 @@ export default function Favorits() {
                 ))}
               </>
             ) : (
-              <Alarm>찜한 TV쇼가 없습니다.</Alarm>
+              <NotFound text="찜한 TV쇼가 없습니다." />
             )}
           </Grid>
         )}
