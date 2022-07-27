@@ -47,7 +47,7 @@ const DetailInfo = styled.section`
 `;
 const Title = styled.h2`
   margin-top: 50px;
-  font-size: 64px;
+  font-size: 42px;
   font-weight: bold;
   margin-bottom: 30px;
   max-width: 50%;
@@ -153,24 +153,30 @@ const LikeBtn = styled.em`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 30px;
+  margin-top: 20px;
   cursor: pointer;
   span {
     position: relative;
     top: 1px;
     color: #f9f9f9;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px !important;
   }
-  svg:hover {
-    transform: scale(1.05);
-  }
-  svg:active {
-    transform: scale(0.96);
+  svg {
+    width: 30px;
+    height: 30px;
+    :hover {
+      transform: scale(1.05);
+    }
+    :active {
+      transform: scale(0.96);
+    }
   }
 `;
-const ShareBtn = styled(LikeBtn)``;
+const ShareBtn = styled(LikeBtn)`
+  margin-left: 15px;
+`;
 const Overview = styled.p`
   max-width: 50%;
   line-height: 1.5;
