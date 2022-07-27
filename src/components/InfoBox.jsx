@@ -10,15 +10,15 @@ const TvItem = styled.div`
   background-image: url(${(props) => props.bgImg});
   background-size: cover;
   background-position: center center;
-  background-color: ${(props) => (props.bgUrl ? "#666" : "none")};
-  border: ${(props) => (props.bgUrl ? "1px solid #d9d9d9" : "none")};
+  background-color: ${(props) =>
+    props.bgImg === false ? "#222" : "transparent"};
   transition: all ease-in-out 0.2s;
   :hover {
     transform: scale(1.03);
   }
   svg {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     color: gray;
   }
 `;
