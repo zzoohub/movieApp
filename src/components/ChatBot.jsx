@@ -21,8 +21,8 @@ const ChatBotBtn = styled.button`
   align-items: center;
   right: 0;
   bottom: 0;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   background-color: #fff;
   border: none;
@@ -31,7 +31,7 @@ const ChatBotBtn = styled.button`
   box-shadow: 0 17px 20px -18px rgba(0, 0, 0, 1);
   cursor: pointer;
   :hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     font-weight: bold;
     transition: all ease 0.1s;
   }
@@ -354,7 +354,7 @@ export default function ChatBot() {
     <ChatBotWrap>
       {user ? (
         <ChatBotBtn onClick={open}>
-          <RedLogo width={35} />
+          <BlackLogo width={35} />
         </ChatBotBtn>
       ) : null}
       {showOn ? (
