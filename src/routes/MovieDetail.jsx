@@ -104,7 +104,6 @@ const Creator = styled.ul`
       }
     }
     span {
-      /* overflow: hidden; */
       text-overflow: ellipsis;
       white-space: nowrap;
       margin-top: 5px;

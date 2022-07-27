@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useUser } from "../util/useUser";
-import { ReactComponent as RedLogo } from "../images/logo.svg";
 import { ReactComponent as BlackLogo } from "../images/logo_black.svg";
 import { ReactComponent as Send } from "../images/paper-plane-solid.svg";
 
