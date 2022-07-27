@@ -155,9 +155,6 @@ const LikeBtn = styled.em`
   margin-left: 20px;
   margin-top: 10px;
   cursor: pointer;
-  :active {
-    transform: scale(0.96);
-  }
   span {
     position: relative;
     top: 1px;
@@ -167,6 +164,9 @@ const LikeBtn = styled.em`
   }
   svg:hover {
     transform: scale(1.05);
+  }
+  svg:active {
+    transform: scale(0.96);
   }
 `;
 const ShareBtn = styled(LikeBtn)``;
