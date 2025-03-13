@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 
-import styled from "styled-components";
-import { useUser } from "../util/useUser";
+import styled from 'styled-components';
+import { useUser } from '../util/useUser';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -87,16 +87,16 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onValid = (form) => {
+  const onValid = form => {
     const user = form;
     user.like = { tv: [], movie: [] };
-    user.profileUrl = "";
-    localStorage.setItem("user", JSON.stringify(user));
-    navigate("/login");
+    user.profileUrl = '';
+    localStorage.setItem('user', JSON.stringify(user));
+    navigate('/login');
   };
   const { user } = useUser();
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) navigate('/');
   }, [user]);
 
   return (
@@ -105,32 +105,28 @@ export default function SignUp() {
         <SignUpForm onSubmit={handleSubmit(onValid)}>
           <h2>무비앱 회원가입</h2>
           <input
-            {...register("nickname", {
-              required: { value: true, message: "닉네임은 필수입니다." },
+            {...register('nickname', {
+              required: { value: true, message: '닉네임은 필수입니다.' },
               minLength: {
                 value: 3,
-                message: "닉네임은 최소 3글자 이상이어야 합니다.",
+                message: '닉네임은 최소 3글자 이상이어야 합니다.',
               },
               maxLength: {
                 value: 12,
-                message: "닉네임은 최대 12글자를 넘으면 안됩니다.",
+                message: '닉네임은 최대 12글자를 넘으면 안됩니다.',
               },
             })}
             type="text"
             placeholder="닉네임을 지어주세요."
           />
-          {errors?.nickname ? (
-            <em>{errors.nickname.message}</em>
-          ) : (
-            <strong>닉네임은 아이디로 사용됩니다.</strong>
-          )}
+          {errors?.nickname ? <em>{errors.nickname.message}</em> : <strong>닉네임은 아이디로 사용됩니다.</strong>}
           <input
-            {...register("password", {
-              required: { value: true, message: "비밀번호를 입력해주세요." },
-              minLength: { value: 6, message: "비밀번호는 최소 6글자입니다." },
+            {...register('password', {
+              required: { value: true, message: '비밀번호를 입력해주세요.' },
+              minLength: { value: 6, message: '비밀번호는 최소 6글자입니다.' },
               maxLength: {
                 value: 18,
-                message: "비밀번호는 최대 18글자입니다.",
+                message: '비밀번호는 최대 18글자입니다.',
               },
             })}
             type="password"

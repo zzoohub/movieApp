@@ -1,19 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./routes/Home";
-import NavBar from "./components/NavBar";
-import Tv from "./routes/Tv";
-import Shoes from "./components/Shoes";
-import Movies from "./routes/Movies";
-import ChatBot from "./components/ChatBot";
-import SignUp from "./routes/SignUp";
-import TvDetail from "./routes/TvDetail";
-import Login from "./routes/Login";
-import MovieDetail from "./routes/MovieDetail";
-import Profile from "./routes/Profile";
-import Favorits, { FavoritMovie, FavoritTv } from "./routes/Favorits";
-import ScrollToTop from "./components/ScrollToTop";
-import SearchedInfo from "./routes/SearchedInfo";
-import GenreInfo from "./routes/GenreInfo";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './routes/Home';
+import NavBar from './components/NavBar';
+import Tv from './routes/Tv';
+import Shoes from './components/Shoes';
+import Movies from './routes/Movies';
+import ChatBot from './components/ChatBot';
+import SignUp from './routes/SignUp';
+import TvDetail from './routes/TvDetail';
+import Login from './routes/Login';
+import MovieDetail from './routes/MovieDetail';
+import Profile from './routes/Profile';
+import Favorits, { FavoritMovie, FavoritTv } from './routes/Favorits';
+import ScrollToTop from './components/ScrollToTop';
+import SearchedInfo from './routes/SearchedInfo';
+import GenreInfo from './routes/GenreInfo';
 
 function App() {
   return (

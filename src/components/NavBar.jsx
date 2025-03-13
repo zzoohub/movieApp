@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useUser } from "../util/useUser";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useUser } from '../util/useUser';
 
 const HeaderWrap = styled.div`
   position: fixed;
@@ -135,11 +135,11 @@ const ProfileMenu = styled.ul`
 `;
 
 export default function NavBar() {
-  const homeMatch = useMatch("/");
-  const searchMatch = useMatch("/search");
-  const tvMatch = useMatch("/tv/*");
-  const movieMatch = useMatch("/movies/*");
-  const genreMatch = useMatch("/genre");
+  const homeMatch = useMatch('/');
+  const searchMatch = useMatch('/search');
+  const tvMatch = useMatch('/tv/*');
+  const movieMatch = useMatch('/movies/*');
+  const genreMatch = useMatch('/genre');
   const { user } = useUser();
   const [showNav, setShowNav] = useState(true);
   const profileMenu = useRef();
@@ -147,9 +147,9 @@ export default function NavBar() {
   const location = useLocation();
 
   const logout = () => {
-    if (window.confirm("로그아웃을 하시겠습니까?")) {
-      localStorage.removeItem("loginUser");
-      navigate("/");
+    if (window.confirm('로그아웃을 하시겠습니까?')) {
+      localStorage.removeItem('loginUser');
+      navigate('/');
       window.location.reload();
     }
     return;
@@ -159,7 +159,7 @@ export default function NavBar() {
   const [clientY, setCLientY] = useState(window.clientY);
 
   const handleNavigation = useCallback(
-    (e) => {
+    e => {
       const window = e.currentTarget;
       // if (y > window.scrollY) {
       //   setShowNav(false);
@@ -173,10 +173,10 @@ export default function NavBar() {
       }
       setPageY(window.scrollY);
     },
-    [pageY]
+    [pageY],
   );
   const handleMouseMove = useCallback(
-    (event) => {
+    event => {
       setCLientY(event.clientY);
       if (window.scrollY > 80) {
         if (event.clientY < 70 || menuOver) {
@@ -186,50 +186,46 @@ export default function NavBar() {
         }
       }
     },
-    [clientY, pageY]
+    [clientY, pageY],
   );
 
   useEffect(() => {
     setPageY(window.scrollY);
-    window.addEventListener("scroll", handleNavigation);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('scroll', handleNavigation);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      window.removeEventListener("scroll", handleNavigation);
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('scroll', handleNavigation);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [handleNavigation, handleMouseMove]);
 
   const [menuOver, setMenuOver] = useState(false);
   const mouseOver = () => {
     setMenuOver(true);
-    profileMenu.current.style.display = "flex";
+    profileMenu.current.style.display = 'flex';
   };
   const mouseLeave = () => {
     setMenuOver(false);
-    profileMenu.current.style.display = "none";
+    profileMenu.current.style.display = 'none';
   };
 
   return (
-    <HeaderWrap className={showNav ? "" : "hidden"}>
+    <HeaderWrap className={showNav ? '' : 'hidden'}>
       <Header>
         <Nav>
           <Li>
-            <Link
-              id="logo"
-              to="/"
-              className={homeMatch || searchMatch || genreMatch ? "on" : ""}
-            >
+            <Link id="logo" to="/" className={homeMatch || searchMatch || genreMatch ? 'on' : ''}>
               MOVIE APP
             </Link>
           </Li>
           <Li>
-            <Link to="/movies" className={movieMatch ? "on" : ""}>
+            <Link to="/movies" className={movieMatch ? 'on' : ''}>
               영화
             </Link>
           </Li>
           <Li>
-            <Link to="/tv" className={tvMatch ? "on" : ""}>
+            <Link to="/tv" className={tvMatch ? 'on' : ''}>
               TV쇼
             </Link>
           </Li>
@@ -255,12 +251,7 @@ export default function NavBar() {
               {user?.profileUrl ? (
                 <img src={user?.profileUrl} />
               ) : (
-                <svg
-                  className="w-6 h-6"
-                  fill="#f9f9f9"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg className="w-6 h-6" fill="#f9f9f9" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
@@ -272,7 +263,7 @@ export default function NavBar() {
                 <li onClick={() => navigate(`/profile`)}>회원 정보</li>
                 <li
                   onClick={() => {
-                    if (location.pathname === "/favorits") return;
+                    if (location.pathname === '/favorits') return;
                     navigate(`/favorits`);
                   }}
                 >

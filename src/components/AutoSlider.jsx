@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import { makeImgPath } from "../util/makeImgPath";
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import { makeImgPath } from '../util/makeImgPath';
 
 const AutoSlider = styled.div`
   position: relative;
   height: 200px;
 `;
-const AutoKeyframes = (reversed) => keyframes`
+const AutoKeyframes = reversed => keyframes`
   0% {
     transform: translateX(${reversed ? -75 : 0}%)
   }
@@ -23,7 +23,7 @@ const AutoSlide = styled.div`
   display: flex;
   gap: 15px;
   height: 100%;
-  animation: ${(props) => AutoKeyframes(props.reversed)} 120s linear infinite;
+  animation: ${props => AutoKeyframes(props.reversed)} 120s linear infinite;
   :hover {
     animation-play-state: paused;
   }
@@ -35,11 +35,10 @@ const AutoBox = styled.div`
   align-items: center;
   width: 250px;
   height: 100%;
-  background-image: url(${(props) => props.autoBoxBgUrl});
+  background-image: url(${props => props.autoBoxBgUrl});
   background-position: center;
   background-size: cover;
-  border: ${(props) =>
-    props.autoBoxBgUrl === "no" ? "1px solid #d9d9d9" : null};
+  border: ${props => (props.autoBoxBgUrl === 'no' ? '1px solid #d9d9d9' : null)};
   svg {
     color: #d9d9d9;
     width: 100px;
@@ -73,15 +72,9 @@ export default function SlideAuto({ data, reversed }) {
   return (
     <AutoSlider>
       <AutoSlide ref={autoSlide} reversed={reversed}>
-        {data?.map((item) => (
+        {data?.map(item => (
           <Link to={`/movies/${item.id}`} key={item.id}>
-            <AutoBox
-              autoBoxBgUrl={
-                item.backdrop_path
-                  ? makeImgPath(item.backdrop_path, "w500")
-                  : "no"
-              }
-            >
+            <AutoBox autoBoxBgUrl={item.backdrop_path ? makeImgPath(item.backdrop_path, 'w500') : 'no'}>
               {!item.backdrop_path ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

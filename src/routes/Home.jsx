@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import React from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { getGenres, getMovieGenres, getTvGenres } from "../api";
-import { useQuery } from "react-query";
-import { useEffect } from "react";
-import { useState } from "react";
+import styled from 'styled-components';
+import React from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { getGenres, getMovieGenres, getTvGenres } from '../api';
+import { useQuery } from 'react-query';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -86,10 +86,10 @@ const Tag = styled.span`
   display: block;
   padding: 10px 15px;
   border-radius: 100px;
-  border: 1px solid ${(props) => (props.isOn ? "#ff3d3d" : "#d9d9d9")};
-  color: ${(props) => (props.isOn ? "#111" : "#d9d9d9")};
-  background-color: ${(props) => (props.isOn ? "#ff3d3d" : "transparent")};
-  font-weight: ${(props) => (props.isOn ? "bold" : "500")};
+  border: 1px solid ${props => (props.isOn ? '#ff3d3d' : '#d9d9d9')};
+  color: ${props => (props.isOn ? '#111' : '#d9d9d9')};
+  background-color: ${props => (props.isOn ? '#ff3d3d' : 'transparent')};
+  font-weight: ${props => (props.isOn ? 'bold' : '500')};
   :hover {
     background-color: #d9d9d9;
     color: #000;
@@ -103,18 +103,18 @@ export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
   const [genreId, setGenreId] = useState();
-  const { data: genres } = useQuery("keywords", getGenres);
+  const { data: genres } = useQuery('keywords', getGenres);
 
-  const onValid = (form) => {
+  const onValid = form => {
     form.preventDefault();
     const userInput = form.target[0].value;
     if (!userInput) return;
-    form.target[0].value = "";
+    form.target[0].value = '';
     navigate(`/search?keyword=${userInput}`);
   };
 
   useEffect(() => {
-    setGenreId(new URLSearchParams(location.search).get("id"));
+    setGenreId(new URLSearchParams(location.search).get('id'));
     // console.log(location);
   }, [location]);
 
@@ -129,12 +129,7 @@ export default function Home() {
         <SearchForm onSubmit={onValid}>
           <input type="text" placeholder="검색어를 입력해주세요." />
           <button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -144,11 +139,9 @@ export default function Home() {
           </button>
         </SearchForm>
         <Genres>
-          {genres?.genres?.map((genre) => (
+          {genres?.genres?.map(genre => (
             <Link to={`/genre?id=${genre.id}`} key={genre.id}>
-              <Tag isOn={genre.id + "" === genreId ? true : false}>
-                {genre.name}
-              </Tag>
+              <Tag isOn={genre.id + '' === genreId ? true : false}>{genre.name}</Tag>
             </Link>
           ))}
         </Genres>

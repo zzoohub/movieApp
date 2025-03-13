@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
-import { useUser } from "../util/useUser";
-import { ReactComponent as BlackLogo } from "../images/logo_black.svg";
-import { ReactComponent as Send } from "../images/paper-plane-solid.svg";
+import { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components';
+import { useUser } from '../util/useUser';
+import { ReactComponent as BlackLogo } from '../images/logo_black.svg';
+import { ReactComponent as Send } from '../images/paper-plane-solid.svg';
 
 const ChatBotWrap = styled.div`
   position: fixed;
@@ -231,8 +231,7 @@ const Dot = styled.span`
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: ${(props) =>
-    props.color === "green" ? "#00bb4f" : "#fc0202"};
+  background-color: ${props => (props.color === 'green' ? '#00bb4f' : '#fc0202')};
 `;
 const Notice = styled.span`
   font-size: 13px;
@@ -317,24 +316,24 @@ export default function ChatBot() {
     }
   };
 
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const lists = [];
   const [chatList, setChatList] = useState(lists);
-  const [id, setId] = useState("2");
-  const [scrollHeight, setScrollHeight] = useState("");
+  const [id, setId] = useState('2');
+  const [scrollHeight, setScrollHeight] = useState('');
   const scrollRef = useRef();
 
-  const userInput = (e) => {
+  const userInput = e => {
     e.preventDefault();
     setInputText(e.target.value);
   };
-  const onClick = (e) => {
+  const onClick = e => {
     e.preventDefault();
     if (inputText.length > 0) {
       const newChat = { text: inputText };
       chatList.push(newChat);
       setChatList(chatList);
-      setInputText("");
+      setInputText('');
       setId(id + 1);
       setScrollHeight(scrollRef.current.scrollHeight);
     }
@@ -366,12 +365,7 @@ export default function ChatBot() {
                 </h2>
                 <div>
                   <button className="miniBtn">
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fillRule="evenodd"
                         d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
@@ -379,16 +373,8 @@ export default function ChatBot() {
                       />
                     </svg>
                   </button>
-                  <button
-                    onClick={() => setShowOn(!showOn)}
-                    className="miniBtn"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                  <button onClick={() => setShowOn(!showOn)} className="miniBtn">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fillRule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -412,8 +398,7 @@ export default function ChatBot() {
                   <MessageBox>
                     <p>Movie App</p>
                     <p>
-                      반갑습니다, 고객님 :) 다양한 영화와 Tv Show 정보를
-                      제공하는 무비앱 입니다. 무엇을 도와드릴
+                      반갑습니다, 고객님 :) 다양한 영화와 Tv Show 정보를 제공하는 무비앱 입니다. 무엇을 도와드릴
                       <br />
                       ...
                     </p>
@@ -429,12 +414,8 @@ export default function ChatBot() {
                   새 문의하기
                 </button>
                 <NotiBox>
-                  <Dot color={onTime ? "green" : null} />
-                  <Notice>
-                    {onTime
-                      ? "보통 수십 분 내 답변"
-                      : "현재 운영 시간이 아닙니다."}
-                  </Notice>
+                  <Dot color={onTime ? 'green' : null} />
+                  <Notice>{onTime ? '보통 수십 분 내 답변' : '현재 운영 시간이 아닙니다.'}</Notice>
                 </NotiBox>
               </ChatBalloonWrap>
               <p className="p2">운영시간 | 평일 오전 9:30 ~ 오후 5:00</p>
@@ -449,10 +430,7 @@ export default function ChatBot() {
                       setChatOn(!chatOn);
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 256 512"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                       <path d="M192 448c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l137.4 137.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448z" />
                     </svg>
                   </button>
@@ -460,12 +438,7 @@ export default function ChatBot() {
                 </h2>
                 <div>
                   <button className="miniBtn">
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fillRule="evenodd"
                         d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
@@ -473,16 +446,8 @@ export default function ChatBot() {
                       />
                     </svg>
                   </button>
-                  <button
-                    onClick={() => setShowOn(!showOn)}
-                    className="miniBtn"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                  <button onClick={() => setShowOn(!showOn)} className="miniBtn">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fillRule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -502,8 +467,8 @@ export default function ChatBot() {
                       <MessageBox_2>
                         <p>Movie App</p>
                         <p>
-                          반갑습니다, 고객님 :) 다양한 영화와 Tv Show 정보를
-                          제공하는 무비앱 입니다. 무엇을 도와드릴까요?
+                          반갑습니다, 고객님 :) 다양한 영화와 Tv Show 정보를 제공하는 무비앱 입니다. 무엇을
+                          도와드릴까요?
                         </p>
                       </MessageBox_2>
                     </FlexBox_2>
@@ -515,12 +480,7 @@ export default function ChatBot() {
                           {user?.profileUrl ? (
                             <img src={user?.profileUrl} />
                           ) : (
-                            <svg
-                              className="w-6 h-6"
-                              fill="#333"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                            <svg className="w-6 h-6" fill="#333" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fillRule="evenodd"
                                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useUser } from "../util/useUser";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useUser } from '../util/useUser';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -90,28 +90,25 @@ export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user]);
-  const onValid = (form) => {
-    const existingUser = JSON.parse(localStorage.getItem("user"));
+  const onValid = form => {
+    const existingUser = JSON.parse(localStorage.getItem('user'));
     if (!existingUser) {
-      setError("loginError", {
-        type: "custom",
-        message: "아이디 또는 패스워드가 일치하지 않습니다.",
+      setError('loginError', {
+        type: 'custom',
+        message: '아이디 또는 패스워드가 일치하지 않습니다.',
       });
     }
-    if (
-      existingUser.nickname === form.nickname &&
-      existingUser.password === form.password
-    ) {
-      localStorage.setItem("loginUser", JSON.stringify(existingUser));
-      navigate("/");
+    if (existingUser.nickname === form.nickname && existingUser.password === form.password) {
+      localStorage.setItem('loginUser', JSON.stringify(existingUser));
+      navigate('/');
       window.location.reload();
     } else {
-      setError("loginError", {
-        type: "custom",
-        message: "아이디 또는 패스워드가 일치하지 않습니다.",
+      setError('loginError', {
+        type: 'custom',
+        message: '아이디 또는 패스워드가 일치하지 않습니다.',
       });
     }
   };
@@ -121,49 +118,39 @@ export default function Login() {
         <LoginForm onSubmit={handleSubmit(onValid)}>
           <h2>로그인</h2>
           <input
-            {...register("nickname", {
-              required: { value: true, message: "닉네임을 입력하세요." },
+            {...register('nickname', {
+              required: { value: true, message: '닉네임을 입력하세요.' },
               minLength: {
                 value: 3,
-                message: "닉네임은 최소 3글자 이상이어야 합니다.",
+                message: '닉네임은 최소 3글자 이상이어야 합니다.',
               },
               maxLength: {
                 value: 12,
-                message: "닉네임은 최대 12글자를 넘으면 안됩니다.",
+                message: '닉네임은 최대 12글자를 넘으면 안됩니다.',
               },
             })}
             type="text"
             onInput={() => clearErrors()}
             placeholder="닉네임"
           />
-          {errors?.nickname ? (
-            <em>{errors.nickname.message}</em>
-          ) : (
-            <strong></strong>
-          )}
+          {errors?.nickname ? <em>{errors.nickname.message}</em> : <strong></strong>}
           <input
-            {...register("password", {
-              required: { value: true, message: "비밀번호를 입력해주세요." },
-              minLength: { value: 6, message: "비밀번호는 최소 6글자입니다." },
+            {...register('password', {
+              required: { value: true, message: '비밀번호를 입력해주세요.' },
+              minLength: { value: 6, message: '비밀번호는 최소 6글자입니다.' },
               maxLength: {
                 value: 18,
-                message: "비밀번호는 최대 18글자입니다.",
+                message: '비밀번호는 최대 18글자입니다.',
               },
             })}
             onInput={() => clearErrors()}
             type="password"
             placeholder="비밀번호"
           />
-          {errors?.password ? (
-            <em>{errors.password.message}</em>
-          ) : (
-            <strong></strong>
-          )}
+          {errors?.password ? <em>{errors.password.message}</em> : <strong></strong>}
           <button>로그인</button>
           <Link to="/signup">회원가입</Link>
-          <em className="strong">
-            {errors?.loginError ? errors.loginError.message : null}
-          </em>
+          <em className="strong">{errors?.loginError ? errors.loginError.message : null}</em>
         </LoginForm>
       </Main>
     </Wrapper>

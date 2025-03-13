@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { useUser } from "../util/useUser";
-import { useEffect, useState } from "react";
-import { makeImgPath } from "../util/makeImgPath";
-import { Link } from "react-router-dom";
-import InfoBox from "../components/InfoBox";
-import NotFound from "../components/NotFound";
+import styled from 'styled-components';
+import { useUser } from '../util/useUser';
+import { useEffect, useState } from 'react';
+import { makeImgPath } from '../util/makeImgPath';
+import { Link } from 'react-router-dom';
+import InfoBox from '../components/InfoBox';
+import NotFound from '../components/NotFound';
 
 const Wrapper = styled.div`
   max-width: 1920px;
@@ -36,11 +36,11 @@ const Tab = styled.button`
   width: 100px;
   height: 35px;
   background: none;
-  color: ${(props) => (props.tabMatch ? "#fff" : "#94979E")};
+  color: ${props => (props.tabMatch ? '#fff' : '#94979E')};
   border: none;
-  border-bottom: ${(props) => (props.tabMatch ? "2px solid #ff3d3d" : "none")};
+  border-bottom: ${props => (props.tabMatch ? '2px solid #ff3d3d' : 'none')};
   font-size: 18px;
-  font-weight: ${(props) => (props.tabMatch ? "500" : "300")};
+  font-weight: ${props => (props.tabMatch ? '500' : '300')};
   transition: all linear 0.2s;
   cursor: pointer;
   :hover {
@@ -67,29 +67,25 @@ const Grid = styled.div`
 
 export default function Favorits() {
   const { user } = useUser();
-  const [tab, setTab] = useState("movie");
+  const [tab, setTab] = useState('movie');
   const [tvs, setTvs] = useState([]);
   const [movies, setMovies] = useState([]);
 
   function fetchTv() {
     if (user?.like?.tv) {
       for (const tv of user?.like?.tv) {
-        fetch(
-          `https://api.themoviedb.org/3/tv/${tv}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
-        )
-          .then((res) => res.json())
-          .then((json) => setTvs((old) => [...old, json]));
+        fetch(`https://api.themoviedb.org/3/tv/${tv}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`)
+          .then(res => res.json())
+          .then(json => setTvs(old => [...old, json]));
       }
     }
   }
   function fetchMovie() {
     if (user?.like?.movie) {
       for (const movie of user?.like?.movie) {
-        fetch(
-          `https://api.themoviedb.org/3/movie/${movie}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`
-        )
-          .then((res) => res.json())
-          .then((json) => setMovies((old) => [...old, json]));
+        fetch(`https://api.themoviedb.org/3/movie/${movie}?api_key=${process.env.REACT_APP_API_KEY}&language=ko`)
+          .then(res => res.json())
+          .then(json => setMovies(old => [...old, json]));
       }
     }
   }
@@ -103,32 +99,22 @@ export default function Favorits() {
     <Wrapper>
       <h3>찜한 목록</h3>
       <Tabs>
-        <Tab
-          onClick={() => setTab("movie")}
-          tabMatch={tab === "movie" ? true : false}
-        >
+        <Tab onClick={() => setTab('movie')} tabMatch={tab === 'movie' ? true : false}>
           영화
         </Tab>
-        <Tab
-          onClick={() => setTab("tv")}
-          tabMatch={tab === "tv" ? true : false}
-        >
+        <Tab onClick={() => setTab('tv')} tabMatch={tab === 'tv' ? true : false}>
           TV쇼
         </Tab>
       </Tabs>
       <Main>
-        {tab === "movie" ? (
+        {tab === 'movie' ? (
           <Grid>
             {movies[0] ? (
               <>
                 {movies?.map((movie, index) => (
                   <Link key={index} to={`/movies/${movie.id}`}>
                     <InfoBox
-                      bgUrl={
-                        movie.backdrop_path
-                          ? makeImgPath(movie.backdrop_path, "w500")
-                          : null
-                      }
+                      bgUrl={movie.backdrop_path ? makeImgPath(movie.backdrop_path, 'w500') : null}
                       name={movie.title}
                       voteAverage={movie.vote_average}
                       firstDate={movie.release_date}
@@ -144,15 +130,11 @@ export default function Favorits() {
           <Grid>
             {tvs[0] ? (
               <>
-                {" "}
+                {' '}
                 {tvs?.map((tv, index) => (
                   <Link key={index} to={`/tv/${tv.id}`}>
                     <InfoBox
-                      bgUrl={
-                        tv.backdrop_path
-                          ? makeImgPath(tv.backdrop_path, "w500")
-                          : null
-                      }
+                      bgUrl={tv.backdrop_path ? makeImgPath(tv.backdrop_path, 'w500') : null}
                       name={tv.name}
                       voteAverage={tv.vote_average}
                       firstDate={tv.first_air_date}

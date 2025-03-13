@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const Spinner = keyframes`
  0%, 39%, 100% { opacity: 0; }
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 
   .sk-fading-circle .sk-circle:before {
-    content: "";
+    content: '';
     display: block;
     margin: 0 auto;
     width: 15%;

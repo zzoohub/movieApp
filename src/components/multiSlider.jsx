@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { makeImgPath } from "../util/makeImgPath";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { makeImgPath } from '../util/makeImgPath';
 
 const MultiSlide = styled.div`
   position: relative;
@@ -53,7 +53,7 @@ const MultiSet = styled.div`
 `;
 const Item = styled.div`
   position: relative;
-  background-image: url(${(props) => props.bgUrl});
+  background-image: url(${props => props.bgUrl});
   background-position: center;
   background-size: cover;
   height: 100%;
@@ -132,11 +132,11 @@ export default function SlideMulti({ offset, data, type }) {
       {data ? (
         <MultiSlide>
           {[...Array(Math.ceil(data.length / offset))].map((v, indexes) => (
-            <MultiSet key={indexes} className={page === indexes ? "on" : ""}>
+            <MultiSet key={indexes} className={page === indexes ? 'on' : ''}>
               {[...Array(offset)].map((item, index) => (
                 <Link
                   to={
-                    type === "movie"
+                    type === 'movie'
                       ? `/movies/${data[offset * indexes + index]?.id}`
                       : `/tv/${data[offset * indexes + index]?.id}`
                   }
@@ -145,17 +145,12 @@ export default function SlideMulti({ offset, data, type }) {
                   <Item
                     bgUrl={
                       data[offset * indexes + index]?.backdrop_path
-                        ? makeImgPath(
-                            data[offset * indexes + index]?.backdrop_path,
-                            "w500"
-                          )
-                        : "no"
+                        ? makeImgPath(data[offset * indexes + index]?.backdrop_path, 'w500')
+                        : 'no'
                     }
                   >
                     <h4>
-                      {type === "movie"
-                        ? data[offset * indexes + index]?.title
-                        : data[offset * indexes + index]?.name}
+                      {type === 'movie' ? data[offset * indexes + index]?.title : data[offset * indexes + index]?.name}
                     </h4>
                     {/* <span>{data[offset * indexes + index]?.vote_average}</span> */}
                     <div>
@@ -186,7 +181,7 @@ export default function SlideMulti({ offset, data, type }) {
           {page !== 0 ? (
             <Prev
               onClick={() => {
-                setPage((old) => old - 1);
+                setPage(old => old - 1);
               }}
             >
               <svg
@@ -197,11 +192,7 @@ export default function SlideMulti({ offset, data, type }) {
                 stroke="currentColor"
                 strokeWidth={2}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </Prev>
           ) : null}
@@ -209,7 +200,7 @@ export default function SlideMulti({ offset, data, type }) {
           {page < Math.ceil(data?.length / 5) - 1 ? (
             <Next
               onClick={() => {
-                setPage((old) => old + 1);
+                setPage(old => old + 1);
               }}
             >
               <svg
@@ -220,11 +211,7 @@ export default function SlideMulti({ offset, data, type }) {
                 stroke="currentColor"
                 strokeWidth={2}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Next>
           ) : null}

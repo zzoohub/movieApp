@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
-import styled from "styled-components";
-import { getSimilarTvs, getTvDetail } from "../api";
-import { makeImgPath } from "../util/makeImgPath";
-import Loading from "../components/Loading";
-import InfoBox from "../components/InfoBox";
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { getSimilarTvs, getTvDetail } from '../api';
+import { makeImgPath } from '../util/makeImgPath';
+import Loading from '../components/Loading';
+import InfoBox from '../components/InfoBox';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,8 +23,7 @@ const Banner = styled.section`
   z-index: -1;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-    url(${(props) => props.bannerImg});
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${props => props.bannerImg});
   background-position: center;
   background-size: cover;
 `;
@@ -201,33 +200,31 @@ const SimilarTvs = styled.div`
 
 export default function TvDetail() {
   const { id } = useParams();
-  const { data, isLoading, refetch } = useQuery(["tv", "detail"], () =>
-    getTvDetail(id)
-  );
+  const { data, isLoading, refetch } = useQuery(['tv', 'detail'], () => getTvDetail(id));
   const {
     data: similarData,
     isLoading: similarLoading,
     refetch: similarRefetch,
-  } = useQuery(["tv", "similar"], () => getSimilarTvs(id));
-  const [video, setVideo] = useState("");
+  } = useQuery(['tv', 'similar'], () => getSimilarTvs(id));
+  const [video, setVideo] = useState('');
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => {
-    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    const loginUser = JSON.parse(localStorage.getItem('loginUser'));
     if (!loginUser) {
-      return alert("로그인이 필요합니다.");
+      return alert('로그인이 필요합니다.');
     }
-    const aleadyLiked = loginUser.like.tv.find((value) => value === id);
+    const aleadyLiked = loginUser.like.tv.find(value => value === id);
     if (aleadyLiked) {
-      const removed = loginUser.like.tv.filter((value) => value !== id);
+      const removed = loginUser.like.tv.filter(value => value !== id);
       loginUser.like.tv = removed;
-      localStorage.setItem("loginUser", JSON.stringify(loginUser));
-      localStorage.setItem("user", JSON.stringify(loginUser));
+      localStorage.setItem('loginUser', JSON.stringify(loginUser));
+      localStorage.setItem('user', JSON.stringify(loginUser));
       setIsLiked(false);
     } else {
       loginUser.like.tv = [...loginUser.like.tv, id];
-      localStorage.setItem("loginUser", JSON.stringify(loginUser));
-      localStorage.setItem("user", JSON.stringify(loginUser));
+      localStorage.setItem('loginUser', JSON.stringify(loginUser));
+      localStorage.setItem('user', JSON.stringify(loginUser));
       setIsLiked(true);
     }
   };
@@ -236,22 +233,20 @@ export default function TvDetail() {
     refetch();
     similarRefetch();
     setIsLiked(false);
-    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
-    const aleadyLiked = loginUser?.like?.tv?.find((value) => value === id);
+    const loginUser = JSON.parse(localStorage.getItem('loginUser'));
+    const aleadyLiked = loginUser?.like?.tv?.find(value => value === id);
     if (aleadyLiked) {
       setIsLiked(true);
     } else {
       setIsLiked(false);
     }
-    fetch(
-      `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-    )
-      .then((res) => res.json())
-      .then((json) => {
+    fetch(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+      .then(res => res.json())
+      .then(json => {
         if (json.results[0]) {
           setVideo(json.results[0].key);
         } else {
-          setVideo("");
+          setVideo('');
         }
       });
   }, [id]);
@@ -272,18 +267,9 @@ export default function TvDetail() {
                   {data?.adult ? <Ban>19금</Ban> : null}
                   <TitleWrap>
                     <Title>{data?.name}</Title>
-                    <LikeBtn
-                      onClick={toggleLike}
-                      color={isLiked ? "gold" : "gray"}
-                    >
+                    <LikeBtn onClick={toggleLike} color={isLiked ? 'gold' : 'gray'}>
                       {!isLiked ? (
-                        <svg
-                          width="48"
-                          height="48"
-                          viewBox="0 0 48 48"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M23.2913 13.5104L23.9992 14.2182L24.7063 13.5096L26.3469 11.8653C26.347 11.8652 26.3471 11.8651 26.3472 11.865C30.1625 8.05009 36.3389 8.0502 40.1541 11.8653C43.9606 15.6719 43.9571 21.8267 40.1563 25.65C40.1559 25.6505 40.1554 25.651 40.1549 25.6515L24.3543 41.4429L24.3541 41.4431C24.1588 41.6384 23.8422 41.6384 23.6469 41.4431L7.85621 25.6525C4.04858 21.8448 4.04859 15.6715 7.8562 11.8639L7.8562 11.8639C11.6638 8.05625 17.8372 8.05626 21.6447 11.8639L21.6447 11.8639L23.2913 13.5104Z"
                             stroke="white"
@@ -291,13 +277,7 @@ export default function TvDetail() {
                           />
                         </svg>
                       ) : (
-                        <svg
-                          width="48"
-                          height="48"
-                          viewBox="0 0 48 48"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M23.2913 13.5104L23.9992 14.2182L24.7063 13.5096L26.3469 11.8653C26.347 11.8652 26.3471 11.8651 26.3472 11.865C30.1625 8.05009 36.3389 8.0502 40.1541 11.8653C43.9606 15.6719 43.9571 21.8267 40.1563 25.65C40.1559 25.6505 40.1554 25.651 40.1549 25.6515L24.3543 41.4429L24.3541 41.4431C24.1588 41.6384 23.8422 41.6384 23.6469 41.4431L7.85621 25.6525C4.04858 21.8448 4.04859 15.6715 7.8562 11.8639L7.8562 11.8639C11.6638 8.05625 17.8372 8.05626 21.6447 11.8639L21.6447 11.8639L23.2913 13.5104Z"
                             fill="#ff3d3d"
@@ -309,44 +289,12 @@ export default function TvDetail() {
                       <span>찜</span>
                     </LikeBtn>
                     <ShareBtn>
-                      <svg
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle
-                          cx="35"
-                          cy="12"
-                          r="6"
-                          stroke="white"
-                          stroke-width="2"
-                        />
-                        <circle
-                          cx="35"
-                          cy="36"
-                          r="6"
-                          stroke="white"
-                          stroke-width="2"
-                        />
-                        <circle
-                          cx="14"
-                          cy="24"
-                          r="6"
-                          stroke="white"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M18.5001 20.4998L29.4904 14.134"
-                          stroke="white"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M30.4904 33.6338L19 27"
-                          stroke="white"
-                          stroke-width="2"
-                        />
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="35" cy="12" r="6" stroke="white" stroke-width="2" />
+                        <circle cx="35" cy="36" r="6" stroke="white" stroke-width="2" />
+                        <circle cx="14" cy="24" r="6" stroke="white" stroke-width="2" />
+                        <path d="M18.5001 20.4998L29.4904 14.134" stroke="white" stroke-width="2" />
+                        <path d="M30.4904 33.6338L19 27" stroke="white" stroke-width="2" />
                       </svg>
                       <span>공유</span>
                     </ShareBtn>
@@ -363,18 +311,16 @@ export default function TvDetail() {
                     <BaseInfo>
                       <Period>
                         {data.first_air_date} ~ {data.last_air_date}
-                        {"  "}
+                        {'  '}
                         &nbsp;|&nbsp;&nbsp;총 {data.number_of_episodes}회
                       </Period>
                       <Genre>
-                        {data.genres.map((genre) => (
+                        {data.genres.map(genre => (
                           <li key={genre.name}>{genre.name}</li>
                         ))}
                       </Genre>
                       <Rating>
-                        <span>
-                          평점:&nbsp;&nbsp;{Math.round(data.vote_average) / 2}
-                        </span>
+                        <span>평점:&nbsp;&nbsp;{Math.round(data.vote_average) / 2}</span>
                         {/* {[1, 2, 3, 4, 5].map((index) =>
                           Math.round(data.vote_average) / 2 >= index ? (
                             <svg
@@ -394,7 +340,7 @@ export default function TvDetail() {
                         <CreatorWrap>
                           <strong>연출:</strong>
                           <Creator>
-                            {data?.created_by.map((person) => (
+                            {data?.created_by.map(person => (
                               <li key={person.id}>
                                 <span>{person.name}</span>
                               </li>
@@ -403,21 +349,15 @@ export default function TvDetail() {
                         </CreatorWrap>
                       ) : null}
                       <Overview>
-                        {data.overview.length < 250
-                          ? data.overview
-                          : data.overview.slice(0, 250) + "..."}
+                        {data.overview.length < 250 ? data.overview : data.overview.slice(0, 250) + '...'}
                       </Overview>
                     </BaseInfo>
                     <SimilarTitle>비슷한 TV쇼</SimilarTitle>
                     <SimilarTvs>
-                      {similarData?.results.slice(0, 5).map((result) => (
+                      {similarData?.results.slice(0, 5).map(result => (
                         <Link key={result.id} to={`/tv/${result.id}`}>
                           <InfoBox
-                            bgUrl={
-                              result.backdrop_path
-                                ? makeImgPath(result.backdrop_path, "w500")
-                                : null
-                            }
+                            bgUrl={result.backdrop_path ? makeImgPath(result.backdrop_path, 'w500') : null}
                             name={result.name}
                             voteAverage={result.vote_average}
                             firstDate={result.first_air_date}

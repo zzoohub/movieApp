@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { makeImgPath } from "../util/makeImgPath";
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { makeImgPath } from '../util/makeImgPath';
 
 const Slider = styled.div`
   max-width: 1920px;
@@ -33,11 +33,11 @@ const Slider = styled.div`
 `;
 const Slide = styled.div`
   transform-origin: left;
-  transform: scale(${(props) => props.scale});
+  transform: scale(${props => props.scale});
   position: absolute;
   display: flex;
   height: 220px;
-  gap: ${(props) => props.gap}px;
+  gap: ${props => props.gap}px;
   /* padding: 0px 5px; */
   transition: all ease 0.3s;
 `;
@@ -46,10 +46,10 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url(${(props) => props.bgUrl});
+  background-image: url(${props => props.bgUrl});
   background-position: center;
   background-size: cover;
-  border: ${(props) => (props.bgUrl === "no" ? "1px solid gray" : "none")};
+  border: ${props => (props.bgUrl === 'no' ? '1px solid gray' : 'none')};
   :hover {
     border: 1px solid #fff;
     transform: scale(1.01);
@@ -86,31 +86,27 @@ const Title = styled.h3`
 export default function InfiniteSlide({ url, offset, gap, type }) {
   const [nowPlay, setNowPlay] = useState([]);
   const [scale, setScale] = useState((window.innerWidth / 1920).toFixed(2));
-  const [boxWidth, setBoxWidth] = useState(
-    (window.innerWidth / offset).toFixed() - gap
-  );
+  const [boxWidth, setBoxWidth] = useState((window.innerWidth / offset).toFixed() - gap);
   const [count, setCount] = useState(1);
   const slideRef = useRef();
   const MAX_SLIDES = 30;
 
-  window.addEventListener("resize", (event) => {
+  window.addEventListener('resize', event => {
     setScale((window.innerWidth / 1920).toFixed(2));
     setBoxWidth((window.innerWidth / offset).toFixed());
   });
 
   async function setting() {
-    const data = await fetch(url).then((res) => res.json());
+    const data = await fetch(url).then(res => res.json());
     const first = data.results.slice(0, 5);
     const last = data.results.slice(-5);
     slideRef.current.style.width = `${boxWidth + gap * MAX_SLIDES}px`;
-    slideRef.current.style.transform = `translateX(-${
-      (boxWidth + gap) * offset * count
-    }px)`;
+    slideRef.current.style.transform = `translateX(-${(boxWidth + gap) * offset * count}px)`;
     await setNowPlay([...last, ...data.results, ...first]);
   }
 
   useEffect(() => {
-    slideRef.current.style.transition = "none";
+    slideRef.current.style.transition = 'none';
   }, []);
   useEffect(() => {
     setting();
@@ -118,11 +114,11 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
 
   const countUp = () => {
     if (count < 4) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
-      setCount((prev) => prev + 1);
+      slideRef.current.style = 'transition: all easy-in-out 0.3s';
+      setCount(prev => prev + 1);
     } else {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
-      setCount((prev) => prev + 1);
+      slideRef.current.style = 'transition: all easy-in-out 0.3s';
+      setCount(prev => prev + 1);
       setTimeout(() => {
         slideRef.current.style.transition = `none`;
         setCount(1);
@@ -131,11 +127,11 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
   };
   const countDown = () => {
     if (count > 1) {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
-      setCount((prev) => prev - 1);
+      slideRef.current.style = 'transition: all easy-in-out 0.3s';
+      setCount(prev => prev - 1);
     } else {
-      slideRef.current.style = "transition: all easy-in-out 0.3s";
-      setCount((prev) => prev - 1);
+      slideRef.current.style = 'transition: all easy-in-out 0.3s';
+      setCount(prev => prev - 1);
       setTimeout(() => {
         slideRef.current.style.transition = `none`;
         setCount(4);
@@ -148,19 +144,12 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
       {nowPlay ? (
         <Slide ref={slideRef} scale={scale} gap={gap}>
           {nowPlay.map((item, index) => (
-            <Link
-              to={type === "movie" ? `/movies/${item.id}` : `/tv/${item.id}`}
-              key={index}
-            >
+            <Link to={type === 'movie' ? `/movies/${item.id}` : `/tv/${item.id}`} key={index}>
               <Box
-                bgUrl={
-                  item.backdrop_path
-                    ? makeImgPath(item.backdrop_path, "w500")
-                    : "no"
-                }
+                bgUrl={item.backdrop_path ? makeImgPath(item.backdrop_path, 'w500') : 'no'}
                 style={{ width: `${boxWidth}px` }}
               >
-                <Title>{type === "movie" ? item.title : item.name}</Title>
+                <Title>{type === 'movie' ? item.title : item.name}</Title>
                 {item.backdrop_path ? null : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -191,11 +180,7 @@ export default function InfiniteSlide({ url, offset, gap, type }) {
           stroke="currentColor"
           strokeWidth={2}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </Prev>
       <Next onClick={countUp}>

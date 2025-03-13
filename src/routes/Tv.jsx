@@ -1,13 +1,13 @@
-import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { getTvAiringToday, getTopRatedTvs } from "../api";
-import SlideMulti from "../components/multiSlider";
+import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { getTvAiringToday, getTopRatedTvs } from '../api';
+import SlideMulti from '../components/multiSlider';
 // import PopularTV from "../components/PopularTV";
-import { makeImgPath } from "../util/makeImgPath";
-import Loading from "../components/Loading";
-import { ReactComponent as MoreBtn } from "../images/more_btn.svg";
-import InfiniteSlide from "../components/InfiniteSlide";
+import { makeImgPath } from '../util/makeImgPath';
+import Loading from '../components/Loading';
+import { ReactComponent as MoreBtn } from '../images/more_btn.svg';
+import InfiniteSlide from '../components/InfiniteSlide';
 
 const Wrapper = styled.div`
   height: max-content;
@@ -26,8 +26,7 @@ const Banner = styled.section`
   padding: 50px;
   width: 100%;
   height: 85vh;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), #111c26),
-    url(${(props) => props.bannerImg});
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), #111c26), url(${props => props.bannerImg});
   background-position: center;
   background-size: cover;
   color: #f9f9f9;
@@ -99,17 +98,10 @@ const AiringToday = styled(PopularTV)`
 `;
 
 export default function Tv() {
-  const { data, isLoading } = useQuery(["tv", "airingToday"], getTvAiringToday);
-  const { data: topRateData, isLoading: topRateisLoading } = useQuery(
-    ["tv", "topRated"],
-    getTopRatedTvs
-  );
-  const bannerData = data?.results.find(
-    (result) => result.backdrop_path && result.overview
-  );
-  const fitered = data?.results.filter(
-    (result) => result.backdrop_path !== bannerData.backdrop_path
-  );
+  const { data, isLoading } = useQuery(['tv', 'airingToday'], getTvAiringToday);
+  const { data: topRateData, isLoading: topRateisLoading } = useQuery(['tv', 'topRated'], getTopRatedTvs);
+  const bannerData = data?.results.find(result => result.backdrop_path && result.overview);
+  const fitered = data?.results.filter(result => result.backdrop_path !== bannerData.backdrop_path);
   // console.log(topRateData);
   return (
     <>
@@ -122,26 +114,20 @@ export default function Tv() {
               <div>
                 <h3>{bannerData?.name}</h3>
                 <Link to={`/tv/${bannerData?.id}`} className="moreBtn">
-                  <MoreBtn width={45} fill={"#ff3d3d"} />
+                  <MoreBtn width={45} fill={'#ff3d3d'} />
                 </Link>
               </div>
               <span>첫방송 {bannerData.first_air_date}</span>
               <span>평점 {bannerData.vote_average}</span>
               <p>
-                {bannerData?.overview.length > 200
-                  ? bannerData?.overview.slice(0, 200) + "..."
-                  : bannerData?.overview}
+                {bannerData?.overview.length > 200 ? bannerData?.overview.slice(0, 200) + '...' : bannerData?.overview}
               </p>
             </Banner>
             <TopRated>
               <TopTitle>
                 TOP 20<em>TV쇼</em>
               </TopTitle>
-              <SlideMulti
-                offset={5}
-                data={topRateData?.results}
-                type="tv"
-              ></SlideMulti>
+              <SlideMulti offset={5} data={topRateData?.results} type="tv"></SlideMulti>
             </TopRated>
             <Trending>
               <Title>주간 트렌드</Title>

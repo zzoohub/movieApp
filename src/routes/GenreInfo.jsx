@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import InfoBox from "../components/InfoBox";
-import NotFound from "../components/NotFound";
-import { makeImgPath } from "../util/makeImgPath";
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import InfoBox from '../components/InfoBox';
+import NotFound from '../components/NotFound';
+import { makeImgPath } from '../util/makeImgPath';
 
 const Title = styled.div`
   display: flex;
@@ -36,11 +36,11 @@ const Tab = styled.button`
   width: 100px;
   height: 35px;
   background: none;
-  color: ${(props) => (props.tabMatch ? "#fff" : "#94979E")};
+  color: ${props => (props.tabMatch ? '#fff' : '#94979E')};
   border: none;
-  border-bottom: ${(props) => (props.tabMatch ? "2px solid #ff3d3d" : "none")};
+  border-bottom: ${props => (props.tabMatch ? '2px solid #ff3d3d' : 'none')};
   font-size: 18px;
-  font-weight: ${(props) => (props.tabMatch ? "500" : "300")};
+  font-weight: ${props => (props.tabMatch ? '500' : '300')};
   transition: all linear 0.2s;
   cursor: pointer;
   :hover {
@@ -65,23 +65,23 @@ const Contents = styled.div`
 
 export default function GenreInfo() {
   const location = useLocation();
-  let keyword = new URLSearchParams(location.search).get("id");
+  let keyword = new URLSearchParams(location.search).get('id');
 
   const [allData, setAllData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [tvs, setTvs] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [tab, setTab] = useState("movie");
+  const [tab, setTab] = useState('movie');
 
   useEffect(() => {
     const data = [];
     const fetchData = async () => {
       for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
         await fetch(
-          `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko&page=${i}`
+          `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}&language=ko&page=${i}`,
         )
-          .then((res) => res.json())
-          .then((json) => data.push(...json.results));
+          .then(res => res.json())
+          .then(json => data.push(...json.results));
       }
       setAllData(data);
     };
@@ -92,49 +92,35 @@ export default function GenreInfo() {
     // setMovies([]);
     // setTvs([]);
     const set = async () => {
-      await setFiltered([
-        ...new Set(
-          allData?.filter((content) => content?.genre_ids?.includes(+keyword))
-        ),
-      ]);
+      await setFiltered([...new Set(allData?.filter(content => content?.genre_ids?.includes(+keyword)))]);
     };
     set();
   }, [allData]);
 
   useEffect(() => {
-    setTvs(filtered.filter((content) => content.media_type === "tv"));
-    setMovies(filtered.filter((content) => content.media_type === "movie"));
+    setTvs(filtered.filter(content => content.media_type === 'tv'));
+    setMovies(filtered.filter(content => content.media_type === 'movie'));
   }, [filtered]);
 
   return (
     <>
       <Tabs>
-        <Tab
-          onClick={() => setTab("movie")}
-          tabMatch={tab === "movie" ? true : false}
-        >
+        <Tab onClick={() => setTab('movie')} tabMatch={tab === 'movie' ? true : false}>
           영화
         </Tab>
-        <Tab
-          onClick={() => setTab("tv")}
-          tabMatch={tab === "tv" ? true : false}
-        >
+        <Tab onClick={() => setTab('tv')} tabMatch={tab === 'tv' ? true : false}>
           TV쇼
         </Tab>
       </Tabs>
       <Contents>
-        {tab === "movie" ? (
+        {tab === 'movie' ? (
           <Grid>
             {movies.length > 0 ? (
               <>
                 {movies?.map((movie, index) => (
                   <Link key={index} to={`/movies/${movie.id}`}>
                     <InfoBox
-                      bgUrl={
-                        movie.backdrop_path
-                          ? makeImgPath(movie.backdrop_path, "w500")
-                          : null
-                      }
+                      bgUrl={movie.backdrop_path ? makeImgPath(movie.backdrop_path, 'w500') : null}
                       name={movie.title}
                       voteAverage={movie.vote_average}
                       firstDate={movie.release_date}
@@ -150,15 +136,11 @@ export default function GenreInfo() {
           <Grid>
             {tvs.length > 0 ? (
               <>
-                {" "}
+                {' '}
                 {tvs?.map((tv, index) => (
                   <Link key={index} to={`/tv/${tv.id}`}>
                     <InfoBox
-                      bgUrl={
-                        tv.backdrop_path
-                          ? makeImgPath(tv.backdrop_path, "w500")
-                          : null
-                      }
+                      bgUrl={tv.backdrop_path ? makeImgPath(tv.backdrop_path, 'w500') : null}
                       name={tv.name}
                       voteAverage={tv.vote_average}
                       firstDate={tv.first_air_date}

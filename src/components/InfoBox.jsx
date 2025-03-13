@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const TvItem = styled.div`
   position: relative;
@@ -7,11 +7,10 @@ const TvItem = styled.div`
   align-items: center;
   flex-direction: column;
   height: 200px;
-  background-image: url(${(props) => props.bgImg});
+  background-image: url(${props => props.bgImg});
   background-size: cover;
   background-position: center center;
-  background-color: ${(props) =>
-    props.bgImg === false ? "#222" : "transparent"};
+  background-color: ${props => (props.bgImg === false ? '#222' : 'transparent')};
   transition: all ease-in-out 0.2s;
   :hover {
     transform: scale(1.03);
